@@ -28,6 +28,8 @@ def wiki_search(subject):
 	# gets wikipedia page based on subject
 	text = wikipedia.page(subject).content.encode('utf-8')
 
+	# checking 
+	
 	# formats text
 	text = text.lower()
 	text = text.rstrip()
