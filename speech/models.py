@@ -9,22 +9,22 @@ class Student(models.Model):
 	f_name = models.CharField(max_length=30)
 	l_name = models.CharField(max_length=30)
 
-class Class(models.model):
+class Class(models.Model):
 	class_id = models.IntegerField()
 	class_name = models.CharField(max_length=30)
 	num_enrollments = models.IntegerField()
 
-class Enrollments(models.model):
+class Enrollments(models.Model):
 	student_id = models.ManyToManyField(Student)
 	class_id = models.ManyToManyField(Class)
 
-class Topic(models.model):
+class Topic(models.Model):
 	class_id = models.ForeignKey(Class, on_delete=models.CASCADE)
 	topic_id = models.IntegerField()
 	topic_name = models.CharField(max_length=30)
 	num_questions = models.IntegerField()
 
-class Question(models.model):
+class Question(models.Model):
 	class_id = models.ForeignKey(Class, on_delete=models.CASCADE)
 	topic_id = models.ForeignKey(Topic, on_delete=models.CASCADE)
 	question_id = models.IntegerField()
@@ -35,10 +35,10 @@ class Question(models.model):
 	is_mandatory = models.BooleanField()
 	percent_to_pass = models.FloatField()
 
-class Completion(models.model):
+class Completion(models.Model):
 	pass
 	# come back to this
 
-class SelfStudy(models.model):
+class SelfStudy(models.Model):
 	pass
 	# come back to this
