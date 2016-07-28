@@ -2,12 +2,12 @@ from django.db import models
 
 # Create your models here.
 class Greeting(models.Model):
-    when = models.DateTimeField('date created', auto_now_add=True)
+	when = models.DateTimeField('date created', auto_now_add=True)
 
 class Student(models.Model):
 	student_id = models.IntegerField()
 	f_name = models.CharField(max_length=30)
-    l_name = models.CharField(max_length=30)
+	l_name = models.CharField(max_length=30)
 
 class Class(models.model):
 	class_id = models.IntegerField()
