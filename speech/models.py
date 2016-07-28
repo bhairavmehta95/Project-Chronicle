@@ -28,7 +28,7 @@ class Question(models.Model):
 	class_id = models.ForeignKey(Class, on_delete=models.CASCADE)
 	topic_id = models.ForeignKey(Topic, on_delete=models.CASCADE)
 	question_id = models.IntegerField()
-	question_text = models.CharField()
+	question_text = models.CharField(max_length=300)
 	num_attempts = models.IntegerField()
 	num_accepted = models.IntegerField()
 	is_user_generated = models.BooleanField()
