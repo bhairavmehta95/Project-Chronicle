@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .models import Greeting, Student, Enrollment, Class, Topic, Question
+from .models import Greeting, Student, Enrollments, Class, Topic, Question
 
 # Create your views here.
 def index(request):
