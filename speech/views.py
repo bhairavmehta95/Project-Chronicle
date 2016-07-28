@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .models import Greeting
+from .models import Greeting, Student, Enrollment, Class, Topic, Question
 
 # Create your views here.
 def index(request):
@@ -11,10 +11,16 @@ def index(request):
 
 def db(request):
 
-    greeting = Greeting()
-    greeting.save()
+    # greeting = Greeting()
+    # greeting.save()
 
-    greetings = Greeting.objects.all()
+    # greetings = Greeting.objects.all()
 
-    return render(request, 'db.html', {'greetings': greetings})
+    s = Student(student_id = 1, f_name = "bhairav", l_name = "mehta")
+
+    s.save()
+
+    students = Student.objects.all()
+
+    return render(request, 'db.html', {'students': students})
 
