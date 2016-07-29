@@ -8,6 +8,8 @@ class Student(models.Model):
 	student_id = models.IntegerField()
 	f_name = models.CharField(max_length=30)
 	l_name = models.CharField(max_length=30)
+	email = models.CharField(max_length=30)
+	password = models.CharField(max_length=30)
 
 class Class(models.Model):
 	class_id = models.IntegerField()
