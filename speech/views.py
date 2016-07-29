@@ -10,8 +10,8 @@ def index(request):
     # return HttpResponse('Hello from Python!')
     if request.method == 'POST':
     	return render(request, 'signup.html')
-    	
-    return render(request, 'index.html')
+
+    return render(request, 'speech.html')
 
 def signup_user(request):
     # if this is a POST request we need to process the form data
