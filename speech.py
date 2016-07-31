@@ -1,4 +1,7 @@
 import speech_recognition as sr
+from threading import Thread, Event
+
+exitFlag = 0
 
 def speech_query():
     r = sr.Recognizer()
@@ -29,3 +32,41 @@ def speech_query():
             print("Uh oh! Couldn't request results from Google Speech Recognition service; {0}".format(e))
     except KeyboardInterrupt:
         pass
+
+class speech_thread(threading.Thread):
+    def __init__(self, threadID, name, counter):
+        threading.Thread.__init__(self)
+        self.threadID = threadID
+        self.name = name
+        self.counter = counter
+    def run(self):
+        print "Starting " + self.name
+        text = speech_query()
+        print "Exiting " + self.name
+
+class t2(threading.Thread):
+    def __init__(self, threadID, name, counter):
+        threading.Thread.__init__(self)
+        self.threadID = threadID
+        self.name = name
+        self.counter = counter
+    def run(self):
+        print "Starting " + self.name
+        count()
+        print "Exiting " + self.name
+
+def count():
+    count = 0
+    while True:
+        val = raw_input("Type something")
+        if val == 'q':
+            return
+        print val, "is what you typed to me!"
+
+if __name__ == "__main__":
+    thread1 = speech_thread(1, "Thread-1", 1)
+    thread2 = t2(2, "Thread-2", 2)
+
+    # Start new Threads
+    thread1.start()
+    thread2.start()

@@ -35,7 +35,7 @@ persisted : 1
 red : 1
 artist : 1
 "all : 1
-force : 2
+force : 1
 insular : 1
 phones : 21
 consistent : 1
@@ -57,7 +57,7 @@ liberty : 1
 spokesman : 1
 haze : 1
 zoomed : 2
-new : 24
+new : 25
 increasing : 3
 ever : 3
 gyroscope : 1
@@ -307,7 +307,7 @@ droppeddisconnected : 1
 vertu : 1
 iron : 1
 company's : 2
-enables : 2
+enables : 3
 solely : 1
 product's : 1
 fashion : 2
@@ -320,7 +320,6 @@ spectrum : 1
 simfree : 1
 talking : 1
 seen : 2
-television : 1
 contents : 1
 forced : 1
 strength : 2
@@ -337,7 +336,6 @@ object : 1
 simplify : 1
 germany : 2
 plenty : 1
-macbook : 1
 zealand : 2
 analytics' : 1
 iphone’s : 1
@@ -372,7 +370,7 @@ ipad : 8
 newton : 1
 10 : 5
 watch : 2
-13 : 4
+television : 1
 yielded : 1
 criticized : 2
 propriedade : 1
@@ -592,7 +590,7 @@ powerefficient : 1
 hsp : 1
 permitted : 1
 months : 7
-plus : 9
+plus : 10
 steadily : 1
 connected : 3
 permission : 1
@@ -685,7 +683,6 @@ together : 5
 fingerprintresistant : 1
 time : 23
 push : 3
-lineup : 1
 profits : 5
 songs : 4
 us1000 : 1
@@ -799,7 +796,7 @@ connector : 9
 territories : 2
 live : 3
 upheld : 1
-iphone : 346
+iphone : 348
 peru : 1
 memory : 1
 australian : 1
@@ -850,7 +847,7 @@ assistant : 1
 extensions : 1
 autofocus : 2
 vodafone : 2
-inputs : 1
+inputs : 2
 144 : 2
 designer : 1
 141 : 1
@@ -1020,7 +1017,7 @@ representing : 1
 message : 4
 11 : 5
 wide : 2
-trackpads : 1
+13 : 4
 12 : 3
 15 : 2
 17 : 1
@@ -1211,7 +1208,7 @@ bernardino : 1
 offered : 1
 surpassing : 2
 photos : 12
-6s : 8
+6s : 10
 covers : 1
 bonjour : 1
 "section : 1
@@ -1872,7 +1869,7 @@ fullscreen : 1
 learns : 1
 stance : 1
 pictures : 4
-currently : 1
+currently : 2
 case : 5
 paradigm" : 1
 various : 2
@@ -1895,6 +1892,7 @@ c : 1
 last : 2
 technica : 1
 barely : 1
+sensitive : 1
 connection : 1
 became : 4
 collect : 1
@@ -1925,7 +1923,7 @@ wraparound : 1
 ireland : 1
 navigate : 1
 intrusive : 1
-technologysharing : 1
+firstgeneration : 2
 pm : 1
 firm : 2
 box : 1
@@ -2014,7 +2012,7 @@ tablet : 3
 extracted : 1
 workers : 1
 alternate : 2
-exclusively : 1
+exclusively : 2
 samsung's : 1
 signals : 1
 source : 5
@@ -2242,7 +2240,7 @@ giant : 1
 growing : 1
 focused : 3
 others : 2
-firstgeneration : 2
+technologysharing : 1
 great : 3
 casing : 2
 receive : 5
@@ -2583,7 +2581,7 @@ contain : 1
 fixed : 1
 generations : 6
 view : 10
-available : 30
+available : 31
 requirement : 2
 temporarily : 3
 acquired : 1
@@ -2795,6 +2793,7 @@ noise : 1
 obex : 1
 inaccurate : 1
 june : 11
+pressure : 1
 host : 1
 although : 9
 described : 1
@@ -2815,7 +2814,7 @@ carrier : 15
 sweat : 1
 customizing : 1
 insufficient : 1
-introduced : 14
+introduced : 13
 create : 6
 software : 27
 warranty : 6

@@ -1,9 +1,49 @@
-from speech import speech_query
 from nltk.corpus import stopwords
 import urllib
 import urllib2
 from bs4 import BeautifulSoup
 import wikipedia
+
+import speech_recognition as sr
+from threading import Thread, Event
+
+exitFlag = 0
+
+# TO DO: 
+# Add questions to DB
+# Create Hash tables for each one
+# Add Link "clicking" -- web scraping
+
+
+def speech_query():
+    r = sr.Recognizer()
+    m = sr.Microphone()
+
+    try:
+        print("A moment of silence, please...")
+        with m as source: r.adjust_for_ambient_noise(source)
+        print("Set minimum energy threshold to {}".format(r.energy_threshold))
+
+        print("Say something!")
+        with m as source: audio = r.listen(source)
+        print("Got it! Now to recognize it...")
+        try:
+            # recognize speech using Google Speech Recognition
+            value = r.recognize_google(audio)
+
+            # we need some special handling here to correctly print unicode characters to standard output
+            if str is bytes: # this version of Python uses bytes for strings (Python 2)
+                print(u"You said {}".format(value).encode("utf-8"))
+            else: # this version of Python uses unicode for strings (Python 3+)
+                print("You said {}".format(value))
+
+            return value
+        except sr.UnknownValueError:
+            print("Oops! Didn't catch that")
+        except sr.RequestError as e:
+            print("Uh oh! Couldn't request results from Google Speech Recognition service; {0}".format(e))
+    except KeyboardInterrupt:
+        pass
 
 def wiki_search(subject):
 
@@ -25,18 +65,74 @@ def wiki_search(subject):
 	# gets a list of common stop words
 	stopWords = set(stopwords.words('english'))
 
-	# gets wikipedia page based on subject
-	text = wikipedia.page(subject).content.encode('utf-8')
+	### UNCOMMENT WHEN WITH INTERNET ###
+	
+	# # gets wikipedia page based on subject
+	# text = wikipedia.page(subject).content.encode('utf-8')
 
-	# checking 
-	
+	# # TO DO: Fix Unicode Problem -- Translate
+
+	# w = open('text.txt', 'w')
+	# w.write(text)
+
+	### END COMMENT BLOCK ###
+
+	r = open('text.txt', 'r')
+	text = r.readlines()
+	question_dict = {'topics': [], 'text': []}
+
+   	# main = text.split('=')[0]
+   	# text = text.split('=')[1]
+   	main = ''
+   	#lines = iter(lines)
+
+   	# Developing the questions
+   	for line in text:
+   		if line[0] != '=':
+   			main += str(line)
+
+   		elif line[0] == '=' and main != '':
+   			question_dict['topics'].append(subject)
+   			question_dict['text'].append(main)
+
+			subject = str(line)
+			main = ''
+
+	# gets last one
+	if main != '':
+		question_dict['topics'].append(subject)
+	   	question_dict['text'].append(main)
+
 	# formats text
-	text = text.lower()
-	text = text.rstrip()
-	text = text.translate(None, '!@#$%^*():;,./-_[]}{+=~')
+	i = 0
+	while i < len(question_dict['topics']):
+		question_dict['topics'][i] = question_dict['topics'][i].lower()
+		question_dict['topics'][i] = question_dict['topics'][i].rstrip()
+		question_dict['topics'][i] = question_dict['topics'][i].translate(None, '!@#$%^*():;,./-_[]}{+=~ ')
+		i += 1
+
+	i = 0
+	while i < len(question_dict['text']):
+		question_dict['text'][i] = question_dict['text'][i].lower()
+		question_dict['text'][i] = question_dict['text'][i].rstrip()
+		question_dict['text'][i] = question_dict['text'][i].translate(None, '!@#$%^*():;,./-_[]}{+=~')
 	
-	# removes stop words
-	text = ' '.join([word for word in text.split() if word not in stopWords])
+		# removes stop words
+		question_dict['text'][i] = ' '.join([word for word in question_dict['text'][i].split() if word not in stopWords])
+		i += 1
+
+	print question_dict['topics']
+
+	return
+
+	w = open('text.txt', 'w')
+
+	i = 0
+	while i < len(question_dict['text']):
+		w.write(question_dict['topics'][i])
+		w.write(question_dict['text'][i])
+		w.write('\n')
+
 
 	text_dictionary = {}
 	word_count = 0
@@ -93,7 +189,8 @@ def wiki_search(subject):
 	print "You scored a:", percentage, " percent out of 100%"
 
 def search_and_process():
-	subject = speech_query()
+	#subject = speech_query()
+	subject = 'iPhone'
 	wiki_search(subject)
 
 

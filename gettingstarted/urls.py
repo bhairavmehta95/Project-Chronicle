@@ -12,5 +12,9 @@ import speech.views
 urlpatterns = [
     url(r'^$', speech.views.index, name='index'),
     url(r'^db', speech.views.db, name='db'),
+    url(r'^signup/', speech.views.signup_user, name='signup'),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^classes/$', speech.views.class_page, name='class_page'),
+    url(r'^(\d)/$', speech.views.topic_page, name='topic_page'),
+    url(r'^(\d)/(\d)/$', speech.views.question_page, name='question_page'),
 ]

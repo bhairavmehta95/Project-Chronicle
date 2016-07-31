@@ -1,0 +1,8 @@
+<html>
+	<form action="" method="post">
+   	{% csrf_token %}
+	{% for class in classes %}
+    	<input type="submit" value="{{ class.class_name }}" name= "Class"/>
+    {% endfor %}
+	</form>
+</html>
