@@ -5,6 +5,8 @@ from .models import Greeting, Student, Enrollments, Class, Topic, Question
 
 from .forms import SignupForm
 
+from wiki import wiki_search
+
 # Create your views here.
 def index(request):
     if request.method == 'POST':
@@ -65,6 +67,36 @@ def question_page(request):
 
 def db(request):
 
+    subject = 'iPhone'
+    question_dict = wiki_search(subject)
+
+    class_ = Class.objects.get(class_name='History')
+    
+    print class_
+
+    # For testing, each item is a topic, and is also a QUESTION inside
+    i = 0
+    while i < len(question_dict['topics']):
+        topic = question_dict['topics'][i]
+        question = question_dict['topics'][i]
+        question_text = question_dict['text'][i]
+        i += 1
+
+        # Creating the topics, and the questions
+        # TO DO: Make separate
+
+        topic_add = Topic.objects.create(class_id = class_, topic_name = topic)
+
+        question_add = Question.objects.create(
+            class_id = class_,
+            topic_id = topic_add,
+            question_subject = question,
+            question_text = question_text,
+            )
+
+
+
+
     # greeting = Greeting()
     # greeting.save()
 
@@ -75,6 +107,12 @@ def db(request):
     # s.save()
 
     students = Student.objects.all()
+    t = Topic.objects.all()
+    q = Question.objects.all()
+
+    print t
+    print "-------------"
+    print q
 
     return render(request, 'db.html', {'students': students})
 

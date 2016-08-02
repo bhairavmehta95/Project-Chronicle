@@ -1,0 +1,15 @@
+iPhone is a cool toy!
+It is really nice and fun to play wiht
+
+== Usage == 
+Use it
+Like this
+By Typing
+
+===Hello===
+Hello hello hello hello
+
+=  World  =
+Yup
+
+= Empty =

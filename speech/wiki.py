@@ -123,7 +123,9 @@ def wiki_search(subject):
 
 	print question_dict['topics']
 
-	return
+	return question_dict
+
+	######### TO DO: Fix Bottom ##########
 
 	w = open('text.txt', 'w')
 

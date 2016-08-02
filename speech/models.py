@@ -5,7 +5,7 @@ class Greeting(models.Model):
 	when = models.DateTimeField('date created', auto_now_add=True)
 
 class Student(models.Model):
-	student_id = models.IntegerField()
+	student_id = models.AutoField(primary_key=True)
 	f_name = models.CharField(max_length=30)
 	l_name = models.CharField(max_length=30)
 	email = models.CharField(max_length=30)
@@ -15,9 +15,9 @@ class Student(models.Model):
 		return self.f_name
 
 class Class(models.Model):
-	class_id = models.IntegerField()
+	class_id = models.AutoField(primary_key=True)
 	class_name = models.CharField(max_length=30)
-	num_enrollments = models.IntegerField()
+	num_enrollments = models.IntegerField(default=0)
 
 	def __str__(self):
 		return self.class_name
@@ -31,9 +31,9 @@ class Enrollments(models.Model):
 
 class Topic(models.Model):
 	class_id = models.ForeignKey(Class, on_delete=models.CASCADE)
-	topic_id = models.IntegerField()
+	topic_id = models.AutoField(primary_key=True)
 	topic_name = models.CharField(max_length=30)
-	num_questions = models.IntegerField()
+	num_questions = models.IntegerField(default=0)
 
 	def __str__(self):
 		return self.topic_name
@@ -41,16 +41,17 @@ class Topic(models.Model):
 class Question(models.Model):
 	class_id = models.ForeignKey(Class, on_delete=models.CASCADE)
 	topic_id = models.ForeignKey(Topic, on_delete=models.CASCADE)
-	question_id = models.IntegerField()
+	question_id = models.AutoField(primary_key=True)
+	question_subject = models.CharField(max_length=100, default='QUESTION')
 	question_text = models.CharField(max_length=300)
-	num_attempts = models.IntegerField()
-	num_accepted = models.IntegerField()
-	is_user_generated = models.BooleanField()
-	is_mandatory = models.BooleanField()
-	percent_to_pass = models.FloatField()
+	num_attempts = models.IntegerField(default=0)
+	num_accepted = models.IntegerField(default=0)
+	is_user_generated = models.BooleanField(default=False)
+	is_mandatory = models.BooleanField(default=False)
+	percent_to_pass = models.FloatField(default=.50)
 
 	def __str__(self):
-		return self.question_id
+		return self.question_text
 
 class Completion(models.Model):
 	pass
