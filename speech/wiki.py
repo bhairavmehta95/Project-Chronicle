@@ -97,8 +97,9 @@ def wiki_search(subject):
    			main += str(line)
 
    		elif line[0] == '=':
-   			question_dict['topics'].append(subject)
-   			question_dict['text'].append(main)
+   			if main != '':
+	   			question_dict['topics'].append(subject)
+	   			question_dict['text'].append(main)
 
 			subject = str(line)
 			main = ''
@@ -198,7 +199,7 @@ def wiki_search(subject):
 
 def search_and_process():
 	#subject = speech_query()
-	subject = 'iPhone'
+	subject = 'History of the United States (1776-89)'
 	wiki_search(subject)
 
 
