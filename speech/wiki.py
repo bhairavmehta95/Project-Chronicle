@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from nltk.corpus import stopwords
 import urllib
 import urllib2
@@ -130,9 +132,9 @@ def wiki_search(subject):
 
 	return question_dict
 
-	######### TO DO: Fix Bottom ##########
-	# Make into a different function
 
+	# Function that opens a file and reads a user response,
+	# Put function (parts of it) into views.py
 	def user_response():
 		w = open('text.txt', 'w')
 
@@ -197,9 +199,8 @@ def wiki_search(subject):
 		percentage = score / float(word_count) * 100
 		print "You scored a:", percentage, " percent out of 100%"
 
-def search_and_process():
+def search_and_process(subject):
 	#subject = speech_query()
-	subject = 'History of the United States (1776-89)'
 	wiki_search(subject)
 
 
