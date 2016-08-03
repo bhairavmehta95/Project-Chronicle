@@ -67,18 +67,20 @@ def wiki_search(subject):
 
 	### UNCOMMENT WHEN WITH INTERNET ###
 	
-	# # gets wikipedia page based on subject
-	# text = wikipedia.page(subject).content.encode('utf-8')
+	# gets wikipedia page based on subject
+	text = wikipedia.page(subject).content.encode('utf-8')
 
-	# # TO DO: Fix Unicode Problem -- Translate
+	# TO DO: Fix Unicode Problem -- Translate
 
-	# w = open('text.txt', 'w')
-	# w.write(text)
+	w = open('text.txt', 'w')
+	w.write(text)
 
 	### END COMMENT BLOCK ###
 
 	r = open('text.txt', 'r')
-	text = r.readlines()
+	text = r.read()
+	text = str(text)
+
 	question_dict = {'topics': [], 'text': []}
 
    	# main = text.split('=')[0]
@@ -87,11 +89,14 @@ def wiki_search(subject):
    	#lines = iter(lines)
 
    	# Developing the questions
-   	for line in text:
+   	for line in text.split('\n'):
+   		if line == '\n' or line == None or line == ' ' or line == '':
+   			continue
+
    		if line[0] != '=':
    			main += str(line)
 
-   		elif line[0] == '=' and main != '':
+   		elif line[0] == '=':
    			question_dict['topics'].append(subject)
    			question_dict['text'].append(main)
 
@@ -106,89 +111,90 @@ def wiki_search(subject):
 	# formats text
 	i = 0
 	while i < len(question_dict['topics']):
-		question_dict['topics'][i] = question_dict['topics'][i].lower()
-		question_dict['topics'][i] = question_dict['topics'][i].rstrip()
-		question_dict['topics'][i] = question_dict['topics'][i].translate(None, '!@#$%^*():;,./-_[]}{+=~ ')
+		question_dict['topics'][i] = question_dict['topics'][i].translate(None, '\n=')
 		i += 1
 
 	i = 0
 	while i < len(question_dict['text']):
 		question_dict['text'][i] = question_dict['text'][i].lower()
 		question_dict['text'][i] = question_dict['text'][i].rstrip()
-		question_dict['text'][i] = question_dict['text'][i].translate(None, '!@#$%^*():;,./-_[]}{+=~')
+		question_dict['text'][i] = question_dict['text'][i].translate(None, '\n!@#$%^*():;,./-_[]}{+=~')
 	
 		# removes stop words
 		question_dict['text'][i] = ' '.join([word for word in question_dict['text'][i].split() if word not in stopWords])
 		i += 1
 
-	print question_dict['topics']
+	print 'topic', len(question_dict['topics']), question_dict['topics'][2]
+	print 'question', len(question_dict['text']), question_dict['text'][2]
 
 	return question_dict
 
 	######### TO DO: Fix Bottom ##########
+	# Make into a different function
 
-	w = open('text.txt', 'w')
+	def user_response():
+		w = open('text.txt', 'w')
 
-	i = 0
-	while i < len(question_dict['text']):
-		w.write(question_dict['topics'][i])
-		w.write(question_dict['text'][i])
-		w.write('\n')
-
-
-	text_dictionary = {}
-	word_count = 0
-
-	# creates a hash table with [word] : occurance
-
-	for word in text.split():
-		if text_dictionary.get(word) == None :
-			text_dictionary[word] = 1
-		else:
-			text_dictionary[word] = text_dictionary[word] + 1
-
-		# tracks total word count
-		word_count += 1
-
-	### FOR TESTING
-	file = open("newfile.txt", "w")
-
-	for word in text_dictionary:
-		string = str(word) + ' : ' + str(text_dictionary[word]) + '\n'
-		file.write(string)
-
-	###
-
-	print "Response time!"
-	# gets response from microphone
-	reponse = speech_query()
+		i = 0
+		while i < len(question_dict['text']):
+			w.write(question_dict['topics'][i])
+			w.write(question_dict['text'][i])
+			w.write('\n')
 
 
-	# formats reponse
-	reponse = reponse.lower()
-	
-	# removes stop words
-	reponse = ' '.join([word for word in reponse.split() if word not in stopWords])
+		text_dictionary = {}
+		word_count = 0
 
-	# calculates score, and outputs it
+		# creates a hash table with [word] : occurance
 
-	score = 0
+		for word in text.split():
+			if text_dictionary.get(word) == None :
+				text_dictionary[word] = 1
+			else:
+				text_dictionary[word] = text_dictionary[word] + 1
 
-	response_dictionary = {}
-	print "RESPONSE:", reponse
+			# tracks total word count
+			word_count += 1
 
-	for word in reponse.split():
-		if text_dictionary.get(word) != None and response_dictionary.get(word) == None:
-			score += text_dictionary[word]
+		### FOR TESTING
+		file = open("newfile.txt", "w")
 
-			# arbitrary value to show the word has been marked
-			response_dictionary[word] = True
-		else:
-			pass
+		for word in text_dictionary:
+			string = str(word) + ' : ' + str(text_dictionary[word]) + '\n'
+			file.write(string)
+
+		###
+
+		print "Response time!"
+		# gets response from microphone
+		reponse = speech_query()
 
 
-	percentage = score / float(word_count) * 100
-	print "You scored a:", percentage, " percent out of 100%"
+		# formats reponse
+		reponse = reponse.lower()
+		
+		# removes stop words
+		reponse = ' '.join([word for word in reponse.split() if word not in stopWords])
+
+		# calculates score, and outputs it
+
+		score = 0
+
+		response_dictionary = {}
+		print "RESPONSE:", reponse
+
+		for word in reponse.split():
+			if text_dictionary.get(word) != None and response_dictionary.get(word) == None:
+				score += text_dictionary[word]
+
+				# arbitrary value to show the word has been marked
+				response_dictionary[word] = True
+			else:
+				pass
+
+
+		percentage = score / float(word_count) * 100
+		print "You scored a:", percentage, " percent out of 100%"
 
 def search_and_process():
 	#subject = speech_query()
