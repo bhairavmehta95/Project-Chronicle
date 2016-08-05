@@ -1,3 +1,5 @@
+ # -*- coding: utf-8 -*-
+
 from bs4 import BeautifulSoup
 import requests
 import re
@@ -20,11 +22,15 @@ for item in samples:
 
 	if url.find('%') != -1 and url.find('#') == -1:
 		# ASCII
-		title = title.replace("–", "-")
-		url_list.append(url)
-		title_list.append(title)
+		try:
+			title = title.replace("–", "-")
+			url_list.append(url)
+			title_list.append(title)
+		except:
+			pass
 
 title_list.sort()
 url_list.sort()
 
+# testing
 search_and_process(title_list[5])
