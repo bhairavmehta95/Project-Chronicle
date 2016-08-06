@@ -1,6 +1,6 @@
 #!/usr/bin/Python	
 
-from nltk.corpus import stopwords
+import nltk.corpus.stopwords as stopwords
 import urllib
 import urllib2
 from bs4 import BeautifulSoup
