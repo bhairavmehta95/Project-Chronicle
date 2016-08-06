@@ -9,12 +9,12 @@ from threading import Thread, Event
 
 exitFlag = 0
 
-# TO DO: 
+# TODO: 
 # Add questions to DB
 # Create Hash tables for each one
 # Add Link "clicking" -- web scraping
 
-
+# function that uses Google Speehc Recongition to understand micrphone
 def speech_query():
     r = sr.Recognizer()
     m = sr.Microphone()
@@ -45,6 +45,7 @@ def speech_query():
     except KeyboardInterrupt:
         pass
 
+# searches a wikipedia subject
 def wiki_search(subject):
 
 	## KEEP TO POTENTIALLY SEARCH OTHER SOURCES ##
@@ -70,7 +71,7 @@ def wiki_search(subject):
 	# gets wikipedia page based on subject
 	text = wikipedia.page(subject).content.encode('utf-8')
 
-	# TO DO: Fix Unicode Problem -- Translate
+	# Writes all text to text file, and then reads it (TODO: do this better somehow)
 
 	w = open('text.txt', 'w')
 	w.write(text)
@@ -81,6 +82,7 @@ def wiki_search(subject):
 	text = r.read()
 	text = str(text)
 
+	# creates question dictionary, each has a list
 	question_dict = {'topics': [], 'text': []}
 
    	# main = text.split('=')[0]
@@ -109,7 +111,7 @@ def wiki_search(subject):
 		question_dict['topics'].append(subject)
 	   	question_dict['text'].append(main)
 
-	# formats text
+	# formats topic and text, removes symbols, newlines, and stopwords
 	i = 0
 	while i < len(question_dict['topics']):
 		question_dict['topics'][i] = question_dict['topics'][i].translate(None, '\n=')
@@ -125,8 +127,8 @@ def wiki_search(subject):
 		question_dict['text'][i] = ' '.join([word for word in question_dict['text'][i].split() if word not in stopWords])
 		i += 1
 
-	print 'topic', len(question_dict['topics']), question_dict['topics'][2]
-	print 'question', len(question_dict['text']), question_dict['text'][2]
+	# print 'topic', len(question_dict['topics']), question_dict['topics'][2]
+	# print 'question', len(question_dict['text']), question_dict['text'][2]
 
 	return question_dict
 
@@ -199,7 +201,8 @@ def wiki_search(subject):
 
 def search_and_process(subject):
 	#subject = speech_query()
-	wiki_search(subject)
+	question_dict = wiki_search(subject)
+	return question_dict
 
 
 if __name__ == "__main__":
