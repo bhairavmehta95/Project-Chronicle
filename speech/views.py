@@ -15,6 +15,11 @@ def index(request):
 
     return render(request, 'index.html')
 
+def speech(request):
+    if request.method == 'POST':
+        print request.POST.get('transcript', "Didn't find")
+
+    return render(request, 'speech.html')
 def signup_user(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':

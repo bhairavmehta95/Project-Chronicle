@@ -288,6 +288,7 @@ if (!('webkitSpeechRecognition' in window)) {
     if (final_transcript || interim_transcript) {
       showButtons('inline-block');
     }
+
   };
 }
 function upgrade() {
@@ -372,4 +373,25 @@ function showButtons(style) {
   copy_info.style.display = 'none';
   email_info.style.display = 'none';
 }
+
+function return_final_transcript() { 
+  var formInfo = document.forms['return_final'];
+
+  formInfo.elements["transcript"].value = final_transcript;
+
+  alert(final_transcript);
+}
 </script>
+
+<p>
+
+<a href="javascript:return_final_transcript();">View the Final Transcript</a></p>
+
+<form method="post" id = "return_final">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit" id ="transcript" name="transcript" onclick="return_final_transcript();" />
+</form>
+</html>
+
+    

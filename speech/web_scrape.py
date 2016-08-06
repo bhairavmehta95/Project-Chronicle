@@ -1,6 +1,5 @@
  # -*- coding: utf-8 -*-
 
-
 # function that generates the TOPICS based on USHISTORY
 #TODO: Make templated/generalized for other classes
 
