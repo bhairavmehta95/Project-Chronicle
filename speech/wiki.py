@@ -1,5 +1,3 @@
-#!/usr/bin/Python	
-
 import nltk.corpus.stopwords as stopwords
 import urllib
 import urllib2
