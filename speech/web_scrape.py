@@ -36,23 +36,27 @@ for item in samples:
 title_list.sort()
 url_list.sort()
 
-## testing
-#search_and_process(title_list[5])
+## generates every question, puts them into an output file
 
 file = open('output.txt', 'w')
 total_count = 0
 for topic in title_list:
+	file.write('------ Start of')
+	file.write(topic)
+	file.write('----------\n\n\n')
 	question_dict = search_and_process(topic)
 	i = 0
 	while i < len(question_dict['topics']):
-		file.write('Question: \n')
-		print "question:", question_dict['topics'][i], "inside of ", topic
+		print "Question:", question_dict['topics'][i], "inside of ", topic
 		file.write(question_dict['topics'][i])
 		file.write('\n')
 		file.write(question_dict['text'][i])
 		file.write('\n')
 		i += 1
 		total_count += 1
-	file.write('----------------\n\n\n')
+		
+	file.write('------ End of')
+	file.write(topic)
+	file.write('----------\n\n\n')
 
 print total_count
