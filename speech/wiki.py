@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/Python	
 
 from nltk.corpus import stopwords
 import urllib
