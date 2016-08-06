@@ -3,5 +3,3 @@ Django==1.9.2
 gunicorn==19.4.5
 psycopg2==2.6.1
 whitenoise==2.0.6
-http://pyyaml.org/download/pyyaml/PyYAML-3.10.tar.gz
-http://pypi.python.org/packages/source/n/nltk/nltk-2.0.1rc1.tar.gz
