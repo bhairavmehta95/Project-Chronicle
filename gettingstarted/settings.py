@@ -136,3 +136,7 @@ STATICFILES_DIRS = (
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
+FIXTURE_DIRS = (
+   '/speech/speech/fixtures/',
+)
+

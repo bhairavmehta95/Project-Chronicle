@@ -10,10 +10,12 @@
 
 <ul>
 
-{% for s in students %}
-    <li>{{ s.student_id }}</li>
-    <li>{{ s.f_name }}</li>
-    <li>{{ s.l_name }}</li>
+{% for s in t %}
+    <li>{{ s.topic_name }} </li> 
+    <ul> 
+	    <li> {{ s.question_subject}} </li> 
+	    <li> {{ s.question_text }} </li>
+    </ul>
 {% endfor %}
 
 </ul>

@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 import requests
 import re
 from wiki import search_and_process
+import json
 
 print "Hello World!"
 
@@ -37,25 +38,39 @@ url_list.sort()
 
 ## generates every question, puts them into an output file
 
-file = open('output.txt', 'w')
-total_count = 0
+file = open('fixtures/test_fixtue.yaml', 'w')
+total_count = 1
+
 for topic in title_list:
-	file.write('------ Start of')
-	file.write(topic)
-	file.write('----------\n\n\n')
+	# yaml serialization
+
+	
+	# file.write(topic)
+	# file.write('----------\n\n\n')
 	question_dict = search_and_process(topic)
+
 	i = 0
 	while i < len(question_dict['topics']):
-		print "Question:", question_dict['topics'][i], "inside of ", topic
-		file.write(question_dict['topics'][i])
-		file.write('\n')
-		file.write(question_dict['text'][i])
-		file.write('\n')
+		file.write('- model: speech.Testing\n')
+		yaml_string = '  pk: ' + str(total_count) + '\n'
+		file.write(yaml_string)
+		file.write('  fields:\n')
+		yaml_string = '    topic_name: ' + topic + "\n"
+		file.write(yaml_string)
+		yaml_string = '    question_text: ' + question_dict['text'][i] + '\n' 
+		file.write(yaml_string)
+		yaml_string = '    question_subject: ' + question_dict['topics'][i] + '\n' 
+		file.write(yaml_string)
+	# 	print "Question:", question_dict['topics'][i], "inside of ", topic
+	# 	file.write(question_dict['topics'][i])
+	# 	file.write('\n')
+	# 	file.write(question_dict['text'][i])
+	# 	file.write('\n')
 		i += 1
-		total_count += 1
+	 	total_count += 1
 		
-	file.write('------ End of')
-	file.write(topic)
-	file.write('----------\n\n\n')
+	# file.write('------ End of')
+	# file.write(topic)
+	# file.write('----------\n\n\n')
 
 print total_count

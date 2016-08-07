@@ -1,4 +1,4 @@
-import nltk.corpus.stopwords as stopwords
+from nltk.corpus import stopwords
 import urllib
 import urllib2
 from bs4 import BeautifulSoup
@@ -114,17 +114,17 @@ def wiki_search(subject):
 	# formats topic and text, removes symbols, newlines, and stopwords
 	i = 0
 	while i < len(question_dict['topics']):
-		question_dict['topics'][i] = question_dict['topics'][i].translate(None, '\n=')
+		question_dict['topics'][i] = question_dict['topics'][i].translate(None, '\n!@#$%^*:;,./_[]}{+=~"')
 		i += 1
 
 	i = 0
 	while i < len(question_dict['text']):
 		question_dict['text'][i] = question_dict['text'][i].lower()
 		question_dict['text'][i] = question_dict['text'][i].rstrip()
-		question_dict['text'][i] = question_dict['text'][i].translate(None, '\n!@#$%^*():;,./-_[]}{+=~')
+		question_dict['text'][i] = question_dict['text'][i].translate(None, '\n!@#$%^*():;,./-_[]}{+=~"')
 	
 		# removes stop words
-		question_dict['text'][i] = ' '.join([word for word in question_dict['text'][i].split() if word not in stopWords])
+		#question_dict['text'][i] = ' '.join([word for word in question_dict['text'][i].split() if word not in stopWords])
 		i += 1
 
 	# print 'topic', len(question_dict['topics']), question_dict['topics'][2]

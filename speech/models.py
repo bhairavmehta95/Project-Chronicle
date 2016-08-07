@@ -53,6 +53,13 @@ class Question(models.Model):
 	def __str__(self):
 		return self.question_text
 
+
+class Testing(models.Model):
+	test_id = models.AutoField(primary_key=True)
+	topic_name = models.CharField(max_length=100)
+	question_subject = models.CharField(max_length=100)
+	question_text = models.CharField(max_length=5000)
+
 class Completion(models.Model):
 	pass
 	# come back to this
