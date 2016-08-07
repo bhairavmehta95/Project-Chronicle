@@ -58,7 +58,7 @@ class Testing(models.Model):
 	test_id = models.AutoField(primary_key=True)
 	topic_name = models.CharField(max_length=100)
 	question_subject = models.CharField(max_length=100)
-	question_text = models.CharField(max_length=5000)
+	question_text = models.CharField(max_length=50000)
 
 class Completion(models.Model):
 	pass
