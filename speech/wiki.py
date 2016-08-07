@@ -1,4 +1,4 @@
-from nltk.corpus import stopwords
+#from nltk.corpus import stopwords
 import urllib
 import urllib2
 from bs4 import BeautifulSoup
@@ -64,7 +64,7 @@ def wiki_search(subject):
 	# text = soup.get_text().encode('utf-8')
 
 	# gets a list of common stop words
-	stopWords = set(stopwords.words('english'))
+	#stopWords = set(stopwords.words('english'))
 
 	### UNCOMMENT WHEN WITH INTERNET ###
 	
@@ -177,7 +177,7 @@ def wiki_search(subject):
 		reponse = reponse.lower()
 		
 		# removes stop words
-		reponse = ' '.join([word for word in reponse.split() if word not in stopWords])
+		#reponse = ' '.join([word for word in reponse.split() if word not in stopWords])
 
 		# calculates score, and outputs it
 
