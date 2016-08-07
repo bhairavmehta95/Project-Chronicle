@@ -1,7 +1,7 @@
 #from nltk.corpus import stopwords
 import urllib
 import urllib2
-from bs4 import BeautifulSoup
+#from bs4 import BeautifulSoup
 import wikipedia
 
 import speech_recognition as sr
