@@ -43,7 +43,7 @@ class Question(models.Model):
 	topic_id = models.ForeignKey(Topic, on_delete=models.CASCADE)
 	question_id = models.AutoField(primary_key=True)
 	question_subject = models.CharField(max_length=100, default='QUESTION')
-	question_text = models.CharField(max_length=300)
+	question_text = models.TextField()
 	num_attempts = models.IntegerField(default=0)
 	num_accepted = models.IntegerField(default=0)
 	is_user_generated = models.BooleanField(default=False)
@@ -58,7 +58,7 @@ class Testing(models.Model):
 	test_id = models.AutoField(primary_key=True)
 	topic_name = models.CharField(max_length=100)
 	question_subject = models.CharField(max_length=100)
-	question_text = models.CharField(max_length=50000)
+	question_text = models.TextField()
 
 class Completion(models.Model):
 	pass
