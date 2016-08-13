@@ -16,7 +16,7 @@ class Student(models.Model):
 
 class Class(models.Model):
 	class_id = models.AutoField(primary_key=True)
-	class_name = models.CharField(max_length=30)
+	class_name = models.CharField(max_length=100)
 	num_enrollments = models.IntegerField(default=0)
 
 	def __str__(self):
@@ -32,7 +32,7 @@ class Enrollments(models.Model):
 class Topic(models.Model):
 	class_id = models.ForeignKey(Class, on_delete=models.CASCADE)
 	topic_id = models.AutoField(primary_key=True)
-	topic_name = models.CharField(max_length=30)
+	topic_name = models.CharField(max_length=100)
 	num_questions = models.IntegerField(default=0)
 
 	def __str__(self):

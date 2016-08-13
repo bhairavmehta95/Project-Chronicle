@@ -72,32 +72,47 @@ def question_page(request):
 
 def db(request):
 
-    # subject = 'iPhone'
-    # question_dict = wiki_search(subject)
+    # Resets DB (testing only)
+    Class.objects.all().delete()
+    Question.objects.all().delete()
+    Topic.objects.all().delete()
 
-    # class_ = Class.objects.get(class_name='History')
+    # Runs wiki search query
+    subject = 'iPhone'
+    question_dict = wiki_search(subject)
+
+    # creates history class, gets that object
+    Class.objects.create(class_name = "History")
+    class_ = Class.objects.get(class_name='History')
     
-    # print class_
+    print class_
 
-    # # For testing, each item is a topic, and is also a QUESTION inside
-    # i = 0
-    # while i < len(question_dict['topics']):
-    #     topic = question_dict['topics'][i]
-    #     question = question_dict['topics'][i]
-    #     question_text = question_dict['text'][i]
-    #     i += 1
+    # For testing, each item is a topic, and is also a QUESTION inside
+    i = 0
+    while i < len(question_dict['topics']):
 
-    #     # Creating the topics, and the questions
-    #     # TO DO: Make separate
+        topic = question_dict['topics'][i]
+        question = question_dict['topics'][i]
+        question_text = question_dict['text'][i]
+        i += 1
 
-    #     topic_add = Topic.objects.create(class_id = class_, topic_name = topic)
+        # Creating the topics, and the questions
+        # TO DO: Make separate
 
-    #     question_add = Question.objects.create(
-    #         class_id = class_,
-    #         topic_id = topic_add,
-    #         question_subject = question,
-    #         question_text = question_text,
-    #         )
+        # tries to find the topic, otherwise adds it
+        topic_add = Topic.objects.get(topic_name = topic)
+
+        # can't find, so adds
+        if topic_add = Topic.DoesNotExist:
+            topic_add = Topic.objects.create(class_id = class_, topic_name = topic)
+
+        # adds, saves question
+        question_add = Question.objects.create(
+            class_id = class_,
+            topic_id = topic_add,
+            question_subject = question,
+            question_text = question_text,
+            )
 
 
 
@@ -111,7 +126,7 @@ def db(request):
 
     # s.save()
 
-    t = Testing.objects.all()
+    q = Question.objects.all()
 
-    return render(request, 'db.html', {'t': t})
+    return render(request, 'db.html', {'t': q})
 
