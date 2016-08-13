@@ -1,3 +1,5 @@
+ # -*- coding: utf-8 -*-
+
 from django.shortcuts import render
 from django.http import HttpResponse
 
@@ -7,6 +9,13 @@ from .forms import SignupForm
 
 from wiki import wiki_search
 
+from bs4 import BeautifulSoup
+import requests
+import re
+from wiki import search_and_process
+import json
+
+
 # Create your views here.
 def index(request):
     if request.method == 'POST':
@@ -15,11 +24,13 @@ def index(request):
 
     return render(request, 'index.html')
 
-def speech(request):
+def speech(request, class_id, topic_id, question_id):
+    q = Question.objects.get(class_id = class_id, topic_id = topic_id, question_id = question_id)
+
     if request.method == 'POST':
         print request.POST.get('transcript', "Didn't find")
 
-    return render(request, 'speech.html')
+    return render(request, 'speech.html', {'q' : q})
 def signup_user(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -51,68 +62,102 @@ def signup_user(request):
 
 def class_page(request):
     classes = Class.objects.all()
-    if (request.method == 'POST'):
-        class_name = request.POST['Class']
-        class_ = Class.objects.filter(class_name=class_name)
-        class_id = class_[0].get_class_id()
-
-        topics = Topic.objects.filter(class_id=class_id)
-
-        # TO DO: How to configure the URL the right way, currently passes in correct topics
-        return render(request, 'topics.html', {'topics' : topics})
 
     return render(request, 'class.html', {'classes': classes})
 
-def topic_page(request):
-    pass
+def topic_page(request, class_id):
+    topics = Topic.objects.all().filter(class_id = class_id)
+
+    # TO DO: How to configure the URL the right way, currently passes in correct topics
+    return render(request, 'topics.html', {'topics' : topics})
     
 
-def question_page(request):
-    pass
+def question_page(request, class_id, topic_id):
+    questions = Question.objects.filter(class_id = class_id).filter(topic_id = topic_id)
+
+    # TO DO: How to configure the URL the right way, currently passes in correct topics
+    return render(request, 'questions.html', {'questions' : questions})
 
 def db(request):
+
+    ## TESTING AREA FOR FUNCTIONS 
+    q = Question.objects.all()
+
+    for qu in q:
+        try:
+            print qu.topic_id, " within ", qu.class_id
+        except:
+            print "ascii err"
+
+    return render(request, 'db.html', {'t': q})
+
+    ### TESTING AREA END
 
     # Resets DB (testing only)
     Class.objects.all().delete()
     Question.objects.all().delete()
     Topic.objects.all().delete()
 
-    # Runs wiki search query
-    subject = 'iPhone'
-    question_dict = wiki_search(subject)
-
     # creates history class, gets that object
-    Class.objects.create(class_name = "History")
-    class_ = Class.objects.get(class_name='History')
+    class_ = Class.objects.create(class_name = "History")
+    
     
     print class_
 
-    # For testing, each item is a topic, and is also a QUESTION inside
-    i = 0
-    while i < len(question_dict['topics']):
+    # Scrapes for US History page on wikipedia
+    result = requests.get('https://en.wikipedia.org/wiki/History_of_the_United_States')
 
-        topic = question_dict['topics'][i]
-        question = question_dict['topics'][i]
-        question_text = question_dict['text'][i]
-        i += 1
+    text = result.content
+    soup = BeautifulSoup(text, 'html.parser')
 
-        # Creating the topics, and the questions
-        # TO DO: Make separate
+    pattern = re.compile("/wiki/History_of_the_United_States_.")
+    samples = soup.find_all("a", {'href': pattern})
 
-        # tries to find the topic, otherwise adds it
-        topic_add = Topic.objects.get(topic_name = topic)
+    url_list = []
+    title_list = []
 
-        # can't find, so adds
-        if topic_add = Topic.DoesNotExist:
-            topic_add = Topic.objects.create(class_id = class_, topic_name = topic)
+    for item in samples:
+        url = item.get('href')
+        title = item.get('title').encode('utf-8')
 
-        # adds, saves question
-        question_add = Question.objects.create(
-            class_id = class_,
-            topic_id = topic_add,
-            question_subject = question,
-            question_text = question_text,
-            )
+        if url.find('%') != -1 and url.find('#') == -1:
+            # ASCII
+            title = title.replace("–", "-")
+            url_list.append(url)
+            title_list.append(title)
+
+
+    title_list.sort()
+    url_list.sort()
+
+    total_count = 1
+
+    for topic in title_list:
+        question_dict = search_and_process(topic)
+
+        i = 0
+        while i < len(question_dict['topics']):
+            print topic
+            question = question_dict['topics'][i]
+            question_text = question_dict['text'][i]
+            i += 1
+
+            # Creating the topics, and the questions
+            # TO DO: Make separate
+
+            # tries to find the topic, otherwise adds it
+            try:
+                topic_add = Topic.objects.get(topic_name = topic)
+            except:
+                topic_add = Topic.objects.create(class_id = class_, topic_name = topic)
+
+            # adds, saves question
+            question_add = Question.objects.create(
+                class_id = class_,
+                topic_id = topic_add,
+                question_subject = question,
+                question_text = question_text,
+                )
 
 
 

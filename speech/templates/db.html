@@ -11,10 +11,10 @@
 <ul>
 
 {% for s in t %}
-    <li>{{ s.topic_name }} </li> 
+    <li>Topic: {{ s.topic_id }}  -- {{ s.class_id }}</li> 
     <ul> 
-	    <li> {{ s.question_subject}} </li> 
-	    <li> {{ s.question_text }} </li>
+	    <li> Question Subject: {{ s.question_subject}} </li> 
+	    <li> Question Text: {{ s.question_text }} </li>
     </ul>
 {% endfor %}
 

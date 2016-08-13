@@ -1,0 +1,7 @@
+<html>
+	<ul>
+	{% for topic in topics %}
+		<li> <a href = "/{{topic.class_id.class_id}}/{{ topic.topic_id }}" > {{ topic.topic_name }} </a> </li>
+    {% endfor %}
+	</ul>
+</html>

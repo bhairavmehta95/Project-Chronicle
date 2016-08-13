@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^classes/$', speech.views.class_page, name='class_page'),
     url(r'^speech/$', speech.views.speech, name='speech'),
-    url(r'^(\d)/$', speech.views.topic_page, name='topic_page'),
-    url(r'^(\d)/(\d)/$', speech.views.question_page, name='question_page'),
+    url(r'^(\d+)/$', speech.views.topic_page, name='topic_page'),
+    url(r'^(\d+)/(\d+)/$', speech.views.question_page, name='question_page'),
+    url(r'^(\d+)/(\d+)/(\d+)/$', speech.views.speech, name='speech'),
 ]

@@ -1,0 +1,7 @@
+<html>
+	{% for q in questions %}
+	<ul>
+		<li> <a href = "/{{q.class_id.class_id}}/{{ q.topic_id.topic_id }}/{{q.question_id}}" > {{ q.question_subject }} </a> </li>
+	</ul>
+    {% endfor %}
+</html>

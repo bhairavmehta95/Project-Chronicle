@@ -48,7 +48,7 @@ for topic in title_list:
 	# file.write(topic)
 	# file.write('----------\n\n\n')
 	question_dict = search_and_process(topic)
-
+	
 	i = 0
 	while i < len(question_dict['topics']):
 		file.write('- model: speech.Testing\n')
