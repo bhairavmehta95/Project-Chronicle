@@ -80,18 +80,18 @@ def question_page(request, class_id, topic_id):
 
 def db(request):
 
-    ## TESTING AREA FOR FUNCTIONS 
-    q = Question.objects.all()
+    # ## TESTING AREA FOR FUNCTIONS 
+    # q = Question.objects.all()
 
-    for qu in q:
-        try:
-            print qu.topic_id, " within ", qu.class_id
-        except:
-            print "ascii err"
+    # for qu in q:
+    #     try:
+    #         print qu.topic_id, " within ", qu.class_id
+    #     except:
+    #         print "ascii err"
 
-    return render(request, 'db.html', {'t': q})
+    # return render(request, 'db.html', {'t': q})
 
-    ### TESTING AREA END
+    # ### TESTING AREA END
 
     # Resets DB (testing only)
     Class.objects.all().delete()
