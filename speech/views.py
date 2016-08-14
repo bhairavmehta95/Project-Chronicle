@@ -8,7 +8,7 @@ from .models import Greeting, Student, Enrollments, Class, Topic, Question, Test
 from .forms import LoginForm, SignupForm
 
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 
 from wiki import wiki_search
 from bs4 import BeautifulSoup
@@ -52,6 +52,7 @@ def login_user(request):
             # ...
             # redirect to a new URL:
             print "Thanks!"
+            
             return render(request, 'login.html', { 'error' : error, 'form': form})
 
     # if a GET (or any other method) we'll create a blank form
