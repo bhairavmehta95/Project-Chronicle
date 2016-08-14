@@ -62,8 +62,11 @@ class Testing(models.Model):
 	question_text = models.TextField()
 
 class Completion(models.Model):
-	pass
-	# come back to this
+	completion_id = models.AutoField(primary_key=True)
+	question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
+	student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
+	transcript = models.TextField()
+	percent_scored = models.FloatField(default = 0)
 
 class SelfStudy(models.Model):
 	pass

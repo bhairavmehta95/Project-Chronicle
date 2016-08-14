@@ -3,7 +3,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .models import Student, Enrollments, Class, Topic, Question, Testing
+from .models import Student, Enrollments, Class, Topic, Question, Testing, Completion
 
 from .forms import LoginForm, SignupForm
 
@@ -17,6 +17,7 @@ import re
 from wiki import search_and_process
 import json
 
+import random
 
 # Create your views here.
 def login_user(request):
@@ -37,6 +38,8 @@ def login_user(request):
                 if user.is_active:
                     login(request, user)
                     print "hello", username
+                    s = Student.objects.get(user_id_login = user.id)
+                    print "hello!", s
                     # Redirect to a success page.
                 else:
                     error = "Disabled account, contact sysadmin"
@@ -132,28 +135,46 @@ def speech(request, class_id, topic_id, question_id):
     q = Question.objects.get(class_id = class_id, topic_id = topic_id, question_id = question_id)
 
     if request.method == 'POST':
-        print request.POST.get('transcript', "Didn't find")
+        transcript = request.POST.get('transcript', None)
+        if request.user.is_authenticated:
+            u_id  = request.user.id
+            student = Student.objects.get(user_id_login = u_id)
+
+            #TODO: Run a script that checks the answer, currently hardcoded
+            completion = Completion.objects.create(student_id = student, 
+                                                   question_id = q, 
+                                                   transcript = transcript, 
+                                                   percent_scored = random.random()
+                                                   )
+
+            
+            completions = Completion.objects.all()
+
+            return render(request, 'test.html', {'completions' : completions })
+        else:
+            pass
+                # Redirect to not logged in page
 
 
     return render(request, 'speech.html', {'q' : q})
 
 def db(request):
 
-    ## TESTING AREA FOR FUNCTIONS 
-    q = Question.objects.all()
+#     ## TESTING AREA FOR FUNCTIONS 
+#     q = Question.objects.all()
 
-    # for qu in q:
-    #     try:
-    #         print qu.topic_id, " within ", qu.class_id
-    #     except:
-    #         print "ascii err"
+#     # for qu in q:
+#     #     try:
+#     #         print qu.topic_id, " within ", qu.class_id
+#     #     except:
+#     #         print "ascii err"
 
-    e = Enrollments.objects.all()
+#     e = Enrollments.objects.all()
 
-    for i in e:
-        print i, i.class_id, i.student_id
-#
-    return render(request, 'db.html', {'t': q})
+#     for i in e:
+#         print i, i.class_id, i.student_id
+# #
+#     return render(request, 'db.html', {'t': q})
 
     ### TESTING AREA END
 
