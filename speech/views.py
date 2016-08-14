@@ -103,8 +103,8 @@ def signup_user(request):
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        Class.objects.all().delete()
-        class_ = Class.objects.create(class_name = 'History')
+        # Class.objects.all().delete()
+        # class_ = Class.objects.create(class_name = 'History')
         classes = Class.objects.all()
         form = SignupForm()
 
@@ -153,7 +153,7 @@ def db(request):
     for i in e:
         print i, i.class_id, i.student_id
 #
-    return render(request, 'db.html', {'t': q})
+    # return render(request, 'db.html', {'t': q})
 
     ### TESTING AREA END
 
