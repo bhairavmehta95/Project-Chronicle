@@ -153,7 +153,7 @@ def db(request):
     for i in e:
         print i, i.class_id, i.student_id
 #
-    # return render(request, 'db.html', {'t': q})
+    return render(request, 'db.html', {'t': q})
 
     ### TESTING AREA END
 
