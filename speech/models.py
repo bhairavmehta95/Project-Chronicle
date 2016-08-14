@@ -5,9 +5,10 @@ class Greeting(models.Model):
 	when = models.DateTimeField('date created', auto_now_add=True)
 
 class Student(models.Model):
-	student_id = models.IntegerField(default = 0, primary_key = True)
+	student_id = models.AutoField(primary_key = True)
 	f_name = models.CharField(max_length=30)
 	l_name = models.CharField(max_length=30)
+	user_id_login = models.IntegerField(default = 0)
 
 	def __str__(self):
 		return self.f_name

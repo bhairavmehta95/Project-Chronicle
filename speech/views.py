@@ -91,9 +91,7 @@ def signup_user(request):
                                 email = email,
                                 password=password)
 
-            student_id = user.id
-
-            s = Student.objects.create(student_id = student_id, f_name = first_name, l_name = last_name)
+            s = Student.objects.create(user_id_login = user.id, f_name = first_name, l_name = last_name)
 
             Enrollments.objects.create(student_id = s, class_id = class_target)
 
