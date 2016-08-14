@@ -1,8 +1,7 @@
 <html>
-	<form action="" method="post">
-   	{% csrf_token %}
+
 	{% for class in classes %}
     	<a href = "/{{ class.class_id }}">  {{ class.class_name }} </a>
     {% endfor %}
-	</form>
+
 </html>

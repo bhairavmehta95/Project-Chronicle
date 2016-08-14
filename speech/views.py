@@ -5,10 +5,12 @@ from django.http import HttpResponse
 
 from .models import Greeting, Student, Enrollments, Class, Topic, Question, Testing
 
-from .forms import SignupForm
+from .forms import LoginForm, SignupForm
+
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 
 from wiki import wiki_search
-
 from bs4 import BeautifulSoup
 import requests
 import re
@@ -17,48 +19,95 @@ import json
 
 
 # Create your views here.
-def index(request):
-    if request.method == 'POST':
-        form = SignupForm()
-        return render(request, 'signup.html', {'form': form})
-
-    return render(request, 'index.html')
-
-def speech(request, class_id, topic_id, question_id):
-    q = Question.objects.get(class_id = class_id, topic_id = topic_id, question_id = question_id)
-
-    if request.method == 'POST':
-        print request.POST.get('transcript', "Didn't find")
-
-    return render(request, 'speech.html', {'q' : q})
-def signup_user(request):
+def login_user(request):
     # if this is a POST request we need to process the form data
+    error = None
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = SignupForm(request.POST)
+        form = LoginForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            f_name_new = form.cleaned_data['f_name']
-            l_name_new = form.cleaned_data['l_name']
-
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
             # TO DO: Check the user information before adding
             # TO DO: Autoincrement student_id
             # TO DO: Add email and password?
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    print "hello", username
+                    # Redirect to a success page.
+                else:
+                    error = "Disabled account, contact sysadmin"
+                    # Return a 'disabled account' error message
+            else:
+                error = "Not a valid username or password, please try again."
+            # Return an 'invalid login' error message.
 
-            s = Student(student_id = 1, f_name = f_name_new, l_name = l_name_new)
-            s.save()
+            # s = Student(student_id = 1, f_name = f_name_new, l_name = l_name_new)
+            # s.save()
 
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
             print "Thanks!"
-            return render(request, 'index.html')
+            return render(request, 'login.html', { 'error' : error, 'form': form})
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = LoginForm()
+
+    return render(request, 'login.html', {'form': form})
+
+def signup_user(request):
+    # if this is a POST request we need to process the form data
+    classes = Class.objects.all()
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = SignupForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            password = form.cleaned_data['password']
+            retyped = form.cleaned_data['retyped']
+
+            # TODO: Assert that password and retyped are the same
+
+            class_id = request.POST['Class']
+         
+            class_target = Class.objects.get(class_id = class_id)
+
+            # ONLY FOR TESTING
+            Student.objects.all().delete()
+            User.objects.all().delete()
+            Enrollments.objects.all().delete()
+
+            user = User.objects.create_user(username=username,
+                                email = email,
+                                password=password)
+
+            student_id = user.id
+
+            s = Student.objects.create(student_id = student_id, f_name = first_name, l_name = last_name)
+
+            Enrollments.objects.create(student_id = s, class_id = class_target)
+
+
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            print "Thanks!"
+            return render(request, 'speech.html')
 
     # if a GET (or any other method) we'll create a blank form
     else:
         form = SignupForm()
 
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'signup.html', {'form': form, 'classes' : classes})
 
 def class_page(request):
     classes = Class.objects.all()
@@ -78,10 +127,23 @@ def question_page(request, class_id, topic_id):
     # TO DO: How to configure the URL the right way, currently passes in correct topics
     return render(request, 'questions.html', {'questions' : questions})
 
+def speech(request, class_id, topic_id, question_id):
+    q = Question.objects.get(class_id = class_id, topic_id = topic_id, question_id = question_id)
+
+    if request.method == 'POST':
+        print request.POST.get('transcript', "Didn't find")
+
+
+    return render(request, 'speech.html', {'q' : q})
+
 def db(request):
 
     ## TESTING AREA FOR FUNCTIONS 
     q = Question.objects.all()
+    Enrollments.objects.all().delete()
+
+    # Creates an enrollment table
+    Enrollments.objects.create()
 
     for qu in q:
         try:
@@ -97,6 +159,7 @@ def db(request):
     Class.objects.all().delete()
     Question.objects.all().delete()
     Topic.objects.all().delete()
+
 
     # creates history class, gets that object
     class_ = Class.objects.create(class_name = "History")

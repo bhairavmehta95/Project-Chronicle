@@ -1,5 +1,18 @@
   <form method="post">
     {% csrf_token %}
+    
     {{ form }}
+
+
+    <br>
+
+    <select name = "Class">
+      {% for class in classes %}
+      <option value = "{{ class.class_id}} "> {{ class.class_name }} </option>
+      {% endfor %}
+    </select>
+
+
     <input type="submit" value="Submit" />
+    <br>
   </form>

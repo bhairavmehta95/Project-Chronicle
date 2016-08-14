@@ -1,0 +1,14 @@
+  <form method="post">
+    {% csrf_token %}
+    
+    {{ form }}
+    <br>
+    {% if error != None %}
+    	{{ error }}
+    	<br>
+    {% endif %}
+
+    <input type="submit" value="Submit" />
+    <br>
+    <a href = "/signup" > Or register here! </a>
+  </form>
