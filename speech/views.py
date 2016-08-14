@@ -52,7 +52,7 @@ def login_user(request):
             # ...
             # redirect to a new URL:
             print "Thanks!"
-            
+
             return render(request, 'login.html', { 'error' : error, 'form': form})
 
     # if a GET (or any other method) we'll create a blank form
@@ -152,7 +152,7 @@ def db(request):
 
     for i in e:
         print i, i.class_id, i.student_id
-
+#
     return render(request, 'db.html', {'t': q})
 
     ### TESTING AREA END
