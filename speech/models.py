@@ -8,6 +8,7 @@ class Student(models.Model):
 	l_name = models.CharField(max_length=30)
 	user_id_login = models.IntegerField(default = 0)
 
+
 	def __str__(self):
 		return self.f_name
 
@@ -25,6 +26,9 @@ class Class(models.Model):
 class Enrollments(models.Model):
 	student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
 	class_id = models.ForeignKey(Class, on_delete=models.CASCADE)
+	
+	def __str__(self):
+		return str(self.id)
 
 class Topic(models.Model):
 	class_id = models.ForeignKey(Class, on_delete=models.CASCADE)
