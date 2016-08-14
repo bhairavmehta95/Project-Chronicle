@@ -140,20 +140,22 @@ def db(request):
 
     ## TESTING AREA FOR FUNCTIONS 
     q = Question.objects.all()
-    Enrollments.objects.all().delete()
 
-    # Creates an enrollment table
-    Enrollments.objects.create()
+    # for qu in q:
+    #     try:
+    #         print qu.topic_id, " within ", qu.class_id
+    #     except:
+    #         print "ascii err"
 
-    for qu in q:
-        try:
-            print qu.topic_id, " within ", qu.class_id
-        except:
-            print "ascii err"
+    e = Enrollments.objects.all()
+
+    for i in e:
+        print i, i.class_id, i.student_id
 
     return render(request, 'db.html', {'t': q})
 
     ### TESTING AREA END
+
 
     # Resets DB (testing only)
     Class.objects.all().delete()
