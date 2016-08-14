@@ -3,7 +3,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .models import Greeting, Student, Enrollments, Class, Topic, Question, Testing
+from .models import Student, Enrollments, Class, Topic, Question, Testing
 
 from .forms import LoginForm, SignupForm
 
