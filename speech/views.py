@@ -63,6 +63,8 @@ def login_user(request):
 
 def signup_user(request):
     # if this is a POST request we need to process the form data
+    Class.objects.all().delete()
+    class_ = Class.objects.create(class_name = 'History')
     classes = Class.objects.all()
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
