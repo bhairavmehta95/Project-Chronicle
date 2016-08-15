@@ -1,7 +1,7 @@
  # -*- coding: utf-8 -*-
 #
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 from .models import Student, Enrollments, Class, Topic, Question, Testing, Completion
 
@@ -37,24 +37,15 @@ def login_user(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    print "hello", username
                     s = Student.objects.get(user_id_login = user.id)
-                    print "hello!", s
+                    print "Welcome back: ", s
                     # Redirect to a success page.
+                    return HttpResponseRedirect('/classes')
                 else:
                     error = "Disabled account, contact sysadmin"
                     # Return a 'disabled account' error message
             else:
                 error = "Not a valid username or password, please try again."
-            # Return an 'invalid login' error message.
-
-            # s = Student(student_id = 1, f_name = f_name_new, l_name = l_name_new)
-            # s.save()
-
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-            print "Thanks!"
 
             return render(request, 'login.html', { 'error' : error, 'form': form})
 
@@ -101,37 +92,47 @@ def signup_user(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            print "Thanks!"
-            return render(request, 'speech.html')
+            print "Welcome", s, "please login"
+            return HttpResponseRedirect('/login')
+            
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        # Class.objects.all().delete()
-        # class_ = Class.objects.create(class_name = 'History')
         classes = Class.objects.all()
         form = SignupForm()
 
     return render(request, 'signup.html', {'form': form, 'classes' : classes})
 
 def class_page(request):
-    classes = Class.objects.all()
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect('/login')
 
+    classes = Class.objects.all()
     return render(request, 'class.html', {'classes': classes})
 
 def topic_page(request, class_id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect('/login')
+
     topics = Topic.objects.all().filter(class_id = class_id)
 
-    # TO DO: How to configure the URL the right way, currently passes in correct topics
     return render(request, 'topics.html', {'topics' : topics})
+
     
 
 def question_page(request, class_id, topic_id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect('/login')
+
     questions = Question.objects.filter(class_id = class_id).filter(topic_id = topic_id)
 
-    # TO DO: How to configure the URL the right way, currently passes in correct topics
     return render(request, 'questions.html', {'questions' : questions})
 
+
 def speech(request, class_id, topic_id, question_id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect('/login')
+
     q = Question.objects.get(class_id = class_id, topic_id = topic_id, question_id = question_id)
 
     if request.method == 'POST':
@@ -140,17 +141,51 @@ def speech(request, class_id, topic_id, question_id):
             u_id  = request.user.id
             student = Student.objects.get(user_id_login = u_id)
 
-            #TODO: Run a script that checks the answer, currently hardcoded
+            score = 0
+
+            actual_text = q.question_text
+            text_dictionary = {}
+            response_dictionary = {}
+            total_words = len(actual_text.split())
+
+            # TODO: IMPORT NLTK STOPWORDS
+
+            # creates a hash table using word frequency
+            for word in actual_text.split():
+                if text_dictionary.get(word) == None:
+                    text_dictionary[word] = 1
+                else:
+                    text_dictionary[word] += 1
+
+
+            # calculates user score
+            for word in transcript.split():
+                if text_dictionary.get(word) != None and response_dictionary.get(word) == None:
+                    score += text_dictionary[word]
+
+                    # arbitrary value to show the word has been marked
+                    response_dictionary[word] = True
+                else:
+                    pass
+
             completion = Completion.objects.create(student_id = student, 
                                                    question_id = q, 
                                                    transcript = transcript, 
-                                                   percent_scored = random.random()
+                                                   percent_scored = score/total_words
                                                    )
 
             
             completions = Completion.objects.all()
 
-            return render(request, 'test.html', {'completions' : completions })
+
+            context = {
+                        'q' : q, 
+                        'percentage' : str(score/float(total_words)), 
+                        'name' : student.f_name,
+                        'transcript' : transcript,
+                        }
+            return render(request, 'review.html', context)
+
         else:
             pass
                 # Redirect to not logged in page
@@ -158,23 +193,24 @@ def speech(request, class_id, topic_id, question_id):
 
     return render(request, 'speech.html', {'q' : q})
 
+
 def db(request):
 
-#     ## TESTING AREA FOR FUNCTIONS 
-#     q = Question.objects.all()
+    ## TESTING AREA FOR FUNCTIONS 
+    q = Question.objects.all()
 
-#     # for qu in q:
-#     #     try:
-#     #         print qu.topic_id, " within ", qu.class_id
-#     #     except:
-#     #         print "ascii err"
+    # for qu in q:
+    #     try:
+    #         print qu.topic_id, " within ", qu.class_id
+    #     except:
+    #         print "ascii err"
 
-#     e = Enrollments.objects.all()
+    e = Enrollments.objects.all()
 
-#     for i in e:
-#         print i, i.class_id, i.student_id
-# #
-#     return render(request, 'db.html', {'t': q})
+    for i in e:
+        print i, i.class_id, i.student_id
+#
+    return render(request, 'db.html', {'t': q})
 
     ### TESTING AREA END
 
@@ -229,9 +265,6 @@ def db(request):
             question_text = question_dict['text'][i]
             i += 1
 
-            # Creating the topics, and the questions
-            # TO DO: Make separate
-
             # tries to find the topic, otherwise adds it
             try:
                 topic_add = Topic.objects.get(topic_name = topic)
@@ -245,18 +278,6 @@ def db(request):
                 question_subject = question,
                 question_text = question_text,
                 )
-
-
-
-#
-    # greeting = Greeting()
-    # greeting.save()
-
-    # greetings = Greeting.objects.all()
-
-    # s = Student(student_id = 1, f_name = "bhairav", l_name = "mehta")
-
-    # s.save()
 
     q = Question.objects.all()
 
