@@ -3,11 +3,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
-from .models import Student, Enrollments, Class, Topic, Question, Testing, Completion
+from .models import Student, Enrollments, Class, Topic, Question, Teacher, Completion
 
-from .forms import LoginForm, SignupForm
+from .forms import LoginForm, SignupForm, TeacherSignupForm, TeacherLoginForm
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login
 
 from wiki import wiki_search
@@ -57,6 +57,7 @@ def login_user(request):
 
 def signup_user(request):
     # if this is a POST request we need to process the form data
+    error = None
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = SignupForm(request.POST)
@@ -68,50 +69,141 @@ def signup_user(request):
             last_name = form.cleaned_data['last_name']
             password = form.cleaned_data['password']
             retyped = form.cleaned_data['retyped']
+            teacher_id = form.cleaned_data['teacher_id']
 
-            # TODO: Assert that password and retyped are the same
+            # Password Checking
+            if (password != retyped):
+                error = "Passwords don't match"
 
             class_id = request.POST['Class']
-         
-            class_target = Class.objects.get(class_id = class_id)
 
-            # ONLY FOR TESTING
-            Student.objects.all().delete()
-            User.objects.all().delete()
-            Enrollments.objects.all().delete()
+            # TODO: ONLY SHOW THE CLASSES CORRESPONDING TO A SPECIFIC TEACHER
+            teacher_target = Class.objects.get(class_id = class_id).teacher_id
 
-            user = User.objects.create_user(username=username,
-                                email = email,
-                                password=password)
-
-            s = Student.objects.create(user_id_login = user.id, f_name = first_name, l_name = last_name)
-
-            Enrollments.objects.create(student_id = s, class_id = class_target)
+            if teacher_target.teacher_id != teacher_id:
+                error = "Please pick a real teacher/class pair, this is only temporary"
 
 
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-            print "Welcome", s, "please login"
-            return HttpResponseRedirect('/login')
+            if error == None:
+                class_target = Class.objects.get(class_id = class_id)
+
+                # ONLY FOR TESTING
+                Student.objects.all().delete()
+                User.objects.all().delete()
+                Enrollments.objects.all().delete()
+
+                user = User.objects.create_user(username=username,
+                                    email = email,
+                                    password=password)
+
+                try:
+                    group = Group.objects.get(name = "student")
+                except:
+                    group = Group.objects.create(name = "student")
+
+                s = Student.objects.create(user_id_login = user.id, f_name = first_name, l_name = last_name)
+                
+                user.groups.add(group)
+
+                Enrollments.objects.create(student_id = s, class_id = class_target)
+
+                print "Welcome", s, "please login"
+                return HttpResponseRedirect('/login')
             
 
     # if a GET (or any other method) we'll create a blank form
-    else:
-        classes = Class.objects.all()
-        form = SignupForm()
+    classes = Class.objects.all()
+    form = SignupForm()
 
-    return render(request, 'signup.html', {'form': form, 'classes' : classes})
+    return render(request, 'signup.html', {'form': form, 'classes' : classes, 'error' : error, })
+
+def signup_teacher(request):
+    # if this is a POST request we need to process the form data
+    error = None
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = TeacherSignupForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            password = form.cleaned_data['password']
+            retyped = form.cleaned_data['retyped']
+            teacher_id = form.cleaned_data['teacher_id']
+            class_name = form.cleaned_data['class_name']
+
+            # Password Checking
+            if (password != retyped):
+                error = "Passwords don't match"
+
+            if error == None:
+                user = User.objects.create_user(username=username,
+                                        email = email,
+                                        password=password)
+
+                try:
+                    group = Group.objects.get(name = "teacher")
+                except:
+                    group = Group.objects.create(name = "teacher")
+
+                t = Teacher.objects.create(user_id_login = user.id, f_name = first_name, l_name = last_name)
+                c = Class.objects.create(teacher_id = t, class_name = class_name)
+
+                user.groups.add(group)
+
+
+                print "Welcome", t, "please login"
+                return HttpResponseRedirect('/teacher')
+
+    # if a GET (or any other method) we'll create a blank form
+    form = TeacherSignupForm()
+
+    return render(request, 'teacher.html', {'form': form, 'error' : error, })
+
+def login_teacher(request):
+    # if this is a POST request we need to process the form data
+    error = None
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = TeacherLoginForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            # TO DO: Check the user is a TEACHER (check above as well)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    t = Teacher.objects.get(user_id_login = user.id)
+                    print "Welcome back: ", t
+                    # Redirect to a success page.
+                    return HttpResponseRedirect('/classes')
+                else:
+                    error = "Disabled account, contact sysadmin"
+                    # Return a 'disabled account' error message
+            else:
+                error = "Not a valid username or password, please try again."
+
+            return render(request, 'teacher.html', { 'error' : error, 'form': form})
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = TeacherLoginForm()
+
+    return render(request, 'teacher.html', {'form': form})
 
 def class_page(request):
-    if not request.user.is_authenticated:
+    if not request.user.is_authenticated():
         return HttpResponseRedirect('/login')
 
     classes = Class.objects.all()
     return render(request, 'class.html', {'classes': classes})
 
 def topic_page(request, class_id):
-    if not request.user.is_authenticated:
+    if not request.user.is_authenticated():
         return HttpResponseRedirect('/login')
 
     topics = Topic.objects.all().filter(class_id = class_id)
@@ -121,7 +213,7 @@ def topic_page(request, class_id):
     
 
 def question_page(request, class_id, topic_id):
-    if not request.user.is_authenticated:
+    if not request.user.is_authenticated():
         return HttpResponseRedirect('/login')
 
     questions = Question.objects.filter(class_id = class_id).filter(topic_id = topic_id)
@@ -130,7 +222,7 @@ def question_page(request, class_id, topic_id):
 
 
 def speech(request, class_id, topic_id, question_id):
-    if not request.user.is_authenticated:
+    if not request.user.is_authenticated():
         return HttpResponseRedirect('/login')
 
     q = Question.objects.get(class_id = class_id, topic_id = topic_id, question_id = question_id)

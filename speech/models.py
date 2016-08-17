@@ -2,18 +2,28 @@ from django.db import models
 
 # Create your models here.
 
+class Teacher(models.Model):
+	teacher_id = models.AutoField(primary_key = True)
+	f_name = models.CharField(max_length = 30)
+	l_name = models.CharField(max_length = 30)
+	user_id_login = models.IntegerField(default = 0)
+
+	def __str__(self):
+		return self.f_name
+
 class Student(models.Model):
 	student_id = models.AutoField(primary_key = True)
+	teacher_id = models.ForeignKey(Teacher, on_delete=models.CASCADE)
 	f_name = models.CharField(max_length=30)
 	l_name = models.CharField(max_length=30)
 	user_id_login = models.IntegerField(default = 0)
-
 
 	def __str__(self):
 		return self.f_name
 
 class Class(models.Model):
 	class_id = models.AutoField(primary_key=True)
+	teacher_id = models.ForeignKey(Teacher, on_delete=models.CASCADE)
 	class_name = models.CharField(max_length=100)
 	num_enrollments = models.IntegerField(default=0)
 
