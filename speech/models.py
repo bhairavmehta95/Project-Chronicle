@@ -13,7 +13,7 @@ class Teacher(models.Model):
 
 class Student(models.Model):
 	student_id = models.AutoField(primary_key = True)
-	teacher_id = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+	#teacher_id = models.ForeignKey(Teacher, on_delete=models.CASCADE)
 	f_name = models.CharField(max_length=30)
 	l_name = models.CharField(max_length=30)
 	user_id_login = models.IntegerField(default = 0)
@@ -23,7 +23,7 @@ class Student(models.Model):
 
 class Class(models.Model):
 	class_id = models.AutoField(primary_key=True)
-	teacher_id = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+	#teacher_id = models.ForeignKey(Teacher, on_delete=models.CASCADE)
 	class_name = models.CharField(max_length=100)
 	num_enrollments = models.IntegerField(default=0)
 

@@ -1,7 +1,10 @@
 <html>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 
-	{% for class in classes %}
-    	<a href = "/{{ class.class_id }}">  {{ class.class_name }} </a>
-    {% endfor %}
+
+{% for class in classes %}
+	<a href = "/{{ class.class_id }}"> <button style= "vertical-align:middle" class = "button">  {{ class.class_name }} </button></a> <br> <br>
+{% endfor %}
 
 </html>

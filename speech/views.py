@@ -69,7 +69,7 @@ def signup_user(request):
             last_name = form.cleaned_data['last_name']
             password = form.cleaned_data['password']
             retyped = form.cleaned_data['retyped']
-            teacher_id = form.cleaned_data['teacher_id']
+            #teacher_id = form.cleaned_data['teacher_id']
 
             # Password Checking
             if (password != retyped):
@@ -78,10 +78,10 @@ def signup_user(request):
             class_id = request.POST['Class']
 
             # TODO: ONLY SHOW THE CLASSES CORRESPONDING TO A SPECIFIC TEACHER
-            teacher_target = Class.objects.get(class_id = class_id).teacher_id
+            # teacher_target = Class.objects.get(class_id = class_id).teacher_id
 
-            if teacher_target.teacher_id != teacher_id:
-                error = "Please pick a real teacher/class pair, this is only temporary"
+            # if teacher_target.teacher_id != teacher_id:
+            #     error = "Please pick a real teacher/class pair, this is only temporary"
 
 
             if error == None:
