@@ -1,0 +1,96 @@
+/* Header */
+body {
+  margin-left:0;
+}
+.header {
+  width:100%;
+  background-color:#0F1F38;
+  height:5em;
+  border-radius:0px;
+  color:#fff;
+  letter-spacing:3px;
+  margin:0px auto;
+  position:fixed;
+  top:0px;
+  font-family:"Century Gothic", sans-serif;
+  z-index:10;
+}
+
+.title {
+  width:100%;
+  float:right;
+  text-align:right;
+  font-size:3em;
+  margin-top:-0.15em;
+  padding-left:0.1em;
+  display:inline;
+}
+
+.logo {
+  height:2em;
+  margin-bottom:-0.8em;
+}
+
+.menu {
+  float:left;
+  margin-top:1.3em;
+  font-size:0.5em;
+  margin-left:0.5em;
+  cursor:pointer;
+  cursor:hand;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color:#F55449;
+    overflow-x: hidden; 
+    padding-top: 60px;
+    transition: 0.7s;
+    font-family: "Times",sans-serif;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #fff;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav .nav-link:hover, .offcanvas a:focus{
+    background-color:rgba(225,225,225,0.3);
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 1%;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 20px;
+}
+
+@media only screen and (max-width:529px) {
+  .pc {
+    display:none;
+  }
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+@media screen and (max-width:480px){
+    .title {font-size:1.5em;}
+}
