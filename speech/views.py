@@ -207,18 +207,26 @@ def topic_page(request, class_id):
         return HttpResponseRedirect('/login')
 
     topics = Topic.objects.all().filter(class_id = class_id)
+    class_ = Class.objects.get(class_id = class_id)
+    context = { 'class' : class_,
+                'topics' : topics
+    }
 
-    return render(request, 'topics.html', {'topics' : topics})
+    return render(request, 'topics.html', context)
 
     
 
 def question_page(request, class_id, topic_id):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login')
-
+    class_ = Class.objects.get(class_id = class_id)
+    topic = Topic.objects.get(class_id = class_id, topic_id = topic_id)
     questions = Question.objects.filter(class_id = class_id).filter(topic_id = topic_id)
-
-    return render(request, 'questions.html', {'questions' : questions})
+    context = {'questions' : questions,
+                'class' : class_,
+                'topic' : topic,
+                }
+    return render(request, 'questions.html', context)
 
 
 def speech(request, class_id, topic_id, question_id):
@@ -288,7 +296,7 @@ def speech(request, class_id, topic_id, question_id):
 
 def db(request):
 
-    ## TESTING AREA FOR FUNCTIONS 
+#     ## TESTING AREA FOR FUNCTIONS 
     q = Question.objects.all()
 
     # for qu in q:
