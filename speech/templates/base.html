@@ -43,26 +43,28 @@
 
   </style>
 </head>
+<header>
+   <div class="header">
+     <div class="title">
+       <!--<div class="menu" onclick="openNav()">MENU</div>--> 
+       <span class="pc">project chronicle</span>
+       <img src="http://www.freeiconspng.com/uploads/open-book-icon-icon--open-book-2-svg-12.png" class="logo">
+     </div>
+   </div>
+</header>
+<!--No need for pop-out menu for now? Not linked
+<div id="pop-out" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#" class="nav-link">Home</a>
+  <a href="#" class="nav-link">Classes</a>
+  <a href="#" class="nav-link">About</a>
+  <a href="#" class="nav-link">Survey</a>
+</div>-->
+
 <body>
-<nav class="navbar navbar-default navbar-static-top navbar-inverse">
-  <div class="container">
-    <ul class="nav navbar-nav">
-      <li class="active">
-        <a href="/"><span class="glyphicon glyphicon-home"></span> Home</a>
-      </li>
-      <li>
-        <a href="https://devcenter.heroku.com/articles/how-heroku-works"><span class="glyphicon glyphicon-user"></span> How Heroku Works</a>
-      </li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li class="navbar-right">
-        <a href="https://devcenter.heroku.com"><span class="glyphicon glyphicon-book"></span> Heroku Dev Center</a>
-      </li>
-    </ul>
-  </div>
-</nav>
 
 {% block content %}{% endblock %}
 
 </body>
+
 </html>
