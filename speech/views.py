@@ -343,7 +343,7 @@ def db(request):
         url = item.get('href')
         title = item.get('title').encode('utf-8')
 
-        if url.find('%') != -1 and url.find('#') == -1:
+        if url.find('%') != -1 and url.find('#') == -1 and not url in url_list:
             # ASCII
             title = title.replace("–", "-")
             url_list.append(url)
