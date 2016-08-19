@@ -7,13 +7,14 @@
 	
 <center>
   <div id="review">
-  <h1>Hey {{ name }},</h1>
-  <h1>when we asked about {{ q.question_subject }}, <br>you answered...</h1>
-  <p>{{ transcript }}</p>
-  <h3>- Your Score -</h3>
-    <span id="percent"><h3>{{ percentage }}%</h3></span>
-  <a href= "/{{ q.class_id.class_id }}/{{ q.topic_id.topic_id }}" ><div id="answer-more"><p>Click to answer more questions about<br>{{ q.topic_id.topic_name }}</p>
-    </div></a>
+  	<h1>Hey {{ name }},</h1>
+  	<h1>when we asked about {{ q.question_subject }}, <br>you answered...</h1>
+  	<p>{{ transcript }}</p>
+  	<h3>- Your Score -</h3>
+    	<span id="percent"><h3>{{ percentage }}%</h3></span>
+  		<a href= "/{{ q.class_id.class_id }}/{{ q.topic_id.topic_id }}" ><div id="answer-more"><p>Click to answer more questions about<br>{{ q.topic_id.topic_name }}</p>
+    		</div></a>
+ </div>
 </center> 
 
 </body>
