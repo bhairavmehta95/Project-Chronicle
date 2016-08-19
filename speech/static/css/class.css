@@ -1,0 +1,60 @@
+html {
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+body{
+  background-color: white;
+}
+
+h1{
+  color: #0f1f38;
+  text-align: center;
+  font-family: 'trebuchet ms';
+}
+
+.in-page-nav{
+  color: #8e7970;
+}
+
+.in-page-nav:hover{
+  color: #f55449;
+}
+
+.btn {
+  align-items: center;
+  justify-content: center;
+  color: #1b4b5a;
+  margin: auto;
+  display: block;
+  text-align: center;
+  font-family: 'trebuchet ms';
+  font-size: 1rem;
+  letter-spacing: 0.1rem;
+  padding: 1rem;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+  width: 100px;
+}
+
+.btn::before {
+  content: "";
+  background-color: #f55449;
+  box-shadow: 10px 10px 0 #0f1f38;
+  position: absolute;
+  left: 0.25rem;
+  top: 0.5rem;
+  height: 102%;
+  width: 102%;
+  z-index: -1;
+  transition: all 0.4s ease;
+}
+
+.btn:hover::before {
+  box-shadow: none;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
