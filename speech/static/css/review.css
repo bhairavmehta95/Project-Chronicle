@@ -1,0 +1,38 @@
+/*Just gave it some stuff for now, unsure on how to make it look good. Have a style meeting maybe? Do draw ups? Instead of going straight into css?*/
+
+
+#review {
+  background-color:rgba(142,121,112,0.3);
+  width:60%;
+  padding:1em 1em 3em 1em;
+  border:5px solid #1B4B5A;
+  box-shadow:3px 3px 2px rgba(0,0,0,0.7);
+}
+
+#review a {
+  text-decoration:none;
+  color:#000;
+  font-weight:bold;
+}
+
+#answer-more{
+  border:2px solid #fff;
+  width:60%;
+  font-size:1.3em;
+}
+
+#answer-more:hover{
+  background-color:rgba(250,250,250,0.5);
+  transition:0.3s ease;
+  width:60%;
+  font-size:1.3em;
+}
+
+#percent {
+  font-size:3em;
+  color:#1B4B5A;
+}
+
+#review p {
+  font-size:1em;
+}

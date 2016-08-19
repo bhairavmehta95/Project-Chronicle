@@ -1,0 +1,43 @@
+body
+{
+   font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+   font-size:16px;
+   margin-top:10em; /*So body doesn't hide under sticky header*/
+}
+
+h1 h2 h3 h4 h5 h6{
+    font-family:'Century Gothic', 'CenturyGothic', 'AppleGothic', sans-serif;
+    color:#000;
+    font-size:24px;
+}
+
+.header {
+    background-color:#0F1F38; /*Dark Blue*/
+}
+
+.base {
+    background-color:#8E7970; /*Taupe*/
+}
+
+.accent-bright {
+    background-color:#F55449; /*Pink-red*/
+}
+
+.accent-dull {
+    background-color:#1B4B5A; /*Lighter Blue*/
+}
+
+/*Center element horizontally within container*/
+.center-h {
+    margin-left:auto;
+    margin-right:auto;
+}
+
+/*Have image size be responsive/auto-adjust to screen size*/
+.flex-img {
+    height:auto;
+    width:100%;
+    display:block;
+}
+
+/*Add useful classes/repititive attributes here.*/
