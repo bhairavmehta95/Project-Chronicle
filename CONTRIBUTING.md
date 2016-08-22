@@ -8,6 +8,7 @@ Branches are ways you can separate your code from everyone elses, and **merge** 
 
 The way git additions work are simple: You add your files, "commit" them (explaining to others what you did in your changes), and then push them to the branch (the place where the rest of the code lives).
 
+* Open a command prompt, and `cd` into your working directory (where all your files live).
 * First, we will add all of our files using `git add {{enter file names here, space delimited}}`. If we have a lot of files we need to commit, we can use `git add .` to add all the files in the working directory.
 * Then, we will write `git commit -m "useful_commit_message"`. This message is important because it shows people what was changed in this commit.
 * Lastly, we will write `git push enter_branch_name_here`, which is the same as what branch you made in the beginning of the file.
