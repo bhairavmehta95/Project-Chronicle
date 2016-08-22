@@ -1,5 +1,7 @@
 **Want to contribute to Project-Chronicle? Here's how.**
 
+**Download [Git for Windows] (https://git-scm.com/download/win) here.**
+
 ## New Contributors
 
 * Create your own branch using `git checkout -b enter_branch_name_here`. This will create a **new** branch called `enter_branch_name_here`, and it will switch you to that new branch.
