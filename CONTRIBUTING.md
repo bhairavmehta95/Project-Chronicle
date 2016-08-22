@@ -2,6 +2,12 @@
 
 **Download [Git for Windows] (https://git-scm.com/download/win) here.**
 
+## Cloning the Repository
+
+* `cd` into the directory you want to clone into
+* Type `git clone https://github.com/bhairavmehta95/Project-Chronicle.git`
+* Sign into github, finish cloning!
+
 ## New Contributors
 
 * Create your own branch using `git checkout -b enter_branch_name_here`. This will create a **new** branch called `enter_branch_name_here`, and it will switch you to that new branch.
