@@ -7,7 +7,7 @@ Team Members: Please install [Zenhub](https://www.zenhub.com/) to make project m
 
 ## How to Commit
 
-Check out [CONTRIBUTING.md] (https://github.com/bhairavmehta95/Project-Chronicle/master/CONTRIBUTING.md) to see how to contribute.
+Check out [CONTRIBUTING.md] (https://github.com/bhairavmehta95/Project-Chronicle/blob/master/CONTRIBUTING.md) to see how to contribute.
 
 
 [Check the wiki for more task-specific details](https://github.com/bhairavmehta95/Project-Chronicle/wiki)
