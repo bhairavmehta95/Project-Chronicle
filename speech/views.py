@@ -305,12 +305,12 @@ def db(request):
     #     except:
     #         print "ascii err"
 
-    e = Enrollments.objects.all()
+#     e = Enrollments.objects.all()
 
-    for i in e:
-        print i, i.class_id, i.student_id
-#
-    return render(request, 'db.html', {'t': q})
+#     for i in e:
+#         print i, i.class_id, i.student_id
+# #
+#     return render(request, 'db.html', {'t': q})
 
     ### TESTING AREA END
 
@@ -343,6 +343,7 @@ def db(request):
         url = item.get('href')
         title = item.get('title').encode('utf-8')
 
+        # makes sure URL has not been checked
         if url.find('%') != -1 and url.find('#') == -1 and not url in url_list:
             # ASCII
             title = title.replace("–", "-")
