@@ -1,56 +1,48 @@
 <!DOCTYPE html>
-<html >
-  <head>
-    <meta charset="UTF-8">
-    <title>Q/R Page With Speech</title>
-    
-    
-    
-    
-        <link rel="stylesheet" href="css/style.css">
+<html lang="en">
+<head>
+  <title>{{ topic }}</title>
+  <meta charset="utf-8">
 
-    
-    
-    
-  </head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/question.css' %}" />
+</head>
 
-  <body>
 
-    <div id="mainHeader" class="rounded-border shadow2">
-  <div class="hover-lighten header-wrapper">
-    <span id="subjectLink" style="margin-left:1em;">Roarin' Twenties</span>
-    <!--<div id="progressBar" class="rounded-border shadow3">
-      <div id="progressNumber">81%</div>
-      <div class="progressIndicator"></div>
-    </div>-->
-  </div>
-</div>
 
-<div id="questionBox" class="rounded-border shadow2">
-  <div for="Question" id="questionLabel" class="">Question:</div>
-  <div id="questionContent">
-    <div id="questionText">Tell me about Thomas Jefferson's view on Hamilton's idea of a national bank. </div>
-  </div>
-  <div id="results">
-    <center><span class="final" id="final_span"></span> <span class="interim" id="interim_span"></span> </center>
-  </div>
-  <div id="bottomRow">
-    <div id="recordTimer" class="rounded-border">
-      <span id="minutes"></span>:<span id="seconds"></span>
-    </div>
-    <div id="buttons">
-      <button id="recordButton" class="rounded-border">Record</button>
-      <button id="submitButton" class="rounded-border disabled">Submit</button>
-    </div>
-  </div>
-</div>
-    <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js'></script>
+	<div class = "page-header">
+		<h1> Questions in {{ topic }} </h1>
+	</div>
 
-        <script src="js/index.js"></script>
+	<div class = "container">
+		<h4><a class = "in-page-nav" href="/classes">{{class}}</a> <strong> / </strong> <a class ="in-page-nav" href="/{{class.class_id}}">{{topic}}</a>  <strong> / </strong> </h4>
+		<div class = "row"> </div>
+	</div>
 
-    
-    
-    
-  </body>
+	<div class = "container">
+		<div class = "row"> </div>
+	</div>
+
+	<div class = "container">
+	{% for q in questions %}
+			
+			{% if forloop.counter0|divisibleby:3 %}
+				<div class = "row"> </div>
+			{% endif %}
+
+		
+			<div class = "col-md-4">
+				<center><a href = "/{{q.class_id.class_id}}/{{ q.topic_id.topic_id }}/{{q.question_id}}"><button class = "button"><span>{{ q.question_subject }}</span></button></a> <br> <br></center>
+			</div>
+			
+		
+
+	{% endfor %}
+	</div>
+
+	
 </html>
