@@ -9,7 +9,6 @@
 
   recognition.onstart = function() {
     recognizing = true;
-
   };
 
   recognition.onerror = function(event) {
@@ -59,10 +58,8 @@
     for (var i = event.resultIndex; i < event.results.length; ++i) {
       if (event.results[i].isFinal) {
         final_transcript += event.results[i][0].transcript;
-        // REED: ADD THE FINAL TRANSCRIPT TO THE TEXT CONTAINER (USE A BLACK TEXT COLOR TO SHOW THAT IT IS PERMANENT)
       } else {
         interim_transcript += event.results[i][0].transcript;
-        // REED: ADD THE INTERIM TRANSCRIPT TO THE TEXT CONTAINER (USE A GRAY TEXT COLOR TO SHOW THAT IT IS STILL BEING PROCESSED)
       }
     }
     
@@ -85,7 +82,6 @@ function capitalize(s) {
   function startButton(event) {
     if (recognizing) {
       recognition.stop();
-      window.alert(final_transcript)
       return;
     }
 
@@ -99,6 +95,8 @@ function capitalize(s) {
     start_timestamp = event.timeStamp;
   }
 
+///END BHAIRAV ADDITIONS
+
 
 $(document).ready(function() {
   bindEvents();
@@ -109,6 +107,11 @@ $(document).ready(function() {
 function bindEvents() {
   $(document).on('click', '#recordButton', function() {
     Functions.RecordButton.Click();
+    startButton();
+  })
+  $(document).on('click', '#submitButton', function() {
+    document.getElementById("final_transcript").value = final_transcript;
+   document.getElementById("form_transcript").submit();
   })
 }
 
@@ -157,8 +160,7 @@ var Functions = {
           HTML.RecordButton.html('Recording');
           break;
         case 'Recording':
-          HTML.RecordButton.html('Start Over');
-          
+          HTML.RecordButton.html('Start Over');          
           break;
         case 'Stopped':
           HTML.RecordButton.html('Recording');
@@ -175,7 +177,7 @@ var Functions = {
       switch (Data.TimerState) {
         case 'New':
           Functions.Timer.Start();
-          Data.TimerState = 'Recording'
+          Data.TimerState = 'Recording';
           break;
         case 'Recording':
           Functions.Timer.Stop();
@@ -205,11 +207,7 @@ var Functions = {
       clearInterval(Functions.Timer.Interval);
     }
   },
-  
   Pad: function(val) {
     return val > 9 ? val : "0" + val;
   }
-  
-  
-  
 }

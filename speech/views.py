@@ -220,7 +220,7 @@ def question_page(request, class_id, topic_id):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login')
     class_ = Class.objects.get(class_id = class_id)
-    topic = Topic.objects.get(class_id = class_id, topic_id = topic_id)
+    topic = Topic.objects.filter(class_id = class_id).filter(topic_id = topic_id).get()
     questions = Question.objects.filter(class_id = class_id).filter(topic_id = topic_id)
     context = {'questions' : questions,
                 'class' : class_,
@@ -236,7 +236,7 @@ def speech(request, class_id, topic_id, question_id):
     q = Question.objects.get(class_id = class_id, topic_id = topic_id, question_id = question_id)
 
     if request.method == 'POST':
-        transcript = request.POST.get('transcript', None)
+        transcript = request.POST.get('final_transcript', None)
         if request.user.is_authenticated:
             u_id  = request.user.id
             student = Student.objects.get(user_id_login = u_id)
@@ -284,14 +284,23 @@ def speech(request, class_id, topic_id, question_id):
                         'name' : student.f_name,
                         'transcript' : transcript,
                         }
+
             return render(request, 'review.html', context)
 
         else:
             pass
                 # Redirect to not logged in page
 
+    topic = q.topic_id.topic_name
+    topic_id = q.topic_id
+    class_ = q.class_id
 
-    return render(request, 'speech.html', {'q' : q})
+    context = {'q' : q, 
+               'topic':topic, 
+               'class' : class_, 
+               'topic_id' : topic_id
+               }
+    return render(request, 'speech.html', context)
 
 
 def db(request):

@@ -1,35 +1,37 @@
 <!DOCTYPE html>
 <html >
+
+  {% include "base.html" %}
+
   <head>
     <meta charset="UTF-8">
-    <title>Q/R Page With Speech</title>
+    <title>Answering</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
     
-    
-    
-        <link rel="stylesheet" href="css/style.css">
+      {% load static %}
 
-    
-    
+        <link rel="stylesheet" type="text/css" href="{% static 'css/speech.css' %}" />
+        <script type="text/javascript" src="{% static 'js/speech.js' %}"></script>
     
   </head>
 
+
+
   <body>
+  
 
     <div id="mainHeader" class="rounded-border shadow2">
-  <div class="hover-lighten header-wrapper">
-    <span id="subjectLink" style="margin-left:1em;">Roarin' Twenties</span>
-    <!--<div id="progressBar" class="rounded-border shadow3">
-      <div id="progressNumber">81%</div>
-      <div class="progressIndicator"></div>
-    </div>-->
+    <div class="hover-lighten header-wrapper">
+    <span id="subjectLink" style="margin-left:1em;"> <a href= "/{{class.class_id}}/{{ topic_id.topic_id }}"> {{ topic }} </a> </span>
+
   </div>
 </div>
 
 <div id="questionBox" class="rounded-border shadow2">
   <div for="Question" id="questionLabel" class="">Question:</div>
   <div id="questionContent">
-    <div id="questionText">Tell me about Thomas Jefferson's view on Hamilton's idea of a national bank. </div>
+    <div id="questionText"> Talk about {{ q.question_subject }} </div>
   </div>
   <div id="results">
     <center><span class="final" id="final_span"></span> <span class="interim" id="interim_span"></span> </center>
@@ -44,13 +46,16 @@
     </div>
   </div>
 </div>
-    <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+
+  <form method="post" id = "form_transcript">
+  {% csrf_token %}
+    <input type ="hidden" id = "final_transcript" name = "final_transcript" value="">
+  </form>
+
+
+<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js'></script>
+  
 
-        <script src="js/index.js"></script>
-
-    
-    
-    
   </body>
 </html>
