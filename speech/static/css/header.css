@@ -3,6 +3,10 @@ body {
   margin-left:0;
 }
 
+body {
+  font-size: 20px;
+}
+
 .header {
   width:100%;
   background-color:#0F1F38;
@@ -15,6 +19,7 @@ body {
   top:0px;
   font-family:"Century Gothic", sans-serif;
   z-index:10;
+  vertical-align: center;
 }
 
 .title {
@@ -32,17 +37,17 @@ body {
 
 .menu {
   float:left;
-  margin-top:1.3em;
   font-size:0.5em;
   margin-left:0.5em;
   cursor:pointer;
   cursor:hand;
+  vertical-align: baseline;
 }
 
 .sidenav {
     height: 100%;
     width: 0;
-    position: fixed;
+    position: absolute;
     z-index: 1;
     top: 0;
     left: 0;
@@ -50,11 +55,12 @@ body {
     overflow-x: hidden; 
     padding-top: 60px;
     transition: 0.7s;
-    font-family: "Times",sans-serif;
+    font-family: 'trebuchet ms';
+    text-align: center;
 }
 
 .sidenav a {
-    padding: 8px 8px 8px 32px;
+    padding: 8px 8px 8px 8px;
     text-decoration: none;
     font-size: 25px;
     color: #fff;
@@ -72,6 +78,15 @@ body {
     right: 25px;
     font-size: 36px;
     margin-left: 50px;
+}
+
+.pc a{ 
+  color: #fff;
+}
+
+.pc a:hover, a:active {
+    text-decoration:none;
+    color: #fff;
 }
 
 #main {
