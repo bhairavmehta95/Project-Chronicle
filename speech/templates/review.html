@@ -21,9 +21,21 @@
   	<h4>{{ transcript }}.</h4>
     <br>
   	<h2>- Your Score -</h2>
-    	<span id="percent"><h3>{{ percentage }}%</h3></span>
-      <br>
-  		<a<center><a href = "/{{ q.class_id.class_id }}/{{ q.topic_id.topic_id }}"><button class = "button"><span>Click here to answer more questions about {{ q.topic_id.topic_name }}</span></button></a> <br> <br></center>
+    <span>
+      <h3> <center>
+      {%  if result_string == "Pass" %}
+        Congratulations, you passed with a score of: 
+      {% else %}
+        Uh oh, you needed a {{ percent_to_pass }}%, but only scored:
+      {% endif %}
+      </center> </h3>
+    </span> 
+
+  	<span id="percent"><h3>{{ percentage }}%</h3></span>
+    <br>
+		<a<center><a href = "/{{ q.class_id.class_id }}/{{ q.topic_id.topic_id }}"><button class = "button"><span>Click here to answer more questions about {{ q.topic_id.topic_name }}</span></button></a> <br> <br></center>
+
+    <a href = ""> <center> Or, click here to try again. </a> </center>
  </div>
 </center> 
 
