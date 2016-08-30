@@ -19,6 +19,9 @@ import json
 
 import random
 
+def landing(request):
+    return render(request, 'landing.html')
+
 # Create your views here.
 def login_user(request):
     # if this is a POST request we need to process the form data
@@ -31,9 +34,7 @@ def login_user(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             user = authenticate(username=username, password=password)
-            # TO DO: Check the user information before adding
-            # TO DO: Autoincrement student_id
-            # TO DO: Add email and password?
+
             if user is not None:
                 if user.is_active:
                     login(request, user)
@@ -271,6 +272,7 @@ def speech(request, class_id, topic_id, question_id):
                 else:
                     pass
 
+
             completion = Completion.objects.create(student_id = student, 
                                                    question_id = q, 
                                                    transcript = transcript, 
@@ -280,12 +282,19 @@ def speech(request, class_id, topic_id, question_id):
             
             completions = Completion.objects.all()
 
+            result_string = ""
+            print score/total_words, q.percent_to_pass, score/total_words > q.percent_to_pass 
+            if score/total_words > q.percent_to_pass:
+                result_string = "Pass"
+            else: result_string = "Fail"
 
             context = {
                         'q' : q, 
                         'percentage' : str(100*score/float(total_words)), 
                         'name' : student.f_name,
                         'transcript' : transcript,
+                        'result_string' : result_string,
+                        'percent_to_pass' : str(100*q.percent_to_pass), 
                         }
 
             return render(request, 'review.html', context)

@@ -202,8 +202,9 @@ def wiki_search(subject):
 def search_and_process(subject):
 	#subject = speech_query()
 	question_dict = wiki_search(subject)
+	
 	return question_dict
 
 
 if __name__ == "__main__":
-	search_and_process()
+	search_and_process("History of the world")
