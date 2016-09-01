@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^db', speech.views.db, name='db'),
     url(r'^signup/', speech.views.signup_user, name='signup'),
     url(r'^login/', speech.views.login_user, name='login'),
+    url(r'^about/', speech.views.about, name='about'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^classes/$', speech.views.class_page, name='class_page'),
     url(r'^speech/$', speech.views.speech, name='speech'),

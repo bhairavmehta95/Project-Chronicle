@@ -63,6 +63,8 @@ def logout_user(request):
     
     return HttpResponseRedirect('/classes')
 
+def about(request):
+    return render(request, 'about.html')
 
 def signup_user(request):
     # if this is a POST request we need to process the form data
