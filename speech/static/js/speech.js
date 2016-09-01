@@ -109,9 +109,11 @@ function bindEvents() {
     Functions.RecordButton.Click();
     startButton();
   })
-  $(document).on('click', '#submitButton', function() {
-    document.getElementById("final_transcript").value = final_transcript;
-   document.getElementById("form_transcript").submit();
+  $(document).on('click', '#submitButton', function () {
+      if (Data.TimerState == "Stopped") {
+          document.getElementById("final_transcript").value = final_transcript;
+          document.getElementById("form_transcript").submit();
+      }
   })
 }
 
