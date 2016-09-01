@@ -19,9 +19,9 @@
             {% csrf_token %}
 
             {% for field in form %}
-            {{ field.label_tag }}
-            <br>
-            {{ field }}
+            <div class="formRow">
+                <label>{{ field.label_tag }}</label> {{ field }}
+            </div>
 
             <br> <br>
             {% endfor %}
@@ -32,9 +32,9 @@
             <br>
             {% endif %}
 
-            <input type="submit" value="Submit" />
+            <input type="submit" class="submitButton" value="Log In!" />
             <br> <br>
-            <a href="/signup"> Or register here! </a>
+            <a class="registerLink" href="/signup"> Need an account? Click here to register!</a>
         </form>
     </div>
 </body>
