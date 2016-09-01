@@ -1,137 +1,149 @@
 /* Header */
 body {
-  margin-left:0;
+    margin-left: 0;
 }
 
 .header {
-  width:100%;
-  background-color:#0F1F38;
-  height:3em;
-  line-height:3em;
-  color:#fff;
-  letter-spacing:3px;
-  position:fixed;
-  top:0px;
-  font-family:"Century Gothic", sans-serif;
-  z-index:10;
-  float:right;
-  text-align:right;
-  font-size:1.5em;
-  padding-left:0.1em;
-  display:inline;
+    width: 100%;
+    background-color: #0F1F38;
+    height: 3em;
+    line-height: 3em;
+    color: #fff;
+    letter-spacing: 3px;
+    position: fixed;
+    top: 0px;
+    font-family: "Century Gothic", sans-serif;
+    z-index: 50;
+    float: right;
+    text-align: right;
+    font-size: 1.5em;
+    padding-left: 0.1em;
+    display: inline;
 }
 
+.pc a {
+    color: #fff;
+}
+
+    .pc a:hover, a:active {
+        text-decoration: none;
+        color: #fff;
+    }
+
 .logo {
-  height:2em;
-  margin-right:1em;
+    height: 2em;
+    margin-right: 1em;
 }
 
 .menu {
-  float:left;
-  margin-left: 1em;
-  cursor:pointer;
-  letter-spacing: normal;
+    float: left;
+    margin-left: 1em;
+    text-align: center;
+    cursor: pointer;
+    letter-spacing: normal;
 }
 
 .sidenav {
-    height: 100%;
+    height: auto;
     width: 0;
-    position: absolute;
+    position: fixed;
     z-index: 1;
-    top: 0;
+    top: 4.5em;
     left: 0;
-    background-color:#F55449;
-    overflow-x: hidden; 
-    padding-top: 60px;
+    background-color: white;
     transition: 0.35s;
     font-family: 'trebuchet ms';
     text-align: center;
+    overflow: hidden;
 }
 
-.sidenav.active {
-    width:15em;
-}
+    .sidenav.active {
+        width: 15em;
+    }
 
-.sidenav a {
-    padding: 8px 8px 8px 8px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #fff;
-    display: block;
-    transition: 0.3s;
-}
 
-.sidenav .nav-link:hover, .offcanvas a:focus{
-    background-color:rgba(225,225,225,0.3);
-}
+    .sidenav .nav-link {
+        display: block;
+        width: 15em;
+        background-color: #fff;
+        height: 4em;
+        line-height: 4em;
+        border: 1px solid #0f1f38;
+        border-top: none;
+        color: #0f1f38;
+    }
 
-.sidenav .closebtn {
-    position: absolute;
-    top: 1%;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-}
+        .sidenav .nav-link:hover {
+            background-color: #f55449;
+            color: white;
+        }
 
-.pc a{ 
-  color: #fff;
-}
-
-.pc a:hover, a:active {
-    text-decoration:none;
-    color: #fff;
-}
-
-#main {
-    transition: margin-left .5s;
-    padding: 20px;
-}
+        .sidenav .nav-link span {
+            font-size: 1.25em;
+        }
 
 @media only screen and (max-width:529px) {
-  .pc {
-    display:none;
-  }
+    .pc {
+        display: none;
+    }
 }
 
 @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
+    .sidenav {
+        padding-top: 15px;
+    }
+
+        .sidenav a {
+            font-size: 18px;
+        }
 }
 
-@media screen and (max-width:480px){
-    .title {font-size:1.5em;}
+@media screen and (max-width:480px) {
+    .title {
+        font-size: 1.5em;
+    }
 }
 
 .jumbotron {
-        background: #532f8c;
-        color: white;
-        padding-bottom: 80px
-    }
+    background: #532f8c;
+    color: white;
+    padding-bottom: 80px;
+}
+
     .jumbotron .btn-primary {
         background: #845ac7;
-        border-color: #845ac7
+        border-color: #845ac7;
     }
-    .jumbotron .btn-primary:hover {
-        background: #7646c1
-    }
+
+        .jumbotron .btn-primary:hover {
+            background: #7646c1;
+        }
+
     .jumbotron p {
         color: #d9ccee;
         max-width: 75%;
-        margin: 1em auto 2em
+        margin: 1em auto 2em;
     }
-    .navbar+.jumbotron {
-        margin-top: -20px
-    }
-    .jumbotron .lang-logo {
-        display: block;
-        background: #b01302;
-        border-radius: 50%;
-        overflow: hidden;
-        width: 100px;
-        height: 100px;
-        margin: auto;
-        border: 2px solid white
-    }
+
+.navbar + .jumbotron {
+    margin-top: -20px;
+}
+
+.jumbotron .lang-logo {
+    display: block;
+    background: #b01302;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    border: 2px solid white;
+}
+
     .jumbotron .lang-logo img {
-        max-width: 100%
+        max-width: 100%;
     }
+
+.noUnderline {
+    text-decoration: none !important;
+}
