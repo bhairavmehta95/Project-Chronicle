@@ -1,61 +1,54 @@
-<!DOCTYPE html>
-<html >
-
+﻿<!DOCTYPE html>
+<html>
   {% include "base.html" %}
-
-  <head>
+<head>
     <meta charset="UTF-8">
     <title>Answering</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    
-      {% load static %}
 
-        <link rel="stylesheet" type="text/css" href="{% static 'css/speech.css' %}" />
-        <script type="text/javascript" src="{% static 'js/speech.js' %}"></script>
-    
-  </head>
+    {% load static %}
 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/speech.css' %}" />
+    <script type="text/javascript" src="{% static 'js/speech.js' %}"></script>
 
+</head>
 
-  <body>
-  
+<body>
+    <div id="speechPage">
+        <br />
+        <div id="mainHeader" class="rounded-border shadow2">
+            <div class="hover-lighten header-wrapper">
+                <span id="subjectLink" style="margin-left:1em;"> <a href="/{{class.class_id}}/{{ topic_id.topic_id }}"> {{ topic }} </a> </span>
+            </div>
+        </div>
 
-    <div id="mainHeader" class="rounded-border shadow2">
-    <div class="hover-lighten header-wrapper">
-    <span id="subjectLink" style="margin-left:1em;"> <a href= "/{{class.class_id}}/{{ topic_id.topic_id }}"> {{ topic }} </a> </span>
-
-  </div>
-</div>
-
-<div id="questionBox" class="rounded-border shadow2">
-  <div for="Question" id="questionLabel" class="">Question:</div>
-  <div id="questionContent">
-    <div id="questionText"> <center> Talk about: {{ q.question_subject }} </center> </div>
-  </div>
-  <div id="results">
-    <center><span class="final" id="final_span"></span> <span class="interim" id="interim_span"></span> </center>
-  </div>
-  <div id="bottomRow">
-    <div id="recordTimer" class="rounded-border">
-      <span id="minutes"></span>:<span id="seconds"></span>
+        <div id="questionBox" class="rounded-border shadow2">
+            <div for="Question" id="questionLabel" class="">Question:</div>
+            <div id="questionContent">
+                <div id="questionText"> <center> Talk about: {{ q.question_subject }} </center> </div>
+            </div>
+            <div id="results">
+                <center><span class="final" id="final_span"></span> <span class="interim" id="interim_span"></span> </center>
+            </div>
+            <div id="bottomRow">
+                <div id="recordTimer" class="rounded-border">
+                    <span id="minutes"></span>:<span id="seconds"></span>
+                </div>
+                <div id="buttons">
+                    <button id="recordButton" class="rounded-border">Record</button>
+                    <button id="submitButton" class="rounded-border disabled">Submit</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div id="buttons">
-      <button id="recordButton" class="rounded-border">Record</button>
-      <button id="submitButton" class="rounded-border disabled">Submit</button>
-    </div>
-  </div>
-</div>
 
-  <form method="post" id = "form_transcript">
-  {% csrf_token %}
-    <input type ="hidden" id = "final_transcript" name = "final_transcript" value="">
-  </form>
+    <form method="post" id="form_transcript">
+        {% csrf_token %}
+        <input type="hidden" id="final_transcript" name="final_transcript" value="">
+    </form>
 
+    <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js'></script>
 
-<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js'></script>
-  
-
-  </body>
+</body>
 </html>

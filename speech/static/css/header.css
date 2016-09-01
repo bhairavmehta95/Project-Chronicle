@@ -1,44 +1,36 @@
 /* Header */
 body {
   margin-left:0;
-  font-size: 20px;
 }
 
 .header {
   width:100%;
   background-color:#0F1F38;
   height:3em;
-  border-radius:0px;
+  line-height:3em;
   color:#fff;
   letter-spacing:3px;
-  margin:0px auto;
   position:fixed;
   top:0px;
   font-family:"Century Gothic", sans-serif;
   z-index:10;
-  vertical-align: center;
-}
-
-.title {
-  width:100%;
   float:right;
   text-align:right;
-  font-size:2em;
+  font-size:1.5em;
   padding-left:0.1em;
   display:inline;
 }
 
 .logo {
-  height:1em;
+  height:2em;
+  margin-right:1em;
 }
 
 .menu {
   float:left;
-  font-size:0.5em;
-  margin-left:0.5em;
+  margin-left: 1em;
   cursor:pointer;
-  cursor:hand;
-  vertical-align: baseline;
+  letter-spacing: normal;
 }
 
 .sidenav {
@@ -51,9 +43,13 @@ body {
     background-color:#F55449;
     overflow-x: hidden; 
     padding-top: 60px;
-    transition: 0.7s;
+    transition: 0.35s;
     font-family: 'trebuchet ms';
     text-align: center;
+}
+
+.sidenav.active {
+    width:15em;
 }
 
 .sidenav a {
