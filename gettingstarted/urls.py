@@ -11,7 +11,7 @@ import speech.views
 
 urlpatterns = [
     url(r'^$', speech.views.landing, name='landing'),
-    #url(r'^db', speech.views.db, name='db'),
+    url(r'^db', speech.views.db, name='db'),
     url(r'^signup/', speech.views.signup_user, name='signup'),
     url(r'^login/', speech.views.login_user, name='login'),
     url(r'^admin/', include(admin.site.urls)),
