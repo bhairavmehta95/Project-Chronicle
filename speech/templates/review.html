@@ -1,43 +1,46 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 {% include "base.html" %}
 <head>
-  <title>Response</title>
-  <meta charset="utf-8">
+    <title>Response</title>
+    <meta charset="utf-8">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  {% load static %}
-  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/review.css' %}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/review.css' %}" />
 </head>
-	
+
 <center>
-  <div id="review">
-  	<h1>Hey {{ name }},</h1>
-  	<h2>when we asked about {{ q.question_subject }}, you answered...</h1>
-    <br>
-  	<h4>{{ transcript }}.</h4>
-    <br>
-  	<h2>- Your Score -</h2>
-    <span>
-      <h3> <center>
-      {%  if result_string == "Pass" %}
-        Congratulations, you passed with a score of: 
-      {% else %}
-        Uh oh, you needed a {{ percent_to_pass }}%, but only scored:
-      {% endif %}
-      </center> </h3>
-    </span> 
+    <div id="review">
+        <h1>Hey {{ name }},</h1>
+        <h2>
+            when we asked about {{ q.question_subject }}, you answered...</h1>
+            <br>
+            <h4>{{ transcript }}.</h4>
+            <br>
+            <h2>- Your Score -</h2>
+            <span>
+                <h3>
+                    <center>
+                        {%  if result_string == "Pass" %}
+                        Congratulations, you passed with a score of:
+                        {% else %}
+                        Uh oh, you needed a {{ percent_to_pass }}%, but only scored:
+                        {% endif %}
+                    </center>
+                </h3>
+            </span>
 
-  	<span id="percent"><h3>{{ percentage }}%</h3></span>
-    <br>
-		<a<center><a href = "/{{ q.class_id.class_id }}/{{ q.topic_id.topic_id }}"><button class = "button"><span>Click here to answer more questions about {{ q.topic_id.topic_name }}</span></button></a> <br> <br></center>
+            <span id="percent"><h3>{{ percentage }}%</h3></span>
+            <br>
+            <a<center><a href = "/{{ q.class_id.class_id }}/{{ q.topic_id.topic_id }}"><button class = "button"><span>Click here to answer more questions about {{ q.topic_id.topic_name }}</span></button></a> <br> <br></center>
 
-    <a href = ""> <center> Or, click here to try again. </a> </center>
- </div>
-</center> 
+    <a href = ""> <center> Or, click here to try again. </a>
+</center>
+</center>
 
 </body>
 </html>
