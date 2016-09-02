@@ -26,15 +26,16 @@ h1{
   line-height:4em;
   text-align:center;
   width:18em;
-  background-color: #f55449;
-  color:#fff;
+  background-color: #fff;
+  color:#0f1f38;
   margin:1em;
-  border: solid 1px #8e7970;
+  border: solid 1px #0f1f38;
   cursor: pointer;
 }
 
 .classContainer:hover {
-  opacity:.9;
+  background-color: #f55449;
+  color:white;
 }
 
 .classContainer span:hover {

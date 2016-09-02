@@ -1,34 +1,31 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 {% include "base.html" %}
 <head>
-  <title>Response</title>
-  <meta charset="utf-8">
+    <title>Response</title>
+    <meta charset="utf-8">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  {% load static %}
-  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/landing.css' %}" />
-  <link href="https://fonts.googleapis.com/css?family=Raleway:700" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Raleway:700" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/landing.css' %}" />
+    <link href="https://fonts.googleapis.com/css?family=Raleway:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:700" rel="stylesheet">
 </head>
 
 <body>
-<div class="first">
-	Welcome to Project Chronicle.
-	<img src="http://www.freeiconspng.com/uploads/open-book-icon-icon--open-book-2-svg-12.png" class="logo-inside">
-</div>
-<div class="second">Click, speak, learn. </div>
-<div class="third">
-  <a href="/login" class="button" style="vertical-align:middle"> <span>Students</span> </a>
-  <a href="/teachers/login" class="button" style="vertical-align:middle"> <span>Teachers</span> </a>
-  <a href="#" class="button" style="vertical-align:middle"> <span>Parents</span> </a>
-</div> 
-
-<div class = "about"> 
-  <h1> <center> About Us: </center> </h1>
-  <p style = "color:white"> <center> We are a group of engineers who want to revolutionize the way you study. </center> </p> 
-</div>
+    <div class="welcome">
+        <h2>
+            Welcome to Project Chronicle.<img src="http://www.freeiconspng.com/uploads/open-book-icon-icon--open-book-2-svg-12.png" class="logo-inside">
+        </h2>
+    </div>
+    <div class="loginOptions">
+        <a href="/login" class="button" style="vertical-align:middle"> <span>Students</span> </a>
+        <a href="/teachers/login" class="button" style="vertical-align:middle"> <span>Teachers</span> </a>
+        <a href="#" class="button" style="vertical-align:middle"> <span>Parents</span> </a>
+    </div>
+    <h3 class="summaryHeader">Click. Speak. Learn. </h3>
+    <div class="summary">This is where Luke is going to eventually give me a one to two sentence summary about our product. I think two sentences will suit our needs just fine.</div>
 </body>
