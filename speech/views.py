@@ -24,6 +24,11 @@ def landing(request):
 
 # Create your views here.
 def login_user(request):
+
+    # user already logged in, take them to classes
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/classes')
+        
     # if this is a POST request we need to process the form data
     error = None
     if request.method == 'POST':
