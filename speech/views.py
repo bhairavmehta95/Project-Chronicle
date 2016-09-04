@@ -84,7 +84,18 @@ def signup_user(request):
 
             # Password Checking
             if (password != retyped):
-                error = "Passwords don't match"
+                error = "Passwords don't match."
+
+            # Password Length: TODO - replace with django validators
+            if len(password) < 8 or len(username) < 8:
+                error = "Username and password must be more than eight characters."
+
+            # Check existing user
+            try:
+                user = User.objects.get(username=username)
+                error = "Username already exists in system."
+            except:
+                pass
 
             class_id = request.POST['Class']
 
