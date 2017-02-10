@@ -11,19 +11,9 @@ class Teacher(models.Model):
 	def __str__(self):
 		return self.f_name
 
-class Student(models.Model):
-	student_id = models.AutoField(primary_key = True)
-	#teacher_id = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-	f_name = models.CharField(max_length=30)
-	l_name = models.CharField(max_length=30)
-	user_id_login = models.IntegerField(default = 0)
-
-	def __str__(self):
-		return self.f_name
-
 class Class(models.Model):
 	class_id = models.AutoField(primary_key=True)
-	#teacher_id = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+	teacher_id = models.ForeignKey(Teacher)
 	class_name = models.CharField(max_length=100)
 	num_enrollments = models.IntegerField(default=0)
 
@@ -33,15 +23,25 @@ class Class(models.Model):
 	def get_class_id(self):
 		return self.class_id
 
+
+class Student(models.Model):
+	student_id = models.AutoField(primary_key = True)
+	f_name = models.CharField(max_length=30)
+	l_name = models.CharField(max_length=30)
+	user_id_login = models.IntegerField(default = 0)
+
+	def __str__(self):
+		return self.f_name
+
 class Enrollments(models.Model):
-	student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
-	class_id = models.ForeignKey(Class, on_delete=models.CASCADE)
+	student_id = models.ForeignKey(Student)
+	class_id = models.ForeignKey(Class)
 	
 	def __str__(self):
 		return str(self.id)
 
 class Topic(models.Model):
-	class_id = models.ForeignKey(Class, on_delete=models.CASCADE)
+	class_id = models.ForeignKey(Class)
 	topic_id = models.AutoField(primary_key=True)
 	topic_name = models.CharField(max_length=100)
 	num_questions = models.IntegerField(default=0)
@@ -50,8 +50,8 @@ class Topic(models.Model):
 		return self.topic_name
 
 class Question(models.Model):
-	class_id = models.ForeignKey(Class, on_delete=models.CASCADE)
-	topic_id = models.ForeignKey(Topic, on_delete=models.CASCADE)
+	class_id = models.ForeignKey(Class)
+	topic_id = models.ForeignKey(Topic)
 	question_id = models.AutoField(primary_key=True)
 	question_subject = models.CharField(max_length=100, default='QUESTION')
 	question_text = models.TextField()
@@ -64,19 +64,24 @@ class Question(models.Model):
 	def __str__(self):
 		return self.question_text
 
-
-class Testing(models.Model):
-	test_id = models.AutoField(primary_key=True)
-	topic_name = models.CharField(max_length=100)
-	question_subject = models.CharField(max_length=100)
-	question_text = models.TextField()
-
 class Completion(models.Model):
 	completion_id = models.AutoField(primary_key=True)
-	question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
-	student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
+	question_id = models.ForeignKey(Question)
+	student_id = models.ForeignKey(Student)
 	transcript = models.TextField()
 	percent_scored = models.FloatField(default = 0)
+
+class Keyword(models.Model):
+	keyword_id = models.AutoField(primary_key=True)
+	question_id = models.ForeignKey(Question)
+	keyword = models.CharField(max_length=100)
+	point_value = models.IntegerField()
+
+# class Testing(models.Model):
+# 	test_id = models.AutoField(primary_key=True)
+# 	topic_name = models.CharField(max_length=100)
+# 	question_subject = models.CharField(max_length=100)
+# 	question_text = models.TextField()
 
 class SelfStudy(models.Model):
 	pass
