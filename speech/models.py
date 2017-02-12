@@ -16,6 +16,7 @@ class Class(models.Model):
 	teacher_id = models.ForeignKey(Teacher)
 	class_name = models.CharField(max_length=100)
 	num_enrollments = models.IntegerField(default=0)
+	class_key = models.CharField(max_length=10)
 
 	def __str__(self):
 		return self.class_name
@@ -36,6 +37,7 @@ class Student(models.Model):
 class Enrollments(models.Model):
 	student_id = models.ForeignKey(Student)
 	class_id = models.ForeignKey(Class)
+	is_verified = models.BooleanField(default = False)
 	
 	def __str__(self):
 		return str(self.id)
@@ -83,6 +85,6 @@ class Keyword(models.Model):
 # 	question_subject = models.CharField(max_length=100)
 # 	question_text = models.TextField()
 
-class SelfStudy(models.Model):
-	pass
-	# come back to this
+# class SelfStudy(models.Model):
+# 	pass
+# 	# come back to this
