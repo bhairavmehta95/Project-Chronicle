@@ -251,7 +251,6 @@ def topic_page(request, class_id):
     }
 
     return render(request, 'topics.html', context)
-
     
 
 def question_page(request, class_id, topic_id):
