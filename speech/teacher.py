@@ -59,8 +59,7 @@ def signup_teacher(request):
 
     # if a GET (or any other method) we'll create a blank form
     form = TeacherSignupForm()
-
-    return render(request, 'teacher.html', {'form': form, 'error' : error, })
+    return render(request, 'teachersignup.html', {'form': form, 'error' : error, })
 
 def login_teacher(request):
     # if this is a POST request we need to process the form data

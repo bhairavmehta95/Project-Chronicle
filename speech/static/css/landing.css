@@ -2,31 +2,37 @@ body {
     font-family: 'Raleway', sans-serif;
 }
 
+.margins {
+    width: 75%;
+    margin: 0 auto;
+}
+
 .welcome {
     font-family: 'Raleway', sans-serif;
     width: auto;
-    margin-top: 8em;
-    padding-bottom: 5em;
+    margin-top: 6em;
     text-align: center;
-    border-bottom: 1px solid #eee;
-}
-
-.loginOptions {
-    width:auto;
-    font-family: 'Raleway', sans-serif;
-    color: #fbdbe8;
-    text-align:center;
-    margin-top:4em;
-    padding-bottom: 4em;
-    border-bottom: 1px solid #eee;
 }
 
 .summaryHeader {
-    margin-top:5em;
     width:auto;
     text-align:center;
     font-family: 'Raleway', sans-serif;
     color: #f55449;
+}
+
+.picture-container {
+    padding: 2em;
+    box-sizing: content-box;
+}
+
+.marketing-image {
+    box-shadow: 0 3px 6px rgba(0,0,0,.1), 0 3px 6px rgba(0,0,0,.2);
+}
+
+.login-register-buttons {
+    width: 425px;
+    margin: 8em auto 2em auto;
 }
 
 .summary {
@@ -82,3 +88,22 @@ a:hover {
             opacity: 1;
             right: 0;
         }
+
+.teacher-section {
+    width: 500px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.button2 {
+    padding: .5em 1em;
+    color: green;
+    border: 2px solid green;
+    border-radius: 4px;
+}
+
+    .button2:hover {
+        color: green;
+        text-decoration: none;
+        box-shadow: 0 3px 6px rgba(0,0,0,.1), 0 3px 6px rgba(0,0,0,.2);
+    }

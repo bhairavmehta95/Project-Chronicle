@@ -1,4 +1,4 @@
-﻿<!-- Google Analytics Script -->
+<!-- Google Analytics Script -->
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -9,6 +9,7 @@
   ga('send', 'pageview');
 
 </script>
+<script src="https://use.fontawesome.com/288ee0d97a.js"></script>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,30 +23,33 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/landing.css' %}" />
     <link href="https://fonts.googleapis.com/css?family=Raleway:700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Raleway:700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/teacher.css' %}" />
 </head>
 
+
+
 <body>
-    <div class="welcome">
-        <h2>
-            Welcome to Project Chronicle.<img src="http://www.freeiconspng.com/uploads/open-book-icon-icon--open-book-2-svg-12.png" class="logo-inside">
-        </h2>
+    <h2>
+        Hello and Welcome!
+    </h2>
+    <div class="info">
+    	<i class="fa fa-info-circle"></i>
+    	<span>Please tell us about yourself so we can help you get set up!</span>
     </div>
+    <div class="teacher-signup-form">
+        {% csrf_token %}
+            {% for field in form %}
+            <div class="formRow">
+                <label>{{ field.label_tag }}</label> <br> {{ field }}
+            </div>
+            <br>
+            {% endfor %}
+            {% if error != None %}
+            {{ error }}
+            <br>
+            {% endif %}
 
-    <h3 class="summaryHeader">Click. Speak. Learn.</h3>
-
-    <div class="login-register-buttons">
-        <a href="/login" class="button" style="vertical-align:middle"> <span>Login</span> </a>
-        <a href="/signup" class="button" style="vertical-align:middle"> <span>Sign Up</span> </a>
     </div>
-
-    <div class="teacher-section">
-      <span>Are you a teacher? Check out our new Teacher Portal!</span>
-      <br> <br>
-      <a href="/teacher" class="button2" style="vertical-align:middle"> <span>Go!</span> </a>
-    </div>
-
-    <div class="summary">Our mission  is to empower students with the ownership of stories and enhance their learning through the power of speech.</div>
 </body>
