@@ -38,18 +38,21 @@
     	<i class="fa fa-info-circle"></i>
     	<span>Please tell us about yourself so we can help you get set up!</span>
     </div>
-    <div class="teacher-signup-form">
-        {% csrf_token %}
-            {% for field in form %}
-            <div class="formRow">
-                <label>{{ field.label_tag }}</label> <br> {{ field }}
-            </div>
-            <br>
-            {% endfor %}
-            {% if error != None %}
-            {{ error }}
-            <br>
-            {% endif %}
+    <form method="post">
+        <div class="teacher-signup-form">
+            {% csrf_token %}
+                {% for field in form %}
+                <div class="formRow">
+                    <label>{{ field.label_tag }}</label> <br> {{ field }}
+                </div>
+                <br>
+                {% endfor %}
+                <input type="submit" value="Submit" />
+                {% if error != None %}
+                {{ error }}
+                <br>
+                {% endif %}
 
-    </div>
+        </div>
+    </form>
 </body>

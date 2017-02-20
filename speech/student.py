@@ -21,10 +21,12 @@ def signup_user(request):
     # if this is a POST request we need to process the form data
     error = None
     if request.method == 'POST':
+        print("got the post");
         # create a form instance and populate it with data from the request:
         form = SignupForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
+            print("form is valid");
             username = form.cleaned_data['username']
             email = form.cleaned_data['email']
             first_name = form.cleaned_data['first_name']
@@ -56,7 +58,8 @@ def signup_user(request):
             # if teacher_target.teacher_id != teacher_id:
             #     error = "Please pick a real teacher/class pair, this is only temporary"
 
-
+            print("here's what's in error:");
+            print(error);
             if error == None:
                 class_target = Class.objects.get(class_id = class_id)
 
