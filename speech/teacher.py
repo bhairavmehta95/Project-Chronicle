@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
-from .models import Student, Enrollments, Class, Topic, Question, Teacher, Completion
+from .models import Student, Enrollments, Class, Topic, Question, Teacher, Completion, Instructor
 
 from .forms import LoginForm, SignupForm, TeacherSignupForm, TeacherLoginForm
 
@@ -32,7 +32,7 @@ def signup_teacher(request):
             password = form.cleaned_data['password']
             retyped = form.cleaned_data['retyped']
             teacher_id = form.cleaned_data['teacher_id']
-            class_name = form.cleaned_data['class_name']
+            #class_name = form.cleaned_data['class_name']
 
             # Password Checking
             if (password != retyped):
@@ -44,12 +44,12 @@ def signup_teacher(request):
                                         password=password)
 
                 try:
-                    group = Group.objects.get(name = "teacher")
+                    group = Group.objects.get(name = "instructor")
                 except:
-                    group = Group.objects.create(name = "teacher")
+                    group = Group.objects.create(name = "instructor")
 
-                t = Teacher.objects.create(user_id_login = user.id, f_name = first_name, l_name = last_name)
-                c = Class.objects.create(teacher_id = t, class_name = class_name)
+                t = Instructor.objects.create(user_id_login = user.id, f_name = first_name, l_name = last_name, teacher_id = teacher_id);
+                #c = Class.objects.create(teacher_id = t, class_name = class_name)
 
                 user.groups.add(group)
 
@@ -59,8 +59,8 @@ def signup_teacher(request):
 
     # if a GET (or any other method) we'll create a blank form
     form = TeacherSignupForm()
-
-    return render(request, 'teacher.html', {'form': form, 'error' : error, })
+    print(Instructor.objects.all());
+    return render(request, 'teachersignup.html', {'form': form, 'error' : error, })
 
 def login_teacher(request):
     # if this is a POST request we need to process the form data

@@ -24,8 +24,8 @@ urlpatterns = [
     url(r'^logout/$', speech.student.logout_user, name='logout_user'),
     
     # Teacher
-    # url(r'^teacher/$', speech.views.login_teacher, name='login_teacher'),
-    # url(r'^teacher/signup/', speech.views.signup_teacher, name='signup_teacher'),
+    url(r'^teacher/$', speech.teacher.login_teacher),
+    url(r'^teacher/signup/', speech.teacher.signup_teacher),
 
     # Question Interface
     url(r'^classes/$', speech.question_interface.class_page, name='class_page'),

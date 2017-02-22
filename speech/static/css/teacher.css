@@ -1,0 +1,71 @@
+h2 {
+	width: 500px;
+	text-align: center;
+	margin: 0 auto;
+	margin-top: 2em;
+	font-family: 'Raleway', sans-serif;
+	color: #444;
+}
+
+.info {
+	width: 550px;
+	margin: 0 auto;
+	margin-top: 2em;
+	border: 1px solid #999;
+	color: #555;
+	padding: .5em 1em;
+	background-color: rgba(255, 249, 145, .5);
+	border-radius: 2px;
+}
+
+	.info i {
+		padding-right: .5em;
+	}
+
+.teacher-login-buttons {
+	width: 550px;
+	margin: 0 auto;
+	margin-top: 4em;
+	text-align: center;
+}
+
+	.teacher-login-buttons .teacher-button {
+		width: 200px;
+		height: 200px;
+		margin: 0 25px;
+		text-align: center;
+		display: inline-block;
+		background-color: #ffaa32;
+		border-radius: 3px;
+		position: relative;
+		cursor: pointer;
+		color: #666;
+	}
+
+	.teacher-login-buttons .teacher-button:nth-of-type(1) {
+		background-color: #27bc3b;
+	}
+
+	.teacher-login-buttons .teacher-button:hover {
+		box-shadow: 0 3px 6px rgba(0,0,0,.1), 0 3px 6px rgba(0,0,0,.2);
+		color: #000;
+	}
+
+		.teacher-login-buttons .teacher-button div {
+			background-color: #fff;
+			padding: .75em 0;
+			position: absolute;
+			bottom: 2em;
+			width: 100%;
+			border: 1px solid #ccc;
+		}
+
+
+.teacher-signup-form {
+	width: 300px;
+	margin: 0 auto;
+}
+
+	.teacher-signup-form input {
+		width: 100%;
+	}
