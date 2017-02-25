@@ -9,7 +9,7 @@ class Teacher(models.Model):
 	user_id_login = models.IntegerField(default = 0)
 
 	def __str__(self):
-		return self.f_name
+		return "{} {}".format(self.f_name, self.l_name)
 
 
 class Instructor(models.Model):
@@ -19,7 +19,7 @@ class Instructor(models.Model):
 	user_id_login = models.IntegerField(default = 0)
 
 	def __str__(self):
-		return self.f_name + " " + self.l_name
+		return "{} {}".format(self.f_name, self.l_name)
 
 class Class(models.Model):
 	class_id = models.AutoField(primary_key=True)
