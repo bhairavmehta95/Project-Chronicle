@@ -48,7 +48,7 @@ def signup_teacher(request):
                 except:
                     group = Group.objects.create(name = "instructor")
 
-                t = Instructor.objects.create(user_id_login = user.id, f_name = first_name, l_name = last_name, teacher_id = teacher_id);
+                t = Teacher.objects.create(user_id_login = user.id, f_name = first_name, l_name = last_name, teacher_id = teacher_id);
                 #c = Class.objects.create(teacher_id = t, class_name = class_name)
 
                 user.groups.add(group)
@@ -58,8 +58,7 @@ def signup_teacher(request):
                 return HttpResponseRedirect('/teacher')
 
     # if a GET (or any other method) we'll create a blank form
-    form = TeacherSignupForm()
-    print(Instructor.objects.all());
+    form = TeacherSignupForm();
     return render(request, 'teachersignup.html', {'form': form, 'error' : error, })
 
 def login_teacher(request):
