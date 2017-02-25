@@ -32,14 +32,18 @@ class QuestionBuilderForm(forms.Form):
     keywords_to_return = forms.IntegerField(label='Keywords to Return', min_value=1, max_value=30)
 
 class QBuilderUpdateForm(forms.Form):
-    question_title = forms.CharField(label='Question Title', max_length=75)
-
     def __init__(self, *args, **kwargs):
         keywords = kwargs.pop('keywords', 0)
+        data = kwargs.pop('data')
     
         super(QBuilderUpdateForm, self).__init__(*args, **kwargs)
+        
+        self.fields['question_title'] = forms.CharField(label='Question Title', max_length=75, initial=data['question_title'])
 
         for index in range(int(keywords)):
             # generate extra fields in the number specified via extra_fields
-            self.fields['keyword_field_{index}'.format(index=index)] = forms.CharField()
-            self.fields['keyword_point_field_{index}'.format(index=index)] = forms.IntegerField(min_value=1)
+            self.fields['keyword_field_{index}'.format(index=index)] = forms.CharField(initial=data['keyword_field_{index}'.format(index=index)])
+            self.fields['keyword_point_field_{index}'.format(index=index)] = forms.IntegerField(
+                                                                                                                                            initial=data['keyword_point_field_{index}'.format(index=index)],
+                                                                                                                                            min_value=1
+                                                                                                                                             )

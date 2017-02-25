@@ -27,22 +27,32 @@ def question_builder(request):
         # check whether it's valid:
         if form.is_valid():
             sources = form.cleaned_data['sources']
-
+            q_title = form.cleaned_data['question_title']
+            number_of_keywords = form.cleaned_data['keywords_to_return']
+            
             sources_list = sources.split('\n')
-
-            print(sources_list)
 
             data = {
                 'documents' : sources_list,
-                'number_of_keywords' : 10
+                'number_of_keywords' : number_of_keywords
             }
 
-            # r = requests.post('http://0.0.0.0:5000/index', json=data)
-            
-            # print(r.text)
+            r = requests.post('http://0.0.0.0:5000/index', json=data)
+            response_json = json.loads(r.text)
+ 
+                
+            form_fields = {}
 
-            form = QBuilderUpdateForm(keywords=10) 
-            pass
+            form_fields['question_title'] = q_title
+
+            for idx, word in enumerate(response_json['words']):
+                form_fields['keyword_field_{index}'.format(index=idx)] = response_json['words'][idx]
+                form_fields['keyword_point_field_{index}'.format(index=idx)] = response_json['point_values'][idx]
+
+            form = QBuilderUpdateForm(keywords=number_of_keywords, data=form_fields)
+
+            print(form.fields)
+            
     else:
         form = QuestionBuilderForm()
 
