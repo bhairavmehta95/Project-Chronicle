@@ -3,7 +3,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
-from .models import Student, Enrollments, Class, Topic, Question, Teacher, Completion
+from .models import Student, Enrollments, Class, Topic, Question, Completion, Teacher, PrimaryKeyword, SecondaryKeyword
 
 from .forms import LoginForm, SignupForm, TeacherSignupForm, TeacherLoginForm, QuestionBuilderForm, QBuilderUpdateForm,  \
 IntegerValidatorForm, StringValidatorForm

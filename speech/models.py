@@ -73,11 +73,19 @@ class Completion(models.Model):
 	transcript = models.TextField()
 	percent_scored = models.FloatField(default = 0)
 
-class Keyword(models.Model):
+class PrimaryKeyword(models.Model):
 	keyword_id = models.AutoField(primary_key=True)
 	question_id = models.ForeignKey(Question)
 	keyword = models.CharField(max_length=100)
 	point_value = models.IntegerField()
+	number_of_hits = models.IntegerField(default=0)
+
+class SecondaryKeyword(models.Model):
+	keyword_id = models.AutoField(primary_key=True)
+	question_id = models.ForeignKey(Question)
+	keyword = models.CharField(max_length=100)
+	point_value = models.IntegerField()
+	number_of_hits = models.IntegerField(default=0)
 
 # class Testing(models.Model):
 # 	test_id = models.AutoField(primary_key=True)
