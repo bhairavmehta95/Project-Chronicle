@@ -11,22 +11,12 @@ class Teacher(models.Model):
 	def __str__(self):
 		return "{} {}".format(self.f_name, self.l_name)
 
-
-class Instructor(models.Model):
-	teacher_id = models.AutoField(primary_key = True)
-	f_name = models.CharField(max_length = 30)
-	l_name = models.CharField(max_length = 30)
-	user_id_login = models.IntegerField(default = 0)
-
-	def __str__(self):
-		return "{} {}".format(self.f_name, self.l_name)
-
 class Class(models.Model):
 	class_id = models.AutoField(primary_key=True)
-	#teacher_id = models.ForeignKey(Teacher, blank=True, null=True)
+	teacher_id = models.ForeignKey(Teacher, blank=True, null=True)
 	class_name = models.CharField(max_length=100)
 	num_enrollments = models.IntegerField(default=0)
-	#class_key = models.CharField(max_length=10, blank=True, null=True)
+	class_key = models.CharField(max_length=10, blank=True, null=True)
 
 	def __str__(self):
 		return self.class_name
