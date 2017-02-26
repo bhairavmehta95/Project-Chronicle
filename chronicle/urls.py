@@ -35,5 +35,5 @@ urlpatterns = [
     url(r'^(\d+)/(\d+)/(\d+)/$', speech.question_interface.speech, name='speech'),
 
     # Question Builder
-    url(r'^builder/$', speech.question_builder.question_builder, name='question_builder'),
+    url(r'^builder/(\d+)/(\d+)/$', speech.question_builder.question_builder, name='question_builder'),
 ]

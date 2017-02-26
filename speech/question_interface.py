@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
-from .models import Student, Enrollments, Class, Topic, Question, Teacher, Completion
+from .models import Student, Enrollments, Class, Topic, Question, Teacher, Completion, PrimaryKeyword, SecondaryKeyword
 
 from .forms import LoginForm, SignupForm, TeacherSignupForm, TeacherLoginForm
 
@@ -64,9 +64,7 @@ def speech(request, class_id, topic_id, question_id):
 
             score = 0
 
-            actual_text = q.question_text
-
-            context = calculateScore(actual_text)
+            context = calculateScore(q, transcript)
 
             return render(request, 'review.html', context)
 
@@ -87,40 +85,45 @@ def speech(request, class_id, topic_id, question_id):
     return render(request, 'speech.html', context)
 
 
-def calculateScore(actual_text):
-    text_dictionary = {}
-    response_dictionary = {}
-    total_words = len(actual_text.split())
+def calculateScore(question_, transcript):
+    primary_keywords = PrimaryKeyword.objects.all().filter(question_id=question_)
+    secondary_keywords = SecondaryKeyword.objects.all().filter(question_id=question_)
+
+    total_points_available = 0
+    user_points = 0
 
     # TODO: IMPORT NLTK STOPWORDS
 
-    # creates a hash table using word frequency
-    for word in actual_text.split():
-        if text_dictionary.get(word) == None:
-            text_dictionary[word] = 1
-        else:
-            text_dictionary[word] += 1
+    score_dict = {}
+    for element in primary_keywords:
+        kw = element.keyword
+        points = element.point_value
 
+        score_dict[kw] = points
 
-    # calculates user score
+        total_points_available += points
+
+    for element in secondary_keywords:
+        kw = element.keyword
+        points = element.point_value
+
+        score_dict[kw] = points
+
+        total_points_available += points
+
     for word in transcript.split():
-        if text_dictionary.get(word) != None and response_dictionary.get(word) == None:
-            score += text_dictionary[word]
-
-            # arbitrary value to show the word has been marked
-            response_dictionary[word] = True
-        else:
-            pass
+        if word in score_dict:
+            user_points += score_dict[word]
 
 
-    completion = Completion.objects.create(student_id = student, 
-                                           question_id = q, 
-                                           transcript = transcript, 
-                                           percent_scored = score/total_words
-                                           )
+    # TODO: Add multipliers, teacher answer queries, etc.
 
-    
-    completions = Completion.objects.all()
+    completion = Completion.objects.create(
+                               student_id = student, 
+                               question_id = question_, 
+                               transcript = transcript, 
+                               percent_scored = user_points/float(total_points_available)
+                               )
 
     result_string = ""
     print score/total_words, q.percent_to_pass, score/total_words > q.percent_to_pass 
@@ -130,7 +133,7 @@ def calculateScore(actual_text):
 
     context = {
                 'q' : q, 
-                'percentage' : str(100*score/float(total_words)), 
+                'percentage' : str(100*user_points/float(total_points_available)), 
                 'name' : student.f_name,
                 'transcript' : transcript,
                 'result_string' : result_string,

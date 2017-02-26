@@ -55,8 +55,7 @@ class Question(models.Model):
 	class_id = models.ForeignKey(Class)
 	topic_id = models.ForeignKey(Topic)
 	question_id = models.AutoField(primary_key=True)
-	question_subject = models.CharField(max_length=100, default='QUESTION')
-	question_text = models.TextField()
+	question_title = models.CharField(max_length=100, default='QUESTION')
 	num_attempts = models.IntegerField(default=0)
 	num_accepted = models.IntegerField(default=0)
 	is_user_generated = models.BooleanField(default=False)
@@ -64,7 +63,7 @@ class Question(models.Model):
 	percent_to_pass = models.FloatField(default=.50)
 
 	def __str__(self):
-		return self.question_text
+		return self.question_subject
 
 class Completion(models.Model):
 	completion_id = models.AutoField(primary_key=True)
