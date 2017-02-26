@@ -107,7 +107,10 @@ def login_user(request):
                     #s = Student.objects.get(user_id_login = user.id)
                     #print "Welcome back: ", s
                     # Redirect to a success page.
-                    return HttpResponseRedirect('/classes')
+                    if (user.has_perm("speech.add_class")):
+                        return HttpResponseRedirect('/teacher')
+                    else:
+                        return HttpResponseRedirect('/classes')
                 else:
                     error = "Disabled account, contact sysadmin"
                     # Return a 'disabled account' error message
@@ -126,5 +129,3 @@ def logout_user(request):
     if request.user.is_authenticated():
         logout(request)
         return HttpResponseRedirect('/login')
-    
-    return HttpResponseRedirect('/classes')

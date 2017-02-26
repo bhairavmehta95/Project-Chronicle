@@ -67,3 +67,7 @@ def teacher_portal(request):
             return render(request, 'teacherportal.html')
         else:
             return render(request, 'teacherlanding.html')
+
+def createClass(request):
+    if (request.method == 'POST'):
+        print('yup')
