@@ -41,6 +41,9 @@ def question_builder(request, class_id, topic_id):
             for kw_tuple in secondary_data:
                 secondary_keyword = SecondaryKeyword.objects.create(question_id=question_, keyword=kw_tuple[0], point_value=kw_tuple[1])                
 
+            # TODO: Add redirect
+
+            return "Success!"
 
 
         # check whether a builder form was submitted and if it is valid:
