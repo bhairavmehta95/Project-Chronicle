@@ -128,5 +128,5 @@ STATICFILES_DIRS = (
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 FIXTURE_DIRS = (
-   '/speech/speech/fixtures/',
+   'speech/fixtures/',
 )

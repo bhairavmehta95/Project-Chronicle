@@ -1,0 +1,12 @@
+[
+	{
+		"model": "speech.class",
+		 "pk": 1, 
+		 "fields": {
+		 	"teacher_id": null,
+		 	"class_name": "Sexual Education",
+		 	"num_enrollments": 0,
+		 	"class_key": "666"
+		}
+	}
+]

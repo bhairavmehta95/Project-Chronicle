@@ -21,12 +21,10 @@ def signup_user(request):
     # if this is a POST request we need to process the form data
     error = None
     if request.method == 'POST':
-        print("got the post");
         # create a form instance and populate it with data from the request:
         form = SignupForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            print("form is valid");
             username = form.cleaned_data['username']
             email = form.cleaned_data['email']
             first_name = form.cleaned_data['first_name']
@@ -50,7 +48,7 @@ def signup_user(request):
             except:
                 pass
 
-            #class_id = request.POST['Class']
+            class_id = request.POST['Class']
 
             # TODO: ONLY SHOW THE CLASSES CORRESPONDING TO A SPECIFIC TEACHER
             # teacher_target = Class.objects.get(class_id = class_id).teacher_id
@@ -78,7 +76,6 @@ def signup_user(request):
 
                 Enrollments.objects.create(student_id = s, class_id = class_target)
 
-                print "Welcome", s, "please login"
                 return HttpResponseRedirect('/login')
             
 
@@ -103,16 +100,12 @@ def login_user(request):
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            print(form.cleaned_data['username'])
-            print(form.cleaned_data['password'])
             user = authenticate(username=username, password=password)
-            print("Authenticate executed.")
-            print(user);
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    s = Student.objects.get(user_id_login = user.id)
-                    print "Welcome back: ", s
+                    #s = Student.objects.get(user_id_login = user.id)
+                    #print "Welcome back: ", s
                     # Redirect to a success page.
                     return HttpResponseRedirect('/classes')
                 else:
