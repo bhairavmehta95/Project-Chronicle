@@ -32,60 +32,20 @@
 {% include "teacherbase.html" %}
 <body>
     <div class="teacher-portal content">
-      <div class="class-title">Your Classes:</div>
+      <div class="class-title tp-title">Your Classes:</div>
       <div class="add-button" data-toggle="modal" data-target="#myModal">
         <i class="fa fa-plus fa-fw"></i>
         <span>Add</span>
         <span>Class</span>
       </div>
       <div class="class-tiles">
-        <a href="/teacher/signup" class="tile">
-          <div>
-            <span>Register</span>
-          </div>
-        </a>
-        <a href="/teacher/signup" class="tile">
-          <div>
-            <span>Register</span>
-          </div>
-        </a>
-        <a href="/teacher/signup" class="tile">
-          <div>
-            <span>Register</span>
-          </div>
-        </a>
-        <a href="/teacher/signup" class="tile">
-          <div>
-            <span>Register</span>
-          </div>
-        </a>
-        <a href="/teacher/signup" class="tile">
-          <div>
-            <span>Register</span>
-          </div>
-        </a>
-        <a href="/teacher/signup" class="tile">
-          <div>
-            <span>Register</span>
-          </div>
-        </a>
-        <a href="/teacher/signup" class="tile">
-          <div>
-            <span>Register</span>
-          </div>
-        </a>
-        <a href="/teacher/signup" class="tile">
-          <div>
-            <span>Register</span>
-          </div>
-        </a>
       </div>
     </div>
 
 </body>
 
 
-<div class="modal fade" id="myModal" tabindex="-1">
+<div class="modal" id="myModal" tabindex="-1">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -94,13 +54,16 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <input id="className" type="text" name="class-name" placeholder="Class Name">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" onclick="createClass()" class="btn btn-primary">Create</button>
-      </div>
+      <form action="/teacher/createClass/" method="post">
+        {% csrf_token %}
+        <div class="modal-body">
+          <input class="modal-input" id="className" type="text" name="class-name" placeholder="Class Name">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="addClass()">Create</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

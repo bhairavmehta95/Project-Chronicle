@@ -7,11 +7,6 @@ h2 {
 	color: #444;
 }
 
-.teacher-portal.content {
-	position: relative;
-	bottom: 739px;
-}
-
 .info {
 	width: 550px;
 	margin: 0 auto;
@@ -81,10 +76,6 @@ h2 {
 	position: relative;
 }
 
-.teacher-portal {
-	position: relative;
-}
-
 .teacher-portal .top-bar h2 {
 	margin: 0;
 	width: auto;
@@ -124,6 +115,12 @@ h2 {
 	color: #444;
 }
 
+.no-class-message {
+	padding: 2em 0 0 2em;
+	color: #888;
+	font-size: 16px;
+}
+
 .class-title {
 	position: absolute;
 	top: 80px;
@@ -150,6 +147,7 @@ h2 {
 	width: 200px;
 	height: 200px;
 	position: relative;
+	cursor: pointer;
 }
 
 .class-tiles .tile div {
@@ -255,10 +253,57 @@ button.close {
 	width: 400px;
 }
 
-.modal-content input {
+.modal-content {
+	height: 180px;
+}
+
+.modal-content input.modal-input {
 	height: 2em;
 	line-height: 2em;
 	font-size: 16px;
 	width: 100%;
 	text-indent: .5em;
+}
+
+.calc-box {
+	width: calc(100vw - 290px);
+	height: calc(100vh - 167px);
+	position: absolute;
+	top: 130px;
+	left: 230px;
+	display: block;
+	overflow: none;
+}
+
+.question-half,
+.student-half {
+	top: 130px;
+	width: calc(50% - 2px);
+	height: 99%;
+	display: inline-block;
+	min-width: 275px;
+	margin-bottom: 3em;
+	position: absolute;
+	top: 0;
+}
+
+.student-half {
+	right: 0;
+}
+
+.question-panel-title,
+.student-panel-title {
+	color: #888;
+	font-size: 16px;
+	padding-bottom: .25em;
+}
+
+.question-panel,
+.student-panel {
+	border: 1px solid #ddd;
+	height: 99%;
+}
+
+.question-panel {
+	margin-right: 10px;
 }
