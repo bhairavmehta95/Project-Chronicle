@@ -66,13 +66,14 @@ def speech(request, class_id, topic_id, question_id):
 
             actual_text = q.question_text
 
+            updateTopicProgress();
+
             context = calculateScore(actual_text)
 
             return render(request, 'review.html', context)
 
         else:
-            pass
-                # Redirect to not logged in page
+            return HttpResponseRedirect('/login')
 
     topic = q.topic_id.topic_name
     topic_id = q.topic_id
@@ -136,3 +137,6 @@ def calculateScore(actual_text):
                 'result_string' : result_string,
                 'percent_to_pass' : str(100*q.percent_to_pass), 
                 }
+
+def updateTopicProgress():
+    print("test for reed")

@@ -1,0 +1,70 @@
+<!-- Google Analytics Script -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-83652865-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<script src="https://use.fontawesome.com/288ee0d97a.js"></script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Project Chronicle</title>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/master.js' %}"></script>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/teacher.css' %}" />
+</head>
+
+
+
+<body>
+    <div class="teacher-portal">
+      <div class="top-bar">
+          <h2>Welcome, {{user}}</h2>
+      </div>
+      <div class="left-bar">
+        <a href="/teacher" class="bar-item">
+          <i class="fa fa-dashboard fa-fw"></i>
+          Home
+        </a>
+        <a class="bar-item">
+          <i class="fa fa-calendar fa-fw"></i>
+          Calendar
+        </a>
+        <a class="bar-item">
+          <i class="fa fa-exclamation-triangle fa-fw"></i>
+          Notifications
+        </a>
+        <a href="/about" class="bar-item">
+          <i class="fa fa-question fa-fw"></i>
+          Help
+        </a>
+        <a class="bar-item">
+          <i class="fa fa-envelope fa-fw"></i>
+          Contact Us
+        </a>
+        <a href="/" class="bar-item">
+          <i class="fa fa-home fa-fw"></i>
+          Exit Teacher Portal
+        </a>
+        <a href="/logout" class="bar-item">
+          <i class="fa fa-arrow-left fa-fw"></i>
+          Logout
+        </a>
+      </div>
+    </div>
+
+</body>

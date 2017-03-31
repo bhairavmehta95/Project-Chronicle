@@ -11,6 +11,9 @@ class Teacher(models.Model):
 	def __str__(self):
 		return "{} {}".format(self.f_name, self.l_name)
 
+	def get_teacher_id(self):
+		return self.teacher_id
+
 class Class(models.Model):
 	class_id = models.AutoField(primary_key=True)
 	teacher_id = models.ForeignKey(Teacher, blank=True, null=True)
@@ -23,6 +26,9 @@ class Class(models.Model):
 
 	def get_class_id(self):
 		return self.class_id
+
+	def get_class_key(self):
+		return self.class_key
 
 
 class Student(models.Model):
@@ -86,6 +92,14 @@ class SecondaryKeyword(models.Model):
 	keyword = models.CharField(max_length=100)
 	point_value = models.IntegerField()
 	number_of_hits = models.IntegerField(default=0)
+
+class TopicProgress(models.Model):
+	progress_id = models.AutoField(primary_key=True)
+	user_id = models.ForeignKey(Student)
+	topic_id = models.ForeignKey(Topic)
+	num_answered = models.IntegerField(default=0)
+	total_questions = models.IntegerField(default=0)
+	progress_percent = models.IntegerField(default=0)
 
 # class Testing(models.Model):
 # 	test_id = models.AutoField(primary_key=True)

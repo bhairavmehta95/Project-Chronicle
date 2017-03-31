@@ -76,9 +76,9 @@ def question_builder(request):
 
         # check whether a builder form was submitted and if it is valid:
         if builder_form.is_valid():
-            sources = form.cleaned_data['sources']
-            q_title = form.cleaned_data['question_title']
-            number_of_keywords = form.cleaned_data['keywords_to_return']
+            sources = builder_form.cleaned_data['sources']
+            q_title = builder_form.cleaned_data['question_title']
+            number_of_keywords = builder_form.cleaned_data['keywords_to_return']
             
             sources_list = sources.split('\n')
 
