@@ -62,13 +62,58 @@ def speech(request, class_id, topic_id, question_id):
             u_id  = request.user.id
             student = Student.objects.get(user_id_login = u_id)
 
-            score = 0
-
             actual_text = q.question_text
 
             updateTopicProgress();
 
-            context = calculateScore(actual_text)
+            text_dictionary = {}
+            response_dictionary = {}
+            total_words = len(actual_text.split())
+
+            # TODO: IMPORT NLTK STOPWORDS
+
+            # creates a hash table using word frequency
+            for word in actual_text.split():
+                if text_dictionary.get(word) == None:
+                    text_dictionary[word] = 1
+                else:
+                    text_dictionary[word] += 1
+
+            score = 0
+
+            # calculates user score
+            for word in actual_text.split():
+                if text_dictionary.get(word) != None and response_dictionary.get(word) == None:
+                    score += text_dictionary[word]
+
+                    # arbitrary value to show the word has been marked
+                    response_dictionary[word] = True
+                else:
+                    pass
+
+            q = Question.objects.get(class_id = class_id, topic_id = topic_id, question_id = question_id)
+            student = Student.objects.get(user_id_login = u_id)
+
+            completion = Completion.objects.create(student_id = student, 
+                                                   question_id = q, 
+                                                   transcript = actual_text, 
+                                                   percent_scored = score/total_words
+                                                   )
+
+            result_string = ""
+            print score/total_words, q.percent_to_pass, score/total_words > q.percent_to_pass 
+            if score/total_words > q.percent_to_pass:
+                result_string = "Pass"
+            else: result_string = "Fail"
+
+            context = {
+                        'q' : q, 
+                        'percentage' : str(100*score/float(total_words)), 
+                        'name' : student.f_name,
+                        'transcript' : actual_text,
+                        'result_string' : result_string,
+                        'percent_to_pass' : str(100*q.percent_to_pass), 
+                        }
 
             return render(request, 'review.html', context)
 
@@ -86,57 +131,6 @@ def speech(request, class_id, topic_id, question_id):
                }
 
     return render(request, 'speech.html', context)
-
-
-def calculateScore(actual_text):
-    text_dictionary = {}
-    response_dictionary = {}
-    total_words = len(actual_text.split())
-
-    # TODO: IMPORT NLTK STOPWORDS
-
-    # creates a hash table using word frequency
-    for word in actual_text.split():
-        if text_dictionary.get(word) == None:
-            text_dictionary[word] = 1
-        else:
-            text_dictionary[word] += 1
-
-
-    # calculates user score
-    for word in transcript.split():
-        if text_dictionary.get(word) != None and response_dictionary.get(word) == None:
-            score += text_dictionary[word]
-
-            # arbitrary value to show the word has been marked
-            response_dictionary[word] = True
-        else:
-            pass
-
-
-    completion = Completion.objects.create(student_id = student, 
-                                           question_id = q, 
-                                           transcript = transcript, 
-                                           percent_scored = score/total_words
-                                           )
-
-    
-    completions = Completion.objects.all()
-
-    result_string = ""
-    print score/total_words, q.percent_to_pass, score/total_words > q.percent_to_pass 
-    if score/total_words > q.percent_to_pass:
-        result_string = "Pass"
-    else: result_string = "Fail"
-
-    context = {
-                'q' : q, 
-                'percentage' : str(100*score/float(total_words)), 
-                'name' : student.f_name,
-                'transcript' : transcript,
-                'result_string' : result_string,
-                'percent_to_pass' : str(100*q.percent_to_pass), 
-                }
 
 def updateTopicProgress():
     print("test for reed")
