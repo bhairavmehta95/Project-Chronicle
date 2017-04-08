@@ -39,7 +39,7 @@
 	{% for topic in topics %}
 			
 		<div class = "col-md-4">
-			<center><a href = "/{{topic.class_id.class_id}}/{{ topic.topic_id }}"><button class = "button"><span>{{ topic.topic_name }}</span></button></a> <br> <br></center>
+			<center><a href = "/{{topic.class_id.class_id}}/{{ topic.topic_id }}"><button class = "button"><span>{{ topic.topic_name }}  {{topic.progress}}</span></button></a> <br> <br></center>
 		</div>
 
 	{% endfor %}

@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from .models import Student, Enrollments, Class, Topic, Question, Teacher, Completion
 
 from .forms import LoginForm, SignupForm, TeacherSignupForm, TeacherLoginForm
+from .topic_progress import updateProgressesFromTopic
 
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login, logout
@@ -131,7 +132,8 @@ def createQuestion(request):
     new_question = Question.objects.create( class_id = class_instance,
                                             topic_id = topic_instance,
                                             question_subject = title,
-                                            question_text = words)
+                                            question_text = words )
+    updateProgressesFromTopic(topicId)
 
 
 # General Functions

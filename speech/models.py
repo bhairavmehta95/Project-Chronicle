@@ -40,6 +40,9 @@ class Student(models.Model):
 	def __str__(self):
 		return self.f_name
 
+	def get_id(self):
+		return self. student_id
+
 class Enrollments(models.Model):
 	student_id = models.ForeignKey(Student)
 	class_id = models.ForeignKey(Class)
@@ -95,11 +98,11 @@ class SecondaryKeyword(models.Model):
 
 class TopicProgress(models.Model):
 	progress_id = models.AutoField(primary_key=True)
-	user_id = models.ForeignKey(Student)
+	student_id = models.ForeignKey(Student)
 	topic_id = models.ForeignKey(Topic)
+	class_id = models.ForeignKey(Class)
 	num_answered = models.IntegerField(default=0)
 	total_questions = models.IntegerField(default=0)
-	progress_percent = models.IntegerField(default=0)
 
 # class Testing(models.Model):
 # 	test_id = models.AutoField(primary_key=True)

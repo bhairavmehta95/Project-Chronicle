@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
-from .models import Student, Enrollments, Class, Topic, Question, Teacher, Completion
+from .models import Student, Enrollments, Class, Topic, Question, Teacher, Completion, TopicProgress
 
 from .forms import LoginForm, SignupForm, TeacherSignupForm, TeacherLoginForm
+
+from .topic_progress import updateSingleTopicProgress, getPercentString
 
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login, logout
@@ -24,12 +26,18 @@ def class_page(request):
     classes = Class.objects.all()
     return render(request, 'class.html', {'classes': classes})
 
+
 def topic_page(request, class_id):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login')
 
     topics = Topic.objects.all().filter(class_id = class_id)
     class_ = Class.objects.get(class_id = class_id)
+
+    #foreach loop to add a field to each topic, giving the percent
+    for topic in topics:
+        topic.progress = getPercentString(topic.topic_id, request.user.id)
+
     context = { 'class' : class_,
                 'topics' : topics
     }
@@ -64,8 +72,6 @@ def speech(request, class_id, topic_id, question_id):
 
             actual_text = q.question_text
 
-            updateTopicProgress();
-
             text_dictionary = {}
             response_dictionary = {}
             total_words = len(actual_text.split())
@@ -82,7 +88,7 @@ def speech(request, class_id, topic_id, question_id):
             score = 0
 
             # calculates user score
-            for word in actual_text.split():
+            for word in transcript.split():
                 if text_dictionary.get(word) != None and response_dictionary.get(word) == None:
                     score += text_dictionary[word]
 
@@ -96,9 +102,10 @@ def speech(request, class_id, topic_id, question_id):
 
             completion = Completion.objects.create(student_id = student, 
                                                    question_id = q, 
-                                                   transcript = actual_text, 
+                                                   transcript = transcript, 
                                                    percent_scored = score/total_words
                                                    )
+            updateSingleTopicProgress(u_id, topic_id)
 
             result_string = ""
             print score/total_words, q.percent_to_pass, score/total_words > q.percent_to_pass 
@@ -110,7 +117,7 @@ def speech(request, class_id, topic_id, question_id):
                         'q' : q, 
                         'percentage' : str(100*score/float(total_words)), 
                         'name' : student.f_name,
-                        'transcript' : actual_text,
+                        'transcript' : transcript,
                         'result_string' : result_string,
                         'percent_to_pass' : str(100*q.percent_to_pass), 
                         }
@@ -131,6 +138,3 @@ def speech(request, class_id, topic_id, question_id):
                }
 
     return render(request, 'speech.html', context)
-
-def updateTopicProgress():
-    print("test for reed")
