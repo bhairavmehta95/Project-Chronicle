@@ -1,4 +1,6 @@
 branch-defaults:
+  master:
+    environment: project-chronicle-dev
   reed:
     environment: pc-env
 environment-defaults:
