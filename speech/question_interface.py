@@ -5,7 +5,7 @@ from .models import Student, Enrollments, Class, Topic, Question, Teacher, Compl
 
 from .forms import LoginForm, SignupForm, TeacherSignupForm, TeacherLoginForm
 
-from .topic_progress import updateSingleTopicProgress, getPercentString
+from .topic_progress import updateSingleTopicProgress, getPercentString, greatestCompletionByStudent
 
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login, logout
@@ -48,9 +48,15 @@ def topic_page(request, class_id):
 def question_page(request, class_id, topic_id):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login')
+    studentObj = Student.objects.get(user_id_login = request.user.id)
     class_ = Class.objects.get(class_id = class_id)
     topic = Topic.objects.filter(class_id = class_id).filter(topic_id = topic_id).get()
     questions = Question.objects.filter(class_id = class_id).filter(topic_id = topic_id)
+
+    #foreach loop to add student's highest score to each question
+    for question in questions:
+        question.best = greatestCompletionByStudent(question.question_id, studentObj.student_id)
+
     context = {'questions' : questions,
                 'class' : class_,
                 'topic' : topic,

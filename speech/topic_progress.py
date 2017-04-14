@@ -1,4 +1,5 @@
 from .models import Student, Topic, Question, Completion, TopicProgress, Class
+from django.db.models import Max
 
 def updateProgressesFromTopic(topicId):
 
@@ -68,7 +69,16 @@ def numQuestionsAnsweredByStudent(topicId, studentId):
     questionsInTopic = Question.objects.filter(topic_id = topicId)
     count = 0
     for question in questionsInTopic:
-        questionResponses = Completion.objects.filter(question_id = question.question_id, student_id = studentId)
+        questionResponses = Completion.objects.filter(question_id = question.question_id, student_id = studentId, percent_scored__gte = question.percent_to_pass)
         if questionResponses.count() > 0:
             count += 1
     return count
+
+def greatestCompletionByStudent(questionId, studentId):
+
+    allCompletions = Completion.objects.filter(question_id = questionId, student_id = studentId)
+    if (allCompletions.count() > 0):
+        bestCompletion = allCompletions.order_by("-percent_scored")[0]
+        return int(bestCompletion.percent_scored * 100)
+    else:
+        return 0
