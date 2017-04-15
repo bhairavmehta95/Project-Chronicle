@@ -20,6 +20,7 @@ import requests
 import re
 #from wiki import search_and_process
 import json
+from django.core import serializers
 
 import random
 
@@ -91,6 +92,20 @@ def logout_user(request):
 def about(request):
     return render(request, 'about.html')
 
+def enroll(request):
+
+    if request.user.is_authenticated():
+        
+        studentObj = Student.objects.get(user_id_login = request.user.id)
+        classObj = Class.objects.get(class_key = request.POST['classKey'])
+
+        newEnrollment = Enrollments.objects.create(student_id = studentObj, class_id = classObj)
+        response = serializers.serialize("json", [newEnrollment])
+        return HttpResponse(json.dumps(response), content_type='application/json')
+
+    else:
+
+        return HttpResponseRedirect('/')
 
 def db(request):
 

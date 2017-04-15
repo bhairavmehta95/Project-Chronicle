@@ -1,4 +1,4 @@
-from .models import Student, Topic, Question, Completion, TopicProgress, Class
+from .models import Student, Topic, Question, Completion, TopicProgress, Class, Enrollments
 from django.db.models import Max
 
 def updateProgressesFromTopic(topicId):
@@ -82,3 +82,11 @@ def greatestCompletionByStudent(questionId, studentId):
         return int(bestCompletion.percent_scored * 100)
     else:
         return 0
+
+def getClassesOfStudent(studentId):
+
+    enrollments = Enrollments.objects.filter(student_id = studentId)
+    searchArray = []
+    for e in enrollments:
+        searchArray.append(e.class_id.class_id)
+    return Class.objects.filter(class_id__in=searchArray)

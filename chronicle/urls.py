@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^$', speech.views.landing, name='landing'),
     url(r'^about/', speech.views.about, name='about'),
     url(r'^demo/$', speech.views.demo, name='demo'),
+    url(r'^enroll/', speech.views.enroll, name='enroll'),
     #url(r'^db', speech.views.db, name='db'),
 
     # Student

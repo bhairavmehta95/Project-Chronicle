@@ -5,7 +5,7 @@ from .models import Student, Enrollments, Class, Topic, Question, Teacher, Compl
 
 from .forms import LoginForm, SignupForm, TeacherSignupForm, TeacherLoginForm
 
-from .topic_progress import updateSingleTopicProgress, getPercentString, greatestCompletionByStudent
+from .data import updateSingleTopicProgress, getPercentString, greatestCompletionByStudent, getClassesOfStudent
 
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login, logout
@@ -23,7 +23,9 @@ def class_page(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login')
 
-    classes = Class.objects.all()
+    studentObj = Student.objects.get(user_id_login = request.user.id)
+    classes = getClassesOfStudent(studentObj.student_id)
+
     return render(request, 'class.html', {'classes': classes})
 
 
