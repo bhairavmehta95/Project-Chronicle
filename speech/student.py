@@ -48,8 +48,6 @@ def signup_user(request):
             except:
                 pass
 
-            class_id = request.POST['Class']
-
             # TODO: ONLY SHOW THE CLASSES CORRESPONDING TO A SPECIFIC TEACHER
             # teacher_target = Class.objects.get(class_id = class_id).teacher_id
 
@@ -59,7 +57,6 @@ def signup_user(request):
             print("here's what's in error:");
             print(error);
             if error == None:
-                class_target = Class.objects.get(class_id = class_id)
 
                 user = User.objects.create_user(username=username,
                                     email = email,
@@ -73,8 +70,6 @@ def signup_user(request):
                 s = Student.objects.create(user_id_login = user.id, f_name = first_name, l_name = last_name)
                 
                 user.groups.add(group)
-
-                Enrollments.objects.create(student_id = s, class_id = class_target)
 
                 return HttpResponseRedirect('/login')
             

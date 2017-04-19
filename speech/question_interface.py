@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
-from .models import Student, Enrollments, Class, Topic, Question, Teacher, Completion, TopicProgress
+from .models import Student, Enrollments, Class, Topic, Question, Teacher, Completion, TopicProgress, PrimaryKeyword, SecondaryKeyword
 
 from .forms import LoginForm, SignupForm, TeacherSignupForm, TeacherLoginForm
 
@@ -60,6 +60,7 @@ def question_page(request, class_id, topic_id):
     #foreach loop to add student's highest score to each question
     for question in questions:
         question.best = greatestCompletionByStudent(question.question_id, studentObj.student_id)
+        question.percent_to_pass = int(question.percent_to_pass * 100)
 
     context = {'questions' : questions,
                 'class' : class_,
@@ -151,3 +152,11 @@ def speech(request, class_id, topic_id, question_id):
                }
 
     return render(request, 'speech.html', context)
+
+def correct(request, class_id, topic_id, question_id):
+
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login')
+
+    questionObj = Question.objects.get(class_id = class_id, topic_id = topic_id, question_id = question_id)
+    #WIP - reed
