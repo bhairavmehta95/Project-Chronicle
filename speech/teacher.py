@@ -64,10 +64,12 @@ def signup_teacher(request):
 
 def teacher_portal(request):
     if request.method == 'GET':
-        if (request.user.is_authenticated and not request.user.has_perm("speech.add_class")):
-            return HttpResponseRedirect('/classes')
-        elif (request.user.is_authenticated and request.user.has_perm("speech.add_class")):
-            return render(request, 'teacherportal.html')
+        teacher = Teacher.objects.filter(user_id_login=request.user.id)
+        if (request.user.is_authenticated):
+            if teacher.count():
+                return render(request, 'teacherportal.html')
+            else:
+                return HttpResponseRedirect('/classes')
         else:
             return render(request, 'teacherlanding.html')
 

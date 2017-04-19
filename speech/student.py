@@ -85,46 +85,6 @@ def signup_user(request):
 
     return render(request, 'signup.html', {'form': form, 'classes' : classes, 'error' : error, })
 
-def login_user(request):
-
-    # user already logged in, take them to classes
-    if request.user.is_authenticated():
-        return HttpResponseRedirect('/classes')
-        
-    # if this is a POST request we need to process the form data
-    error = None
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = LoginForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    #s = Student.objects.get(user_id_login = user.id)
-                    #print "Welcome back: ", s
-                    # Redirect to a success page.
-                    if (user.has_perm("speech.add_class")):
-                        return HttpResponseRedirect('/teacher')
-                    else:
-                        return HttpResponseRedirect('/classes')
-                else:
-                    error = "Disabled account, contact sysadmin"
-                    # Return a 'disabled account' error message
-            else:
-                error = "Not a valid username or password, please try again."
-
-            return render(request, 'login.html', { 'error' : error, 'form': form})
-
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = LoginForm()
-
-    return render(request, 'login.html', {'form': form})
-
 def logout_user(request):
     if request.user.is_authenticated():
         logout(request)

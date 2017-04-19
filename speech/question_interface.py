@@ -20,7 +20,9 @@ import json
 import random
 
 def class_page(request):
+
     if not request.user.is_authenticated():
+        print("not authenticated")
         return HttpResponseRedirect('/login')
 
     studentObj = Student.objects.get(user_id_login = request.user.id)
@@ -88,6 +90,8 @@ def speech(request, class_id, topic_id, question_id):
 
             # creates a hash table using word frequency
             for word in actual_text.split():
+                word = word.lower()
+                print(word)
                 if text_dictionary.get(word) == None:
                     text_dictionary[word] = 1
                 else:
@@ -97,6 +101,8 @@ def speech(request, class_id, topic_id, question_id):
 
             # calculates user score
             for word in transcript.split():
+                word = word.lower()
+                print(word)
                 if text_dictionary.get(word) != None and response_dictionary.get(word) == None:
                     score += text_dictionary[word]
 
@@ -111,13 +117,12 @@ def speech(request, class_id, topic_id, question_id):
             completion = Completion.objects.create(student_id = student, 
                                                    question_id = q, 
                                                    transcript = transcript, 
-                                                   percent_scored = score/total_words
+                                                   percent_scored = float(score)/total_words
                                                    )
             updateSingleTopicProgress(u_id, topic_id)
 
             result_string = ""
-            print score/total_words, q.percent_to_pass, score/total_words > q.percent_to_pass 
-            if score/total_words > q.percent_to_pass:
+            if float(score)/total_words > q.percent_to_pass:
                 result_string = "Pass"
             else: result_string = "Fail"
 

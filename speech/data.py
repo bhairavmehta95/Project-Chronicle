@@ -25,7 +25,7 @@ def updateSingleTopicProgress(userId, topicId):
     else: #topicProgress does not exist
         
         topicObj = Topic.objects.get(pk=topicId)
-        classObj = Class.objects.get(pk=topicObj.class_id)
+        classObj = Class.objects.get(pk=topicObj.class_id.class_id)
 
         TopicProgress.objects.create(   student_id = studentObj,
                                         topic_id = topicObj,
@@ -90,3 +90,14 @@ def getClassesOfStudent(studentId):
     for e in enrollments:
         searchArray.append(e.class_id.class_id)
     return Class.objects.filter(class_id__in=searchArray)
+
+def getStudentBestScore(request, questionId):
+
+    if request.method == 'GET':
+
+        studentObj = Student.objects.get(user_id_login = userId)
+        studentId = studentObj.student_id
+
+        bestCompletion = Completion.objects.get(student_id = studentId, question_id = questionId)
+        response = serializers.serialize("json", [bestCompletion])
+        return HttpResponse(json.dumps(response), content_type='application/json')
