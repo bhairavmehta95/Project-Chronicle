@@ -16,11 +16,12 @@ urlpatterns = [
     url(r'^$', speech.views.landing, name='landing'),
     url(r'^about/', speech.views.about, name='about'),
     url(r'^demo/$', speech.views.demo, name='demo'),
+    url(r'^enroll/', speech.views.enroll, name='enroll'),
+    url(r'^login/', speech.views.login_user, name='login'),
     #url(r'^db', speech.views.db, name='db'),
 
     # Student
     url(r'^signup/', speech.student.signup_user, name='signup'),
-    url(r'^login/', speech.student.login_user, name='login'),
     url(r'^logout/$', speech.student.logout_user, name='logout_user'),
     
     # Teacher
@@ -39,6 +40,9 @@ urlpatterns = [
     url(r'^(\d+)/$', speech.question_interface.topic_page, name='topic_page'),
     url(r'^(\d+)/(\d+)/$', speech.question_interface.question_page, name='question_page'),
     url(r'^(\d+)/(\d+)/(\d+)/$', speech.question_interface.speech, name='speech'),
+
+    # Data
+    url(r'^getStudentBestScore/(\d+)/', speech.data.getStudentBestScore, name='getStudentBestScore'),
 
     # Question Builder
     url(r'^builder/$', speech.question_builder.question_builder, name='question_builder'),

@@ -32,21 +32,24 @@
 {% include "teacherbase.html" %}
 <body>
     <div class="teacher-portal content">
-      <div class="class-title tp-title">{{class_name}}</div>
-        <div class="calc-box">
-          <div class="question-half">
-            <div class="question-panel-title">Topics/Questions</div>
-            <div class="question-panel">
-              <ul id="topicList">
-              </ul>
-            </div>
-          </div>
-          <div class="student-half">
-            <div class="student-panel-title">Students Enrolled</div>
-            <div class="student-panel">
-            </div>
+      <div class="class-title tp-title">
+        <span>{{class_name}}</span>
+        <span class="class-key-title">Enrollment Key: {{class_key}}</span>
+      </div>
+      <div class="calc-box">
+        <div class="question-half">
+          <div class="question-panel-title">Topics/Questions</div>
+          <div class="question-panel">
+            <ul id="topicList">
+            </ul>
           </div>
         </div>
+        <div class="student-half">
+          <div class="student-panel-title">Students Enrolled</div>
+          <div class="student-panel">
+          </div>
+        </div>
+      </div>
       <div class="add-button" data-toggle="modal" data-target="#myModal">
         <i class="fa fa-plus fa-fw"></i>
         <span>Add</span>

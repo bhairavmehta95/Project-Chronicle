@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
-from .models import Student, Enrollments, Class, Topic, Question, Teacher, Completion, TopicProgress
+from .models import Student, Enrollments, Class, Topic, Question, Teacher, Completion, TopicProgress, PrimaryKeyword, SecondaryKeyword
 
 from .forms import LoginForm, SignupForm, TeacherSignupForm, TeacherLoginForm
 
-from .topic_progress import updateSingleTopicProgress, getPercentString
+from .data import updateSingleTopicProgress, getPercentString, greatestCompletionByStudent, getClassesOfStudent
 
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login, logout
@@ -20,10 +20,14 @@ import json
 import random
 
 def class_page(request):
+
     if not request.user.is_authenticated():
+        print("not authenticated")
         return HttpResponseRedirect('/login')
 
-    classes = Class.objects.all()
+    studentObj = Student.objects.get(user_id_login = request.user.id)
+    classes = getClassesOfStudent(studentObj.student_id)
+
     return render(request, 'class.html', {'classes': classes})
 
 
@@ -48,9 +52,16 @@ def topic_page(request, class_id):
 def question_page(request, class_id, topic_id):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login')
+    studentObj = Student.objects.get(user_id_login = request.user.id)
     class_ = Class.objects.get(class_id = class_id)
     topic = Topic.objects.filter(class_id = class_id).filter(topic_id = topic_id).get()
     questions = Question.objects.filter(class_id = class_id).filter(topic_id = topic_id)
+
+    #foreach loop to add student's highest score to each question
+    for question in questions:
+        question.best = greatestCompletionByStudent(question.question_id, studentObj.student_id)
+        question.percent_to_pass = int(question.percent_to_pass * 100)
+
     context = {'questions' : questions,
                 'class' : class_,
                 'topic' : topic,
@@ -80,6 +91,8 @@ def speech(request, class_id, topic_id, question_id):
 
             # creates a hash table using word frequency
             for word in actual_text.split():
+                word = word.lower()
+                print(word)
                 if text_dictionary.get(word) == None:
                     text_dictionary[word] = 1
                 else:
@@ -89,6 +102,8 @@ def speech(request, class_id, topic_id, question_id):
 
             # calculates user score
             for word in transcript.split():
+                word = word.lower()
+                print(word)
                 if text_dictionary.get(word) != None and response_dictionary.get(word) == None:
                     score += text_dictionary[word]
 
@@ -103,13 +118,12 @@ def speech(request, class_id, topic_id, question_id):
             completion = Completion.objects.create(student_id = student, 
                                                    question_id = q, 
                                                    transcript = transcript, 
-                                                   percent_scored = score/total_words
+                                                   percent_scored = float(score)/total_words
                                                    )
             updateSingleTopicProgress(u_id, topic_id)
 
             result_string = ""
-            print score/total_words, q.percent_to_pass, score/total_words > q.percent_to_pass 
-            if score/total_words > q.percent_to_pass:
+            if float(score)/total_words > q.percent_to_pass:
                 result_string = "Pass"
             else: result_string = "Fail"
 
@@ -138,3 +152,11 @@ def speech(request, class_id, topic_id, question_id):
                }
 
     return render(request, 'speech.html', context)
+
+def correct(request, class_id, topic_id, question_id):
+
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login')
+
+    questionObj = Question.objects.get(class_id = class_id, topic_id = topic_id, question_id = question_id)
+    #WIP - reed

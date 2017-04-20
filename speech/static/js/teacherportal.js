@@ -16,10 +16,12 @@ function renderClasses(classArray) {
 	for (var i = 0; i < classArray.length; i++) {
 		var d = document;
 		var tile = $("<a></a>").addClass('tile').attr('href','/teacher/classPage/' + classArray[i].fields.class_key);
+		var key = $("<span></span>").addClass('class-key').text(classArray[i].fields.class_key);
 		var banner = $("<div></div>");
 		var name = $("<span></span>").text(classArray[i].fields.class_name);
 		banner.append(name);
 		tile.append(banner);
+		tile.append(key);
 		$('.class-tiles').append(tile);
 	}
 	if (classArray.length == 0) {

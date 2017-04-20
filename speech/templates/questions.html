@@ -43,10 +43,23 @@
 				<div class = "row"> </div>
 			{% endif %}
 
-		
-			<div class = "col-md-4">
-				<center><a href = "/{{q.class_id.class_id}}/{{ q.topic_id.topic_id }}/{{q.question_id}}"><button class = "button"><span>{{ q.question_subject }}</span></button></a> <br> <br></center>
-			</div>
+			{% if q.best > q.percent_to_pass %}
+				<div class = "col-md-4 passed">
+					<center><a href = "/{{q.class_id.class_id}}/{{ q.topic_id.topic_id }}/{{q.question_id}}">
+					<button class = "button">
+						<span>{{ q.question_subject }}</span> <br>
+						<span>Highest Score: {{ q.best }}%</span>
+					</button></a> <br> <br></center>
+				</div>
+			{% else %}
+				<div class = "col-md-4 not-passed">
+					<center><a href = "/{{q.class_id.class_id}}/{{ q.topic_id.topic_id }}/{{q.question_id}}">
+					<button class = "button">
+						<span>{{ q.question_subject }}</span> <br>
+						<span>Highest Score: {{ q.best }}%</span>
+					</button></a> <br> <br></center>
+				</div>
+			{% endif %}
 			
 		
 
