@@ -4,16 +4,10 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from .models import Student, Enrollments, Class, Topic, Question, Teacher, Completion
 
 from .forms import LoginForm, SignupForm, TeacherSignupForm, TeacherLoginForm
-from .topic_progress import updateProgressesFromTopic
+from .data import updateProgressesFromTopic
 
 from django.contrib.auth.models import User, Group
-from django.contrib.auth import authenticate, login, logout
 
-from wiki import wiki_search
-from bs4 import BeautifulSoup
-import requests
-import re
-from wiki import search_and_process
 import json
 from django.core import serializers
 

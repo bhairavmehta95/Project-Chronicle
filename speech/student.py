@@ -8,14 +8,6 @@ from .forms import LoginForm, SignupForm, TeacherSignupForm, TeacherLoginForm
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login, logout
 
-from wiki import wiki_search
-from bs4 import BeautifulSoup
-import requests
-import re
-from wiki import search_and_process
-import json
-
-import random
 
 def signup_user(request):
     # if this is a POST request we need to process the form data

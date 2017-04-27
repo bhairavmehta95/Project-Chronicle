@@ -99,7 +99,7 @@ def speech(request, class_id, topic_id, question_id):
                     text_dictionary[word] += 1
 
             score = 0
-            # 
+            #
             # calculates user score
             for word in transcript.split():
                 word = word.lower()
