@@ -37,7 +37,7 @@ def question_builder(request):
             else:
                 error = True
             
-            test_form = StringValidatorForm(data = {'string' : request.POST.get('question_title') })
+            test_form = StringValidatorForm(data={'string' : request.POST.get('question_title') })
 
             if test_form.is_valid():
                 question_title = test_form.cleaned_data.get('string')
@@ -69,11 +69,6 @@ def question_builder(request):
                 if error:
                     return 
 
-            
-
- 
-
-
         # check whether a builder form was submitted and if it is valid:
         if builder_form.is_valid():
             sources = builder_form.cleaned_data['sources']
@@ -83,13 +78,15 @@ def question_builder(request):
             sources_list = sources.split('\n')
 
             data = {
-                'documents' : sources_list,
-                'number_of_keywords' : number_of_keywords
+                'documents': sources_list,
+                'num_primary_keywords': number_of_keywords,
+                'num_secondary_keywords':int(number_of_keywords / 2)
             }
 
-            r = requests.post('http://0.0.0.0:5000/index', json=data)
+            r = requests.post('http://pc-api-secretbuilder.us-west-2.elasticbeanstalk.com', json=data)
+            print(r.text)
             response_json = json.loads(r.text)
- 
+
             form_fields = {}
 
             form_fields['question_title'] = q_title
@@ -108,3 +105,6 @@ def question_builder(request):
 
 def points_validator(point_value):
     return is_instance(point_value)
+
+# def addQuestion(request):
+#
