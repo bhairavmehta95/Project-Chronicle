@@ -37,7 +37,11 @@ function renderClasses(classArray) {
 		banner.append(row1);
 		iconContainer.append(updateIcon, deleteIcon)
 		tile.append(banner, key, iconContainer);
-		$('.class-tiles').append(tile);
+		if (classArray.length > 1) {
+			$('.class-tiles').prepend(tile);
+		} else {
+			$('.class-tiles').append(tile); /* to keep the order consistent */
+		}
 	}
 	if ($('a.tile') == 0) {
 		var message = $("<div class='no-class-message'>It seems you do not have any classes. Click the Add Class button to create a new class...</div>");
@@ -100,6 +104,7 @@ function postEditClass() {
 }
 
 function openConfirmDeleteModal(deleteIcon) {
+	$('#deleteConfirmModal input.confirm-txt').val('')
 	$('#deleteConfirmModal').modal();
 	$('.hidden-delete-key').val($(deleteIcon).data().classKey);
 }
@@ -120,7 +125,6 @@ function confirmDeleteClass() {
 			}
 		})
 	} else {
-		$('#deleteConfirmModal input.confirm-txt').val('')
 		$('#deleteConfirmModal').modal('toggle');
 		$('.modal-backdrop').hide();
 	}
