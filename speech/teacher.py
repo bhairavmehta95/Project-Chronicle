@@ -62,17 +62,7 @@ def signup_teacher(request):
     form = TeacherSignupForm();
     return render(request, 'teachersignup.html', {'form': form, 'error' : error, })
 
-def teacher_portal(request):
-    if request.method == 'GET':
-        teacher = Teacher.objects.filter(user_id_login=request.user.id)
-        if (request.user.is_authenticated):
-            if teacher.count():
-                return render(request, 'teacherportal.html')
-            else:
-                return HttpResponseRedirect('/classes')
-        else:
-            return render(request, 'teacherlanding.html')
-
+# Classes
 def createClass(request):
     if (request.method == 'POST'):
         user = request.user.id
@@ -92,20 +82,26 @@ def getClasses(request):
         response = serializers.serialize("json", c)
         return HttpResponse(response, content_type='application/json')
 
-def getTopics(request, classKey):
-    if (request.method == 'GET'):
+def ajaxEditClass(request):
+    if (request.method == 'POST'):
         teacherId = getTeacherId(request)
-        if (teacherOwnsClass(teacherId, classKey)):
-            c = Class.objects.get(class_key = classKey)
-            result = Topic.objects.filter(class_id = c)
-            response = serializers.serialize("json", result)
-            return HttpResponse(response, content_type='application/json')
+        data = request.POST
 
-def classPage(request, classKey):
-    t = getTeacherId(request)
-    c = Class.objects.get(teacher_id = t, class_key = classKey)
-    return render(request, 'teacherclass.html', {'class_name':c, 'class_key':classKey, 'class_id':c.get_class_id()})
+        oldClassObj = Class.objects.get(teacher_id = teacherId, class_key = data['classKey'])
+        oldClassObj.class_name = data['className']
+        oldClassObj.save()
+        return HttpResponse(1, content_type="application/json")
 
+def ajaxGetClass(request):
+    if (request.method == 'POST'):
+        teacherId = getTeacherId(request)
+        classKey = request.POST['classKey']
+        classObj = Class.objects.get(teacher_id = teacherId, class_key = classKey)
+        response = serializers.serialize("json", [classObj])
+        return HttpResponse(response, content_type='application/json')
+
+
+# Topics
 def addTopic(request):
 
     if (request.method == 'POST'):
@@ -122,6 +118,17 @@ def addTopic(request):
     else:
         return HttpResponseRedirect('/')
 
+def getTopics(request, classKey):
+    if (request.method == 'GET'):
+        teacherId = getTeacherId(request)
+        if (teacherOwnsClass(teacherId, classKey)):
+            c = Class.objects.get(class_key = classKey)
+            result = Topic.objects.filter(class_id = c)
+            response = serializers.serialize("json", result)
+            return HttpResponse(response, content_type='application/json')
+
+
+# Questions
 def createQuestion(request):
     
     topicId = request.POST['topic']
@@ -138,8 +145,27 @@ def createQuestion(request):
     updateProgressesFromTopic(topicId)
 
 
+# Page rendering
+def teacher_portal(request):
+    if request.method == 'GET':
+        teacher = Teacher.objects.filter(user_id_login=request.user.id)
+        if (request.user.is_authenticated):
+            if teacher.count():
+                return render(request, 'teacherportal.html')
+            else:
+                return HttpResponseRedirect('/classes')
+        else:
+            return render(request, 'teacherlanding.html')
+
+def classPage(request, classKey):
+    t = getTeacherId(request)
+    c = Class.objects.get(teacher_id = t, class_key = classKey)
+    return render(request, 'teacherclass.html', {'class_name':c, 'class_key':classKey, 'class_id':c.get_class_id()})
+
+
 # General Functions
 def generateClassKey(length):
+
     return ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(length))
 
 def getTeacherId(request):

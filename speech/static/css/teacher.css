@@ -151,11 +151,11 @@ h2 {
 	text-decoration: none;
 }
 
-.class-tiles .tile div {
+.class-tiles .tile div.banner {
 	background-color: #fff;
 	padding: .75em 0;
 	position: absolute;
-	bottom: 2em;
+	bottom: 2.5em;
 	width: 100%;
 	border: 1px solid #ccc;
 	text-align: center;
@@ -203,7 +203,28 @@ h2 {
 	width: 100%;
 	text-align: center;
 	position: absolute;
-	top: 200px;
+	bottom: 200px;
+}
+
+.class-tiles .tile .icon-container {
+	position: absolute;
+	bottom: 5px;
+	text-align: right;
+	width: 100%;
+}
+
+.class-tiles .tile .icon-container i {
+	color: white;
+	font-size: 1.5em;
+	margin-right: .5em;
+}
+
+.class-tiles .tile .icon-container i.fa-times:hover {
+	color: red;
+}
+
+.class-tiles .tile .icon-container i.fa-pencil-square-o:hover {
+	color: green;
 }
 
 .add-button {
@@ -265,7 +286,18 @@ button.close {
 }
 
 .modal-content {
-	height: 180px;
+	height: initial;
+}
+
+.modal-body .body-row {
+	padding: .5em;
+	text-align: right;
+	line-height: 1.75em;
+}
+
+.modal-body .body-row input {
+	width: 215px;
+	text-indent: .5em;
 }
 
 .modal-content input.modal-input {

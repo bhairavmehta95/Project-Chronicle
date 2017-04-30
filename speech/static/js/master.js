@@ -22,4 +22,9 @@ $(document).ready(function() {
 	         }
 	     } 
 	});
+	$('[data-toggle="tooltip"]').tooltip();
 })
+
+function toggleNav() {
+    $('#pop-out').toggleClass('active');
+}
