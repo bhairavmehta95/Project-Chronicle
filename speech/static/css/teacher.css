@@ -308,6 +308,12 @@ button.close {
 	text-indent: .5em;
 }
 
+#deleteConfirmModal input.confirm-txt {
+	line-height: 2em;
+	width: 100px;
+	text-indent: .5em;
+}
+
 .calc-box {
 	width: calc(100vw - 290px);
 	height: calc(100vh - 167px);

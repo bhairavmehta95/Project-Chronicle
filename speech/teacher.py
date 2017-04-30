@@ -100,6 +100,14 @@ def ajaxGetClass(request):
         response = serializers.serialize("json", [classObj])
         return HttpResponse(response, content_type='application/json')
 
+def ajaxDeleteClass(request):
+    if (request.method == 'POST'):
+        teacherId = getTeacherId(request)
+        classKey = request.POST['classKey']
+        classObj = Class.objects.get(teacher_id = teacherId, class_key = classKey)
+        classObj.delete()
+        return HttpResponse(1, content_type='application/json')
+
 
 # Topics
 def addTopic(request):

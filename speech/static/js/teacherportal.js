@@ -29,12 +29,13 @@ function renderClasses(classArray) {
 			e.preventDefault(); //stops the link from triggering
 			openEditClassModal(this);
 		})
-
+		deleteIcon.click(function(e) {
+			e.preventDefault(); //stops the link from triggering
+			openConfirmDeleteModal(this);
+		})
 		row1.append(name);
 		banner.append(row1);
-
 		iconContainer.append(updateIcon, deleteIcon)
-
 		tile.append(banner, key, iconContainer);
 		$('.class-tiles').append(tile);
 	}
@@ -96,4 +97,31 @@ function postEditClass() {
 			originalTile.find('span.classNameSpan').text(postData.className);
 		}
 	})
+}
+
+function openConfirmDeleteModal(deleteIcon) {
+	$('#deleteConfirmModal').modal();
+	$('.hidden-delete-key').val($(deleteIcon).data().classKey);
+}
+
+function confirmDeleteClass() {
+	if ($('#deleteConfirmModal input.confirm-txt').val() == "YES") {
+		var postData = {
+			classKey: $('.hidden-delete-key').val(),
+		}
+		$.ajax({
+			type: 'POST',
+			url: 'ajax/deleteClass/',
+			data: postData,
+			success: function(result) {
+				$('#deleteConfirmModal').modal('toggle');
+				$('.modal-backdrop').hide();
+				$('a.tile:contains(' + postData.classKey + ')').remove()
+			}
+		})
+	} else {
+		$('#deleteConfirmModal input.confirm-txt').val('')
+		$('#deleteConfirmModal').modal('toggle');
+		$('.modal-backdrop').hide();
+	}
 }
