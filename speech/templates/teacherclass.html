@@ -39,10 +39,7 @@
       <div class="calc-box">
         <div class="question-half">
           <div class="question-panel-title">Topics/Questions</div>
-          <div class="question-panel">
-            <ul id="topicList">
-            </ul>
-          </div>
+          <div class="question-panel"></div>
         </div>
         <div class="student-half">
           <div class="student-panel-title">Students Enrolled</div>
@@ -74,6 +71,27 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="button" onclick="addTopic()" class="btn btn-primary">Create</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editTopicModal" tabindex="-1">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">Edit Topic</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        {% csrf_token %}
+        <div class="modal-body">
+          <input class="modal-input" id="topicName" type="text" name="class-name" placeholder="Topic Name">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" onclick="editTopic()" class="btn btn-primary">Save Changes</button>
         </div>
     </div>
   </div>

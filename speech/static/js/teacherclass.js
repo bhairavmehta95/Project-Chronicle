@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	populateTopics();
+	//populateStudents();
 })
 
 function populateTopics() {
@@ -8,6 +9,20 @@ function populateTopics() {
 		url: "/teacher/gettopics/" + $('#classKey').val(),
 		success: function (result) {
 			renderTopics(result);
+		}
+	})
+}
+
+function populateStudents() {
+	var postData = {
+		classKey: $('#classKey').val()
+	}
+	$.ajax({
+		type: 'POST',
+		url: "/teacher/ajax/getStudentsInClass/",
+		data: postData,
+		success: function (result) {
+			renderStudents(result);
 		}
 	})
 }
@@ -32,19 +47,18 @@ function addTopic() {
 }
 
 function renderTopics(topicArray) {
-	for (var i = 0; i < topicArray.length; i++) {
+	for (var i = 0; i < topicArray.length; i++) {	
 		var d = document;
-		var link = $("<a onclick='questionBuilderModal.open(this)' class='question-link'></a>")
-			.text(topicArray[i].fields.topic_name)
+		var link = $("<div class='topic-link'></div>")
 			.attr("topicNumber", topicArray[i].pk);
-		var listElement = $("<li></li>");
-		listElement.append(link);
-		$('#topicList').append(listElement);
+		var name = $("<span></span>").text(topicArray[i].fields.topic_name);
+		var downArrow = $("<i class='fa fa-chevron-down'> </i>");
+		var plusIcon = $("<i onclick='questionBuilderModal.open(this)' class='fa fa-plus-square-o'> </i>");
+		var editIcon = $("<i onclick='openEditTopicModal(this)' class='fa fa-edit'> </i>");
+		
+		link.append(name, editIcon, plusIcon, downArrow);
+		$('.question-panel').append(link);
 	}
-}
-
-function test(thing) {
-	alert($(thing).text());
 }
 
 var questionBuilderModal = {
@@ -69,4 +83,8 @@ var questionBuilderModal = {
 			}
 		})
 	}
+}
+
+function openEditTopicModal() {
+	
 }

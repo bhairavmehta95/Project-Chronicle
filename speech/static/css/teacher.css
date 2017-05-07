@@ -357,7 +357,32 @@ button.close {
 	margin-right: 10px;
 }
 
+.question-panel .topic-link {
+	width: 100%;
+	padding: .75em;
+	border-bottom: 1px solid #ddd;
+	display: flex;
+	align-content: stretch;
+}
+
+.question-panel .topic-link span {
+	flex-grow: 1;
+}
+
+.question-panel .topic-link i {
+	font-size: 20px;
+	padding: 0 .25em;
+	cursor: pointer;
+}
+
+.question-panel .topic-link i:hover {
+	color: green;
+}
+
 .class-key-title {
 	display: inline-block;
-	margin-left: calc(50vw - 253px);
+	left: calc(50vw - 142px);
+	position: absolute;
+	bottom: 0;
+	width: 250px;
 }
