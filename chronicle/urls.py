@@ -33,6 +33,9 @@ urlpatterns = [
     url(r'^teacher/classPage/(?P<classKey>[0-9A-Z]{6})/', speech.teacher.classPage),
     url(r'^teacher/addtopic/', speech.teacher.addTopic),
     url(r'^teacher/createQuestion/', speech.teacher.createQuestion),
+    url(r'^teacher/ajax/getClass', speech.teacher.ajaxGetClass),
+    url(r'^teacher/ajax/editClass', speech.teacher.ajaxEditClass),
+    url(r'^teacher/ajax/deleteClass', speech.teacher.ajaxDeleteClass),
 
     # Question Interface
     url(r'^classes/$', speech.question_interface.class_page, name='class_page'),
