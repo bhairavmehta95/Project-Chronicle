@@ -1,6 +1,6 @@
 branch-defaults:
   master:
-    environment: project-chronicle-dev2
+    environment: project-chronicle-dev
 environment-defaults:
   project-chronicle-dev:
     branch: null
