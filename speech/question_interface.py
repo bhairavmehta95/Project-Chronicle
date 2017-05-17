@@ -153,10 +153,61 @@ def speech(request, class_id, topic_id, question_id):
 
     return render(request, 'speech.html', context)
 
-def correct(request, class_id, topic_id, question_id):
+def correct(request, classId, topicId, questionId):
 
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login')
 
+    student = Student.objects.get(user_id_login = u_id)
     questionObj = Question.objects.get(class_id = class_id, topic_id = topic_id, question_id = question_id)
-    #WIP - reed
+    primaryKeywords = PrimaryKeyword.objects.filter(question_id = questionId)
+    studentResponse = request.POST['response']
+    keywordDict = {}
+
+    studentScore = 0
+    possibleScore = 0
+
+    #add words to dictionary with point values
+    for keywordObj in primaryKeywords:
+        word = keywordObj.keyword.lower()
+        possibleScore += keywordObj.point_value
+        if keywordDict.get(word) == None:
+            keywordDict[word] = keywordObj.point_value
+        else:   # I don't think we should ever have duplicates, but just in case
+            keywordDict[word] += keywordObj.point_value
+
+    studentResponse = re.sub("~!@#$%^&*()_+=-`/*.,[];:\"'/?\n><", ' ', studentResponse) #replace illegal characters with a space
+
+    #add student score
+    for word in studentResponse.split():
+        word = word.lower()
+        if keywordDict.get(word) != None:
+            score += keywordDict[word]
+            keywordDict[word] = 0 #set the point value to 0 bc the points have already been earned
+
+    #create completion object
+    completion = Completion.objects.create( student_id = studentObj, 
+                                            question_id = questionObj, 
+                                            transcript = studentResponse, 
+                                            percent_scored = float(studentScore)/possibleScore  )
+
+    #create or update topic progress
+    updateSingleTopicProgress(request.user.id, topicId)
+
+    #did the student pass?
+    if float(score)/total_words > q.percent_to_pass:
+        result_string = "Pass"
+    else: 
+        resultString = "Fail"
+
+    #give the front end neccesary context
+    context = {
+        'q' : questionObj, 
+        'percentage' : str(100*studentScore/possibleScore), 
+        'name' : studentObj.f_name,
+        'transcript' : studentResponse,
+        'result_string' : resultString,
+        'percent_to_pass' : str(100*q.percent_to_pass), 
+    }
+
+    return render(request, 'review.html', context)
