@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 
-from .models import Student, Enrollments, Class, Topic, Question, Teacher, Completion
+from .models import Student, Enrollments, Class, Topic, Question, Teacher, Completion, PrimaryKeyword
 
 from .forms import LoginForm, SignupForm, TeacherSignupForm, TeacherLoginForm
 from .topic_progress import updateProgressesFromTopic
@@ -141,16 +141,39 @@ def createQuestion(request):
     
     topicId = request.POST['topic']
     title = request.POST['title']
-    words = request.POST['words']
     
+    print("topic id " + topicId)
     topic_instance = Topic.objects.get(topic_id = topicId)
     class_instance = topic_instance.class_id
 
     new_question = Question.objects.create( class_id = class_instance,
                                             topic_id = topic_instance,
-                                            question_subject = title,
-                                            question_text = words )
+                                            question_subject = title )
     updateProgressesFromTopic(topicId)
+    return HttpResponse(1, content_type='application/json')
+
+def getQuestionsInTopic(request):
+
+    topicId = request.POST['topicId']
+    #TODO: make sure user owns this topic
+
+    result = Question.objects.filter(topic_id = topicId)
+    response = serializers.serialize("json", result)
+    return HttpResponse(response, content_type='application/json')
+
+
+# Keywords
+def addKeyword(request):
+
+    questionId = request.POST['questionId']
+    questionObj = Question.objects.get( pk = questionId )
+    word = request.POST['keyword']
+    points = request.POST['points']
+
+    new_keyword = PrimaryKeyword.objects.create(    question_id = questionObj,
+                                                    keyword = word,
+                                                    point_value = points    )
+    return HttpResponse(1, content_type='application/json')
 
 
 # Page rendering
@@ -173,7 +196,6 @@ def classPage(request, classKey):
 
 # General Functions
 def generateClassKey(length):
-
     return ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(length))
 
 def getTeacherId(request):

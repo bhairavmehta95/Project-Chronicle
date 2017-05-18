@@ -306,6 +306,11 @@ button.close {
 	font-size: 16px;
 	width: 100%;
 	text-indent: .5em;
+	margin-bottom: 1em;
+}
+
+.modal-content input.modal-input:last-of-type {
+	margin-bottom: 0;
 }
 
 #deleteConfirmModal input.confirm-txt {
@@ -351,13 +356,74 @@ button.close {
 .student-panel {
 	border: 1px solid #ddd;
 	height: 99%;
+	overflow-y: auto;
 }
 
 .question-panel {
 	margin-right: 10px;
 }
 
+.question-panel .topic-link {
+	width: 100%;
+	padding: .75em;
+	border-bottom: 1px solid #ddd;
+	display: flex;
+	align-content: stretch;
+}
+
+.question-panel .topic-link span {
+	flex-grow: 1;
+	padding-left: .5em;
+}
+
+.question-panel .topic-link i {
+	font-size: 20px;
+	padding: 0 .25em;
+	cursor: pointer;
+}
+
+.question-panel .topic-link i:hover {
+	color: green;
+}
+
+.question-panel .topic-link i.fa-trash-o:hover {
+	color: red;
+}
+
 .class-key-title {
 	display: inline-block;
-	margin-left: calc(50vw - 253px);
+	left: calc(50vw - 142px);
+	position: absolute;
+	bottom: 0;
+	width: 250px;
+}
+
+.question-container {
+	display: flex;
+	align-items: flex-end;
+	flex-direction: column;
+	border-bottom: 1px solid #ddd;
+}
+
+.question-row {
+	width: calc(100% - 15px);
+	border-left: 1px solid #ddd;
+	padding: 1em;
+	display: flex;
+}
+
+.question-row span {
+	flex-grow: 1;
+}
+
+.question-row i {
+	padding: 0 .25em;
+	font-size: 18px;
+	cursor: pointer;
+}
+
+.empty-message {
+	padding: 1em;
+	width: calc(100% - 15px);
+	border-left: 1px solid #ddd;
 }
