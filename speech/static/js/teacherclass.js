@@ -156,6 +156,10 @@ function toggleQuestionsInTopic(arrowIcon) {
 function openAddKeywordModal(icon) {
 	var questionId = $(icon).closest('div.question-row').data().questionId;
 	$('#hiddenQuestionId').val(questionId);
+
+	$('#keywordString').val('');
+	$('#keywordValue').val('');
+
 	$('#addKeywordModal').modal();
 }
 
