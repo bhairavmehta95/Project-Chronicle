@@ -76,7 +76,6 @@ def speech(request, class_id, topic_id, question_id):
     q = Question.objects.get(class_id = class_id, topic_id = topic_id, question_id = question_id)
 
     if request.method == 'POST':
-<<<<<<< HEAD
         transcript = request.POST.get('final_transcript', None)
         if request.user.is_authenticated:
             u_id  = request.user.id
@@ -153,23 +152,6 @@ def speech(request, class_id, topic_id, question_id):
                }
 
     return render(request, 'speech.html', context)
-=======
-        context = correct(request, class_id, topic_id, question_id)
-        return render(request, 'review.html', context)
-
-    else:
-        topic = q.topic_id.topic_name
-        topic_id = q.topic_id
-        class_ = q.class_id
-
-        context = {'q' : q, 
-                   'topic':topic, 
-                   'class' : class_, 
-                   'topic_id' : topic_id
-                   }
-
-        return render(request, 'speech.html', context)
->>>>>>> 544ab6ab4307828a673d81b8c92cd1c0a1a43620
 
 def correct(request, classId, topicId, questionId):
 
