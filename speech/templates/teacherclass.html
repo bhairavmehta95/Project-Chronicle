@@ -39,10 +39,7 @@
       <div class="calc-box">
         <div class="question-half">
           <div class="question-panel-title">Topics/Questions</div>
-          <div class="question-panel">
-            <ul id="topicList">
-            </ul>
-          </div>
+          <div class="question-panel"></div>
         </div>
         <div class="student-half">
           <div class="student-panel-title">Students Enrolled</div>
@@ -79,6 +76,27 @@
   </div>
 </div>
 
+<div class="modal fade" id="editTopicModal" tabindex="-1">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Topic</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        {% csrf_token %}
+        <div class="modal-body">
+          <input class="modal-input" id="editTopicModalTopicName" type="text" name="class-name" placeholder="Topic Name">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" onclick="editTopic()" class="btn btn-primary">Save Changes</button>
+        </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" id="questionBuilder" tabindex="-1">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -91,7 +109,6 @@
         {% csrf_token %}
         <div class="modal-body">
           <input class="modal-input" id="qbName" type="text" name="class-name" placeholder="Question">
-          <input class="modal-input" id="qbWords" type="text" name="class-name" placeholder="Key Words">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -100,6 +117,31 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="addKeywordModal" tabindex="-1">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Keyword</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        {% csrf_token %}
+        <div class="modal-body">
+          <input class="modal-input" id="keywordString" type="text" placeholder="Keyword">
+          <input class="modal-input" id="keywordValue" type="text" placeholder="Points Value">
+          <input class="modal-input" id="hiddenQuestionId" type="hidden" >
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" onclick="addKeyword()" class="btn btn-primary">Add</button>
+        </div>
+    </div>
+  </div>
+</div>
+
 
 <input id="classKey" type="hidden" value={{class_key}} />
 <input id="classId" type="hidden" value={{class_id}} />

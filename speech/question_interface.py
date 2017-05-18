@@ -70,12 +70,13 @@ def question_page(request, class_id, topic_id):
 
 
 def speech(request, class_id, topic_id, question_id):
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         return HttpResponseRedirect('/login')
 
     q = Question.objects.get(class_id = class_id, topic_id = topic_id, question_id = question_id)
 
     if request.method == 'POST':
+<<<<<<< HEAD
         transcript = request.POST.get('final_transcript', None)
         if request.user.is_authenticated:
             u_id  = request.user.id
@@ -152,16 +153,33 @@ def speech(request, class_id, topic_id, question_id):
                }
 
     return render(request, 'speech.html', context)
+=======
+        context = correct(request, class_id, topic_id, question_id)
+        return render(request, 'review.html', context)
+
+    else:
+        topic = q.topic_id.topic_name
+        topic_id = q.topic_id
+        class_ = q.class_id
+
+        context = {'q' : q, 
+                   'topic':topic, 
+                   'class' : class_, 
+                   'topic_id' : topic_id
+                   }
+
+        return render(request, 'speech.html', context)
+>>>>>>> 544ab6ab4307828a673d81b8c92cd1c0a1a43620
 
 def correct(request, classId, topicId, questionId):
 
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login')
 
-    student = Student.objects.get(user_id_login = u_id)
-    questionObj = Question.objects.get(class_id = class_id, topic_id = topic_id, question_id = question_id)
+    studentObj = Student.objects.get(user_id_login = request.user.id)
+    questionObj = Question.objects.get(class_id = classId, topic_id = topicId, question_id = questionId)
     primaryKeywords = PrimaryKeyword.objects.filter(question_id = questionId)
-    studentResponse = request.POST['response']
+    studentResponse = request.POST['final_transcript']
     keywordDict = {}
 
     studentScore = 0
@@ -176,13 +194,16 @@ def correct(request, classId, topicId, questionId):
         else:   # I don't think we should ever have duplicates, but just in case
             keywordDict[word] += keywordObj.point_value
 
-    studentResponse = re.sub("~!@#$%^&*()_+=-`/*.,[];:\"'/?\n><", ' ', studentResponse) #replace illegal characters with a space
+    #studentResponse = re.sub("~!@#$%^&*()_+=-`/*.,[];:'/?><", ' ', studentResponse) #replace illegal characters with a space
 
     #add student score
-    for word in studentResponse.split():
+    print(studentResponse)
+    for word in studentResponse.split(' '):
+        print(word)
         word = word.lower()
         if keywordDict.get(word) != None:
-            score += keywordDict[word]
+            print('got one')
+            studentScore += keywordDict[word]
             keywordDict[word] = 0 #set the point value to 0 bc the points have already been earned
 
     #create completion object
@@ -195,7 +216,7 @@ def correct(request, classId, topicId, questionId):
     updateSingleTopicProgress(request.user.id, topicId)
 
     #did the student pass?
-    if float(score)/total_words > q.percent_to_pass:
+    if float(studentScore)/possibleScore > questionObj.percent_to_pass:
         result_string = "Pass"
     else: 
         resultString = "Fail"
@@ -207,7 +228,7 @@ def correct(request, classId, topicId, questionId):
         'name' : studentObj.f_name,
         'transcript' : studentResponse,
         'result_string' : resultString,
-        'percent_to_pass' : str(100*q.percent_to_pass), 
+        'percent_to_pass' : str(100*questionObj.percent_to_pass), 
     }
 
-    return render(request, 'review.html', context)
+    return context
