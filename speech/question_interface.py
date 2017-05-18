@@ -70,98 +70,37 @@ def question_page(request, class_id, topic_id):
 
 
 def speech(request, class_id, topic_id, question_id):
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         return HttpResponseRedirect('/login')
 
     q = Question.objects.get(class_id = class_id, topic_id = topic_id, question_id = question_id)
 
     if request.method == 'POST':
-        transcript = request.POST.get('final_transcript', None)
-        if request.user.is_authenticated:
-            u_id  = request.user.id
-            student = Student.objects.get(user_id_login = u_id)
+        context = correct(request, class_id, topic_id, question_id)
+        return render(request, 'review.html', context)
 
-            actual_text = q.question_text
+    else:
+        topic = q.topic_id.topic_name
+        topic_id = q.topic_id
+        class_ = q.class_id
 
-            text_dictionary = {}
-            response_dictionary = {}
-            total_words = len(actual_text.split())
+        context = {'q' : q, 
+                   'topic':topic, 
+                   'class' : class_, 
+                   'topic_id' : topic_id
+                   }
 
-            # TODO: IMPORT NLTK STOPWORDS
-
-            # creates a hash table using word frequency
-            for word in actual_text.split():
-                word = word.lower()
-                print(word)
-                if text_dictionary.get(word) == None:
-                    text_dictionary[word] = 1
-                else:
-                    text_dictionary[word] += 1
-
-            score = 0
-
-            # calculates user score
-            for word in transcript.split():
-                word = word.lower()
-                print(word)
-                if text_dictionary.get(word) != None and response_dictionary.get(word) == None:
-                    score += text_dictionary[word]
-
-                    # arbitrary value to show the word has been marked
-                    response_dictionary[word] = True
-                else:
-                    pass
-
-            q = Question.objects.get(class_id = class_id, topic_id = topic_id, question_id = question_id)
-            student = Student.objects.get(user_id_login = u_id)
-
-            completion = Completion.objects.create(student_id = student, 
-                                                   question_id = q, 
-                                                   transcript = transcript, 
-                                                   percent_scored = float(score)/total_words
-                                                   )
-            updateSingleTopicProgress(u_id, topic_id)
-
-            result_string = ""
-            if float(score)/total_words > q.percent_to_pass:
-                result_string = "Pass"
-            else: result_string = "Fail"
-
-            context = {
-                        'q' : q, 
-                        'percentage' : str(100*score/float(total_words)), 
-                        'name' : student.f_name,
-                        'transcript' : transcript,
-                        'result_string' : result_string,
-                        'percent_to_pass' : str(100*q.percent_to_pass), 
-                        }
-
-            return render(request, 'review.html', context)
-
-        else:
-            return HttpResponseRedirect('/login')
-
-    topic = q.topic_id.topic_name
-    topic_id = q.topic_id
-    class_ = q.class_id
-
-    context = {'q' : q, 
-               'topic':topic, 
-               'class' : class_, 
-               'topic_id' : topic_id
-               }
-
-    return render(request, 'speech.html', context)
+        return render(request, 'speech.html', context)
 
 def correct(request, classId, topicId, questionId):
 
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login')
 
-    student = Student.objects.get(user_id_login = u_id)
-    questionObj = Question.objects.get(class_id = class_id, topic_id = topic_id, question_id = question_id)
+    studentObj = Student.objects.get(user_id_login = request.user.id)
+    questionObj = Question.objects.get(class_id = classId, topic_id = topicId, question_id = questionId)
     primaryKeywords = PrimaryKeyword.objects.filter(question_id = questionId)
-    studentResponse = request.POST['response']
+    studentResponse = request.POST['final_transcript']
     keywordDict = {}
 
     studentScore = 0
@@ -176,13 +115,16 @@ def correct(request, classId, topicId, questionId):
         else:   # I don't think we should ever have duplicates, but just in case
             keywordDict[word] += keywordObj.point_value
 
-    studentResponse = re.sub("~!@#$%^&*()_+=-`/*.,[];:\"'/?\n><", ' ', studentResponse) #replace illegal characters with a space
+    #studentResponse = re.sub("~!@#$%^&*()_+=-`/*.,[];:'/?><", ' ', studentResponse) #replace illegal characters with a space
 
     #add student score
-    for word in studentResponse.split():
+    print(studentResponse)
+    for word in studentResponse.split(' '):
+        print(word)
         word = word.lower()
         if keywordDict.get(word) != None:
-            score += keywordDict[word]
+            print('got one')
+            studentScore += keywordDict[word]
             keywordDict[word] = 0 #set the point value to 0 bc the points have already been earned
 
     #create completion object
@@ -195,7 +137,7 @@ def correct(request, classId, topicId, questionId):
     updateSingleTopicProgress(request.user.id, topicId)
 
     #did the student pass?
-    if float(score)/total_words > q.percent_to_pass:
+    if float(studentScore)/possibleScore > questionObj.percent_to_pass:
         result_string = "Pass"
     else: 
         resultString = "Fail"
@@ -207,7 +149,7 @@ def correct(request, classId, topicId, questionId):
         'name' : studentObj.f_name,
         'transcript' : studentResponse,
         'result_string' : resultString,
-        'percent_to_pass' : str(100*q.percent_to_pass), 
+        'percent_to_pass' : str(100*questionObj.percent_to_pass), 
     }
 
-    return render(request, 'review.html', context)
+    return context
