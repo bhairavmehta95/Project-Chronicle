@@ -179,12 +179,9 @@ def correct(request, classId, topicId, questionId):
     #studentResponse = re.sub("~!@#$%^&*()_+=-`/*.,[];:'/?><", ' ', studentResponse) #replace illegal characters with a space
 
     #add student score
-    print(studentResponse)
     for word in studentResponse.split(' '):
-        print(word)
         word = word.lower()
         if keywordDict.get(word) != None:
-            print('got one')
             studentScore += keywordDict[word]
             keywordDict[word] = 0 #set the point value to 0 bc the points have already been earned
 
