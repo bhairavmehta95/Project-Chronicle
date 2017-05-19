@@ -196,7 +196,7 @@ def correct(request, classId, topicId, questionId):
 
     #did the student pass?
     if float(studentScore)/possibleScore > questionObj.percent_to_pass:
-        result_string = "Pass"
+        resultString = "Pass"
     else: 
         resultString = "Fail"
 
