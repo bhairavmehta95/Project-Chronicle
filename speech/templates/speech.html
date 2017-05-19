@@ -28,19 +28,20 @@
 <body>
     <div id="speechPage">
         <br />
-        <div id="mainHeader" class="rounded-border shadow2">
+        <div id="mainHeader" class="rounded-border">
             <div class="hover-lighten header-wrapper">
-                <span id="subjectLink" style="margin-left:1em;"> <a href="/{{class.class_id}}/{{ topic_id.topic_id }}"> {{ topic }} </a> </span>
+                <span id="subjectLink" style="margin-left:1em;">Question from: <a href="/{{class.class_id}}/{{ topic_id.topic_id }}"> {{ topic }} </a> </span>
             </div>
         </div>
 
-        <div id="questionBox" class="rounded-border shadow2">
-            <div for="Question" id="questionLabel" class="">Question:</div>
-            <div id="questionContent">
-                <div id="questionText"> <center> Talk about: {{ q.question_subject }} </center> </div>
+        <div id="questionBox" class="rounded-border">
+            <div class="speech-label">Our question:</div>
+            <div id="questionContent" class="content">
+                <div id="questionText">{{ q.question_subject }}</div>
             </div>
-            <div id="results">
-                <center><span class="final" id="final_span"></span> <span class="interim" id="interim_span"></span> </center>
+            <div class="speech-label">Your response:</div>
+            <div id="results" class="content">
+                <span class="final" id="final_span"></span> <span class="interim" id="interim_span"></span>
             </div>
             <div id="bottomRow">
                 <div id="recordTimer" class="rounded-border">
