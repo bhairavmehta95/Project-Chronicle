@@ -26,10 +26,10 @@ def question_builder(request, class_id, topic_id):
         return "error should go here"
 
     if request.method == 'POST':
-        form = QuestionBuilderForm(request.POST)
+        builder_form = QuestionBuilderForm(request.POST)
 
         # Question Update Form was submitted, time to validate
-        if not form.is_valid() and request.POST.get('is_qbuilder_update'):
+        if not builder_form.is_valid() and request.POST.get('is_qbuilder_update'):
             num_keywords, question_title, primary_data, secondary_data, error = verify_question_update_form(request.POST)
 
             # Add question to database
@@ -47,11 +47,11 @@ def question_builder(request, class_id, topic_id):
 
 
         # check whether a builder form was submitted and if it is valid:
-        if form.is_valid():
-            sources = form.cleaned_data['sources']
-            q_title = form.cleaned_data['question_title']
-            num_keywords = form.cleaned_data['keywords_to_return']
-            
+        if builder_form.is_valid():
+            sources = builder_form.cleaned_data['sources']
+            q_title = builder_form.cleaned_data['question_title']
+            num_keywords = builder_form.cleaned_data['keywords_to_return']
+
             sources_list = sources.split('\n')
 
             data = {

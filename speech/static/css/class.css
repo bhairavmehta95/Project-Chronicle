@@ -45,3 +45,22 @@ h1{
 .noUnderline {
     text-decoration:none!important;
 }
+
+.enroll-box {
+  width: 300px;
+  left: calc(50vw - 150px);
+  position: absolute;
+  bottom: 50px;
+  font-size: 16px;
+}
+
+.enroll-box label {
+  padding-right: 2px;
+}
+
+.enroll-box input {
+  text-indent: .5em;
+  height: 2.5em;
+  line-height: 2.5em;
+  width: 75px;
+}

@@ -1,28 +1,22 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 
-from .models import Student, Enrollments, Class, Topic, Question, Teacher, Completion, PrimaryKeyword, SecondaryKeyword
+from .models import Student, Class, Topic, Question, Completion, PrimaryKeyword
 
-from .forms import LoginForm, SignupForm, TeacherSignupForm, TeacherLoginForm
+from .data import updateSingleTopicProgress, getPercentString, greatestCompletionByStudent, getClassesOfStudent
 
-from django.contrib.auth.models import User, Group
-from django.contrib.auth import authenticate, login, logout
-
-from wiki import wiki_search
-from bs4 import BeautifulSoup
-import requests
-import re
-from wiki import search_and_process
-import json
-
-import random
 
 def class_page(request):
+
     if not request.user.is_authenticated():
+        print("not authenticated")
         return HttpResponseRedirect('/login')
 
-    classes = Class.objects.all()
+    studentObj = Student.objects.get(user_id_login = request.user.id)
+    classes = getClassesOfStudent(studentObj.student_id)
+
     return render(request, 'class.html', {'classes': classes})
+
 
 def topic_page(request, class_id):
     if not request.user.is_authenticated():
@@ -30,6 +24,11 @@ def topic_page(request, class_id):
 
     topics = Topic.objects.all().filter(class_id = class_id)
     class_ = Class.objects.get(class_id = class_id)
+
+    #foreach loop to add a field to each topic, giving the percent
+    for topic in topics:
+        topic.progress = getPercentString(topic.topic_id, request.user.id)
+
     context = { 'class' : class_,
                 'topics' : topics
     }
@@ -40,9 +39,16 @@ def topic_page(request, class_id):
 def question_page(request, class_id, topic_id):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login')
+    studentObj = Student.objects.get(user_id_login = request.user.id)
     class_ = Class.objects.get(class_id = class_id)
     topic = Topic.objects.filter(class_id = class_id).filter(topic_id = topic_id).get()
     questions = Question.objects.filter(class_id = class_id).filter(topic_id = topic_id)
+
+    #foreach loop to add student's highest score to each question
+    for question in questions:
+        question.best = greatestCompletionByStudent(question.question_id, studentObj.student_id)
+        question.percent_to_pass = int(question.percent_to_pass * 100)
+
     context = {'questions' : questions,
                 'class' : class_,
                 'topic' : topic,
@@ -51,91 +57,80 @@ def question_page(request, class_id, topic_id):
 
 
 def speech(request, class_id, topic_id, question_id):
-    if not request.user.is_authenticated():
+    if not request.user.is_authenticated:
         return HttpResponseRedirect('/login')
 
     q = Question.objects.get(class_id = class_id, topic_id = topic_id, question_id = question_id)
 
     if request.method == 'POST':
-        transcript = request.POST.get('final_transcript', None)
-        if request.user.is_authenticated:
-            u_id  = request.user.id
-            student = Student.objects.get(user_id_login = u_id)
+        context = correct(request, class_id, topic_id, question_id)
+        return render(request, 'review.html', context)
 
-            score = 0
+    else:
+        topic = q.topic_id.topic_name
+        topic_id = q.topic_id
+        class_ = q.class_id
 
-            context = calculateScore(q, transcript)
+        context = {'q' : q, 
+                   'topic':topic, 
+                   'class' : class_, 
+                   'topic_id' : topic_id
+                   }
 
-            return render(request, 'review.html', context)
+        return render(request, 'speech.html', context)
 
-        else:
-            pass
-                # Redirect to not logged in page
+def correct(request, classId, topicId, questionId):
+    studentObj = Student.objects.get(user_id_login = request.user.id)
+    questionObj = Question.objects.get(class_id = classId, topic_id = topicId, question_id = questionId)
+    primaryKeywords = PrimaryKeyword.objects.filter(question_id = questionId)
+    studentResponse = request.POST['final_transcript']
+    keywordDict = {}
 
-    topic = q.topic_id.topic_name
-    topic_id = q.topic_id
-    class_ = q.class_id
+    studentScore = 0
+    possibleScore = 0
 
-    context = {'q' : q, 
-               'topic':topic, 
-               'class' : class_, 
-               'topic_id' : topic_id
-               }
+    #add words to dictionary with point values
+    for keywordObj in primaryKeywords:
+        word = keywordObj.keyword.lower()
+        possibleScore += keywordObj.point_value
+        if keywordDict.get(word) == None:
+            keywordDict[word] = keywordObj.point_value
+        else:   # I don't think we should ever have duplicates, but just in case
+            keywordDict[word] += keywordObj.point_value
 
-    return render(request, 'speech.html', context)
+    #studentResponse = re.sub("~!@#$%^&*()_+=-`/*.,[];:'/?><", ' ', studentResponse) #replace illegal characters with a space
 
+    #add student score
+    for word in studentResponse.split(' '):
+        word = word.lower()
+        if keywordDict.get(word) != None:
+            studentScore += keywordDict[word]
+            keywordDict[word] = 0 #set the point value to 0 bc the points have already been earned
 
-def calculateScore(question_, transcript):
-    primary_keywords = PrimaryKeyword.objects.all().filter(question_id=question_)
-    secondary_keywords = SecondaryKeyword.objects.all().filter(question_id=question_)
+    #create completion object
+    completion = Completion.objects.create( student_id = studentObj, 
+                                            question_id = questionObj, 
+                                            transcript = studentResponse, 
+                                            percent_scored = float(studentScore)/possibleScore  )
 
-    total_points_available = 0
-    user_points = 0
+    #create or update topic progress
+    updateSingleTopicProgress(request.user.id, topicId)
 
-    # TODO: IMPORT NLTK STOPWORDS
+    #did the student pass?
+    if float(studentScore)/possibleScore > questionObj.percent_to_pass:
+        resultString = "Pass"
+    else: 
+        resultString = "Fail"
 
-    score_dict = {}
-    for element in primary_keywords:
-        kw = element.keyword
-        points = element.point_value
-
-        score_dict[kw] = points
-
-        total_points_available += points
-
-    for element in secondary_keywords:
-        kw = element.keyword
-        points = element.point_value
-
-        score_dict[kw] = points
-
-        total_points_available += points
-
-    for word in transcript.split():
-        if word in score_dict:
-            user_points += score_dict[word]
-
-
-    # TODO: Add multipliers, teacher answer queries, etc.
-
-    completion = Completion.objects.create(
-                               student_id = student, 
-                               question_id = question_, 
-                               transcript = transcript, 
-                               percent_scored = user_points/float(total_points_available)
-                               )
-
-    result_string = ""
-    print score/total_words, q.percent_to_pass, score/total_words > q.percent_to_pass 
-    if score/total_words > q.percent_to_pass:
-        result_string = "Pass"
-    else: result_string = "Fail"
-
+    #give the front end neccesary context
     context = {
-                'q' : q, 
-                'percentage' : str(100*user_points/float(total_points_available)), 
-                'name' : student.f_name,
-                'transcript' : transcript,
-                'result_string' : result_string,
-                'percent_to_pass' : str(100*q.percent_to_pass), 
-                }
+        'q' : questionObj, 
+        'percentage' : str(100*studentScore/possibleScore), 
+        'name' : studentObj.f_name,
+        'transcript' : studentResponse,
+        'result_string' : resultString,
+        'percent_to_pass' : str(100*questionObj.percent_to_pass), 
+    }
+
+    return context
+

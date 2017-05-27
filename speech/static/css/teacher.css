@@ -74,11 +74,6 @@ h2 {
 	background-color: rgb(27, 28, 29);
 	text-align: left;
 	position: relative;
-	top: 3px;
-}
-
-.teacher-portal {
-	position: relative;
 }
 
 .teacher-portal .top-bar h2 {
@@ -88,7 +83,7 @@ h2 {
 	height: 50px;
 	line-height: 50px;
 	margin-left: .75em;
-	color: #ffa719;
+	color: #f99f0c;
 	overflow: hidden;
 	text-align: left;
 	font-size: 20px;
@@ -96,27 +91,34 @@ h2 {
 }
 
 .teacher-portal .left-bar {
-	height: calc(100% - 114px);
+	height: calc(100% - 51px);
 	background-color: rgb(27, 28, 29);
 	border-right: #bbb 1px solid;
 	width: 175px;
 	position: relative;
-	top: 3px;
 }
 
 .teacher-portal .left-bar .bar-item {
-	color: #62605d;
+	color: #999;
 	font-weight: 300;
 	width: 100%;
 	height: 40px;
 	line-height: 40px;
 	padding-left: 1.75em;
 	cursor: pointer;
+	display: inline-block;
+	text-decoration: none;
 }
 
 .teacher-portal .left-bar .bar-item:hover {
-	background-color: #547aad;
-	color: white;
+	background-color: #ffa719;
+	color: #444;
+}
+
+.no-class-message {
+	padding: 2em 0 0 2em;
+	color: #888;
+	font-size: 16px;
 }
 
 .class-title {
@@ -131,10 +133,297 @@ h2 {
 .class-tiles {
 	border: 1px solid #ddd;
 	width: calc(100vw - 290px);
-	height: calc(100vh - 230px);
+	height: calc(100vh - 167px);
 	position: absolute;
 	top: 130px;
 	left: 230px;
 	display: block;
 	overflow: auto;
+}
+
+.class-tiles .tile {
+	display: inline-block;
+	margin: 25px 0 0 25px;
+	width: 200px;
+	height: 200px;
+	position: relative;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.class-tiles .tile div.banner {
+	background-color: #fff;
+	padding: .75em 0;
+	position: absolute;
+	bottom: 2.5em;
+	width: 100%;
+	border: 1px solid #ccc;
+	text-align: center;
+}
+
+.class-tiles .tile:hover {
+	box-shadow: 0 3px 6px rgba(0,0,0,.1), 0 3px 6px rgba(0,0,0,.2);
+}
+
+.class-tiles .tile:nth-of-type(7n + 1) {
+	background-color: #D64933;
+}
+
+
+.class-tiles .tile:nth-of-type(7n + 2) {
+	background-color: #FF7F11;
+}
+
+
+.class-tiles .tile:nth-of-type(7n + 3) {
+	background-color: #92DCE5;
+}
+
+
+.class-tiles .tile:nth-of-type(7n + 4) {
+	background-color: #B3D89C;
+}
+
+.class-tiles .tile:nth-of-type(7n + 5) {
+	background-color: #AF42AE;
+}
+
+.class-tiles .tile:nth-of-type(7n + 6) {
+	background-color: #7F7B82;
+}
+
+.class-tiles .tile:nth-of-type(7n) {
+	background-color: #000;
+}
+
+.class-tiles .tile .class-key {
+	color: #000;
+	letter-spacing: 1px;
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	position: absolute;
+	bottom: 200px;
+}
+
+.class-tiles .tile .icon-container {
+	position: absolute;
+	bottom: 5px;
+	text-align: right;
+	width: 100%;
+}
+
+.class-tiles .tile .icon-container i {
+	color: white;
+	font-size: 1.5em;
+	margin-right: .5em;
+}
+
+.class-tiles .tile .icon-container i.fa-times:hover {
+	color: red;
+}
+
+.class-tiles .tile .icon-container i.fa-pencil-square-o:hover {
+	color: green;
+}
+
+.add-button {
+	position: absolute;
+	top: 80px;
+	right: 60px;
+	background-color: #39b23b;
+	padding: .5em;
+	color: #fff;
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+.add-button:hover {
+	opacity: .8;
+	box-shadow: 0 3px 6px rgba(0,0,0,.1), 0 3px 6px rgba(0,0,0,.2);
+}
+
+.screen-shadow {
+	display: none;
+}
+.screen-shadow.active {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top:0;
+	left:0;
+	background-color: #000;
+	opacity: .3;
+	z-index: 50;
+	display: block;
+}
+
+.modal-header {
+	display: flex;
+	align-items: center;
+	font-size: 16px;
+	justify-content: space-between;
+	line-height: 24px;
+	-webkit-box-align: center;
+	-webkit-box-direction: normal;
+	-webkit-box-pack: justify;
+	position: relative;
+}
+
+.modal-title {
+	font-size: 20px;
+	line-height: 30px;
+	position: absolute;
+	left: 15px;
+}
+
+button.close {
+	visibility: hidden;
+}
+
+.modal-dialog {
+	width: 400px;
+}
+
+.modal-content {
+	height: initial;
+}
+
+.modal-body .body-row {
+	padding: .5em;
+	text-align: right;
+	line-height: 1.75em;
+}
+
+.modal-body .body-row input {
+	width: 215px;
+	text-indent: .5em;
+}
+
+.modal-content input.modal-input {
+	height: 2em;
+	line-height: 2em;
+	font-size: 16px;
+	width: 100%;
+	text-indent: .5em;
+	margin-bottom: 1em;
+}
+
+.modal-content input.modal-input:last-of-type {
+	margin-bottom: 0;
+}
+
+#deleteConfirmModal input.confirm-txt {
+	line-height: 2em;
+	width: 100px;
+	text-indent: .5em;
+}
+
+.calc-box {
+	width: calc(100vw - 290px);
+	height: calc(100vh - 167px);
+	position: absolute;
+	top: 130px;
+	left: 230px;
+	display: block;
+	overflow: none;
+}
+
+.question-half,
+.student-half {
+	top: 130px;
+	width: calc(50% - 2px);
+	height: 99%;
+	display: inline-block;
+	min-width: 275px;
+	margin-bottom: 3em;
+	position: absolute;
+	top: 0;
+}
+
+.student-half {
+	right: 0;
+}
+
+.question-panel-title,
+.student-panel-title {
+	color: #888;
+	font-size: 16px;
+	padding-bottom: .25em;
+}
+
+.question-panel,
+.student-panel {
+	border: 1px solid #ddd;
+	height: 99%;
+	overflow-y: auto;
+}
+
+.question-panel {
+	margin-right: 10px;
+}
+
+.question-panel .topic-link {
+	width: 100%;
+	padding: .75em;
+	border-bottom: 1px solid #ddd;
+	display: flex;
+	align-content: stretch;
+}
+
+.question-panel .topic-link span {
+	flex-grow: 1;
+	padding-left: .5em;
+}
+
+.question-panel .topic-link i {
+	font-size: 20px;
+	padding: 0 .25em;
+	cursor: pointer;
+}
+
+.question-panel .topic-link i:hover {
+	color: green;
+}
+
+.question-panel .topic-link i.fa-trash-o:hover {
+	color: red;
+}
+
+.class-key-title {
+	display: inline-block;
+	left: calc(50vw - 142px);
+	position: absolute;
+	bottom: 0;
+	width: 250px;
+}
+
+.question-container {
+	display: flex;
+	align-items: flex-end;
+	flex-direction: column;
+	border-bottom: 1px solid #ddd;
+}
+
+.question-row {
+	width: calc(100% - 15px);
+	border-left: 1px solid #ddd;
+	padding: 1em;
+	display: flex;
+}
+
+.question-row span {
+	flex-grow: 1;
+}
+
+.question-row i {
+	padding: 0 .25em;
+	font-size: 18px;
+	cursor: pointer;
+}
+
+.empty-message {
+	padding: 1em;
+	width: calc(100% - 15px);
+	border-left: 1px solid #ddd;
 }
