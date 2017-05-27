@@ -2,47 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b79e280f-ffa3-4809-a1de-a24b741c1b8a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/chronicle/.wsgi.py.swo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.ebextensions/01_packages.config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.ebextensions/02_python.config" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.elasticbeanstalk/config.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/speech/data.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/speech/fixtures/mydata.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/speech/management/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/speech/management/commands/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/speech/management/commands/createsu.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/speech/migrations/0003_auto_20170330_0047.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/speech/migrations/0004_auto_20170407_2309.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/speech/migrations/0005_remove_topicprogress_progress_percent.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/speech/migrations/0006_topicprogress_class_id.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/speech/reference/reference.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/speech/static/js/interface.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/speech/static/js/master.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/speech/static/js/teacherclass.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/speech/static/js/teacherportal.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/speech/templates/teacherbase.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/speech/templates/teacherclass.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/speech/static/js/menu.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chronicle/settings.py" afterPath="$PROJECT_DIR$/chronicle/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/chronicle/urls.py" afterPath="$PROJECT_DIR$/chronicle/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="$PROJECT_DIR$/requirements.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/speech/admin.py" afterPath="$PROJECT_DIR$/speech/admin.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/chronicle/.wsgi.py.swo" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/speech/migrations/0001_initial.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/speech/migrations/0002_auto_20170226_0234.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/speech/migrations/0003_auto_20170330_0047.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/speech/migrations/0004_auto_20170407_2309.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/speech/migrations/0005_remove_topicprogress_progress_percent.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/speech/migrations/0006_topicprogress_class_id.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/speech/migrations/__init__.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/speech/forms.py" afterPath="$PROJECT_DIR$/speech/forms.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/speech/models.py" afterPath="$PROJECT_DIR$/speech/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/speech/question_builder.py" afterPath="$PROJECT_DIR$/speech/question_builder.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/speech/question_interface.py" afterPath="$PROJECT_DIR$/speech/question_interface.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/speech/static/css/class.css" afterPath="$PROJECT_DIR$/speech/static/css/class.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/speech/static/css/question.css" afterPath="$PROJECT_DIR$/speech/static/css/question.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/speech/static/css/speech.css" afterPath="$PROJECT_DIR$/speech/static/css/speech.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/speech/static/css/teacher.css" afterPath="$PROJECT_DIR$/speech/static/css/teacher.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/speech/student.py" afterPath="$PROJECT_DIR$/speech/student.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/speech/teacher.py" afterPath="$PROJECT_DIR$/speech/teacher.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/speech/templates/base.html" afterPath="$PROJECT_DIR$/speech/templates/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/speech/templates/class.html" afterPath="$PROJECT_DIR$/speech/templates/class.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/speech/templates/questions.html" afterPath="$PROJECT_DIR$/speech/templates/questions.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/speech/templates/signup.html" afterPath="$PROJECT_DIR$/speech/templates/signup.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/speech/templates/speech.html" afterPath="$PROJECT_DIR$/speech/templates/speech.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/speech/templates/teacherportal.html" afterPath="$PROJECT_DIR$/speech/templates/teacherportal.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/speech/templates/topics.html" afterPath="$PROJECT_DIR$/speech/templates/topics.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/speech/views.py" afterPath="$PROJECT_DIR$/speech/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -55,33 +30,35 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="question_interface.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="question_interface.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/speech/question_interface.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="40">
-              <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="question_builder.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/speech/question_builder.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2247">
-              <caret line="114" column="17" lean-forward="true" selection-start-line="114" selection-start-column="17" selection-end-line="114" selection-end-column="17" />
+            <state relative-caret-position="160">
+              <caret line="83" column="0" lean-forward="true" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
               <folding>
-                <element signature="e#27#62#0" expanded="true" />
+                <element signature="e#0#35#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="question_builder.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/speech/templates/question_builder.html">
+      <file leaf-file-name="question_builder.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/speech/question_builder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="680">
+              <caret line="34" column="12" lean-forward="false" selection-start-line="34" selection-start-column="12" selection-end-line="34" selection-end-column="12" />
+              <folding>
+                <element signature="e#25#60#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/speech/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="320">
+              <caret line="91" column="28" lean-forward="false" selection-start-line="91" selection-start-column="28" selection-end-line="91" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -90,50 +67,10 @@
       <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/speech/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="337">
+              <caret line="47" column="0" lean-forward="true" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
               <folding>
-                <marker date="1495846153523" expanded="true" signature="5174:5194" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tests.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/speech/tests.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/speech/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="92" column="41" lean-forward="false" selection-start-line="92" selection-start-column="41" selection-end-line="92" selection-end-column="41" />
-              <folding>
-                <marker date="1495846172978" expanded="true" signature="3157:5505" ph="..." />
-                <marker date="1495846172978" expanded="true" signature="3232:3581" ph="..." />
-                <marker date="1495846172978" expanded="true" signature="4208:4550" ph="..." />
-                <marker date="1495846172978" expanded="true" signature="4416:4550" ph="..." />
-                <marker date="1495846172978" expanded="true" signature="4645:5424" ph="..." />
-                <marker date="1495846172978" expanded="true" signature="4758:5424" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="student.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/speech/student.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1009">
-              <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#35#0" expanded="true" />
-                <marker date="1495846172958" expanded="true" signature="3113:3115" ph="..." />
+                <marker date="1495858176869" expanded="true" signature="5286:5306" ph="..." />
               </folding>
             </state>
           </provider>
@@ -143,12 +80,27 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>int(</find>
       <find>.topic</find>
       <find>.topic_prog</find>
       <find>updateProgressesFromTopic</find>
       <find>studentObj = Student.objects.get(user_id_login = request.user.id)</find>
+      <find>question_</find>
+      <find>question_title</find>
+      <find>form =</find>
+      <find>int</find>
+      <find>int(</find>
+      <find>question_subject</find>
+      <find>UPDATE</find>
+      <find>classObj</find>
+      <find>raw</find>
+      <find>.crea</find>
+      <find>RawTe</find>
     </findStrings>
+    <replaceStrings>
+      <replace>question_subject</replace>
+      <replace>question_title</replace>
+      <replace>class_obj</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -156,10 +108,15 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/speech/student.py" />
+        <option value="$PROJECT_DIR$/speech/templates/speech.html" />
+        <option value="$PROJECT_DIR$/speech/templates/questions.html" />
         <option value="$PROJECT_DIR$/speech/teacher.py" />
-        <option value="$PROJECT_DIR$/speech/question_interface.py" />
+        <option value="$PROJECT_DIR$/speech/views.py" />
+        <option value="$PROJECT_DIR$/speech/student.py" />
+        <option value="$PROJECT_DIR$/speech/forms.py" />
         <option value="$PROJECT_DIR$/speech/question_builder.py" />
+        <option value="$PROJECT_DIR$/speech/models.py" />
+        <option value="$PROJECT_DIR$/speech/question_interface.py" />
       </list>
     </option>
   </component>
@@ -170,10 +127,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="52" />
-    <option name="y" value="-11" />
-    <option name="width" value="1549" />
-    <option name="height" value="912" />
+    <option name="x" value="53" />
+    <option name="y" value="-6" />
+    <option name="width" value="1547" />
+    <option name="height" value="906" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -453,18 +410,19 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="52" y="-11" width="1549" height="912" extended-state="6" />
+    <frame x="53" y="-6" width="1547" height="906" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24951519" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32958803" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22097379" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958803" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24951519" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24951519" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -478,7 +436,6 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958803" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24951519" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -496,93 +453,19 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/speech/data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1860">
-          <caret line="94" column="0" lean-forward="false" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#91#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/speech/teacher.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2340">
-          <caret line="6" column="43" lean-forward="false" selection-start-line="6" selection-start-column="43" selection-end-line="6" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/speech/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="92" column="41" lean-forward="false" selection-start-line="92" selection-start-column="34" selection-end-line="92" selection-end-column="41" />
-          <folding>
-            <marker date="1495846172978" expanded="true" signature="3157:5505" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="3232:3581" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4208:4550" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4416:4550" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4645:5424" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4758:5424" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/speech/templates/signup.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-120">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/speech/templates/question_builder.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/speech/student.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1009">
-          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-            <marker date="1495846172958" expanded="true" signature="3113:3115" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/speech/question_builder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="20" column="13" lean-forward="true" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-          <folding>
-            <element signature="e#27#62#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/speech/question_interface.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/speech/question_interface.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2480">
           <caret line="143" column="29" lean-forward="false" selection-start-line="143" selection-start-column="29" selection-end-line="143" selection-end-column="29" />
-          <folding />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -590,6 +473,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="6" column="43" lean-forward="false" selection-start-line="6" selection-start-column="43" selection-end-line="6" selection-end-column="43" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -606,7 +490,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1495846153523" expanded="true" signature="5174:5194" ph="..." />
+            <marker date="1495858176869" expanded="true" signature="5286:5306" ph="..." />
           </folding>
         </state>
       </provider>
@@ -624,12 +508,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1495846172978" expanded="true" signature="3157:5505" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="3232:3581" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4208:4550" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4416:4550" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4645:5424" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4758:5424" ph="..." />
+            <element signature="e#25#60#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -648,10 +527,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="40">
           <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-            <marker date="1495846172958" expanded="true" signature="3113:3115" ph="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -660,7 +536,7 @@
         <state relative-caret-position="1820">
           <caret line="109" column="4" lean-forward="false" selection-start-line="109" selection-start-column="4" selection-end-line="109" selection-end-column="4" />
           <folding>
-            <element signature="e#27#62#0" expanded="true" />
+            <element signature="e#25#60#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -669,7 +545,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2480">
           <caret line="143" column="29" lean-forward="false" selection-start-line="143" selection-start-column="29" selection-end-line="143" selection-end-column="29" />
-          <folding />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -677,6 +555,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="6" column="43" lean-forward="false" selection-start-line="6" selection-start-column="43" selection-end-line="6" selection-end-column="43" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -693,7 +572,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1495846153523" expanded="true" signature="5174:5194" ph="..." />
+            <marker date="1495858176869" expanded="true" signature="5286:5306" ph="..." />
           </folding>
         </state>
       </provider>
@@ -711,12 +590,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1495846172978" expanded="true" signature="3157:5505" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="3232:3581" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4208:4550" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4416:4550" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4645:5424" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4758:5424" ph="..." />
+            <element signature="e#25#60#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -725,10 +599,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="40">
           <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-            <marker date="1495846172958" expanded="true" signature="3113:3115" ph="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -746,7 +617,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2480">
           <caret line="143" column="29" lean-forward="false" selection-start-line="143" selection-start-column="29" selection-end-line="143" selection-end-column="29" />
-          <folding />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -754,6 +627,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="6" column="43" lean-forward="true" selection-start-line="6" selection-start-column="43" selection-end-line="6" selection-end-column="43" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -770,7 +644,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1495846153523" expanded="true" signature="5174:5194" ph="..." />
+            <marker date="1495858176869" expanded="true" signature="5286:5306" ph="..." />
           </folding>
         </state>
       </provider>
@@ -788,12 +662,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1495846172978" expanded="true" signature="3157:5505" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="3232:3581" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4208:4550" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4416:4550" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4645:5424" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4758:5424" ph="..." />
+            <element signature="e#25#60#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -802,10 +671,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="40">
           <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-            <marker date="1495846172958" expanded="true" signature="3113:3115" ph="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -823,7 +689,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2480">
           <caret line="143" column="29" lean-forward="false" selection-start-line="143" selection-start-column="29" selection-end-line="143" selection-end-column="29" />
-          <folding />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -840,7 +708,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1495846153523" expanded="true" signature="5174:5194" ph="..." />
+            <marker date="1495858176869" expanded="true" signature="5286:5306" ph="..." />
           </folding>
         </state>
       </provider>
@@ -858,12 +726,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1495846172978" expanded="true" signature="3157:5505" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="3232:3581" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4208:4550" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4416:4550" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4645:5424" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4758:5424" ph="..." />
+            <element signature="e#25#60#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -882,10 +745,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="40">
           <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-            <marker date="1495846172958" expanded="true" signature="3113:3115" ph="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -893,31 +753,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="6" column="10" lean-forward="false" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/speech/student.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1009">
-          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-            <marker date="1495846172958" expanded="true" signature="3113:3115" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/speech/teacher.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="6" column="43" lean-forward="false" selection-start-line="6" selection-start-column="43" selection-end-line="6" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/speech/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -930,46 +765,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/speech/forms.py">
+    <entry file="file://$PROJECT_DIR$/chronicle/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="6" />
           <folding>
-            <marker date="1495846153523" expanded="true" signature="5174:5194" ph="..." />
+            <element signature="e#0#9#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/speech/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="92" column="41" lean-forward="false" selection-start-line="92" selection-start-column="41" selection-end-line="92" selection-end-column="41" />
-          <folding>
-            <marker date="1495846172978" expanded="true" signature="3157:5505" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="3232:3581" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4208:4550" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4416:4550" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4645:5424" ph="..." />
-            <marker date="1495846172978" expanded="true" signature="4758:5424" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/speech/data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1860">
-          <caret line="94" column="0" lean-forward="false" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#91#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/speech/question_interface.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="2" column="0" lean-forward="true" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -981,12 +783,136 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/speech/templates/speech.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="39" column="58" lean-forward="false" selection-start-line="39" selection-start-column="58" selection-end-line="39" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/speech/templates/topics.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/speech/templates/questions.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="920">
+          <caret line="46" column="39" lean-forward="true" selection-start-line="46" selection-start-column="39" selection-end-line="46" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/speech/migrations/0001_initial.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-720">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.ebextensions/02_python.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/speech/management/commands/createsu.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/speech/data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="557">
+          <caret line="94" column="0" lean-forward="false" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/speech/teacher.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="4" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="207" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/speech/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/speech/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="1" column="0" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+          <folding>
+            <element signature="e#25#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/speech/student.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="30" column="54" lean-forward="true" selection-start-line="30" selection-start-column="54" selection-end-line="30" selection-end-column="54" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/speech/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="337">
+          <caret line="47" column="0" lean-forward="true" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+          <folding>
+            <marker date="1495858176869" expanded="true" signature="5286:5306" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/speech/question_builder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2247">
-          <caret line="114" column="17" lean-forward="true" selection-start-line="114" selection-start-column="17" selection-end-line="114" selection-end-column="17" />
+        <state relative-caret-position="680">
+          <caret line="34" column="12" lean-forward="false" selection-start-line="34" selection-start-column="12" selection-end-line="34" selection-end-column="12" />
           <folding>
-            <element signature="e#27#62#0" expanded="true" />
+            <element signature="e#25#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/speech/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="91" column="28" lean-forward="false" selection-start-line="91" selection-start-column="28" selection-end-line="91" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/speech/question_interface.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="83" column="0" lean-forward="true" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
           </folding>
         </state>
       </provider>

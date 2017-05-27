@@ -44,6 +44,7 @@ class QBuilderUpdateForm(forms.Form):
         self.fields['question_title'] = forms.CharField(label='Question Title', max_length=75, initial=data['question_title'])
         self.fields['num_primary_keywords'] = forms.IntegerField(label='', initial=primary_keywords, widget=forms.HiddenInput())
         self.fields['num_secondary_keywords'] = forms.IntegerField(label='', initial=secondary_keywords, widget=forms.HiddenInput())
+        self.fields['raw_text'] = forms.CharField(label='', initial=data['raw_text'], widget=forms.HiddenInput)
 
         for index in range(primary_keywords):
             # generate extra fields in the number specified via extra_fields

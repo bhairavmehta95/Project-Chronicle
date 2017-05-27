@@ -1,8 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-
-from .models import Student, Class, Topic, Question, Completion, PrimaryKeyword
-
+from .models import Student, Class, Topic, Question, Completion, PrimaryKeyword, RawText
 from .data import updateSingleTopicProgress, getPercentString, greatestCompletionByStudent, getClassesOfStudent
 
 
@@ -82,6 +80,8 @@ def speech(request, class_id, topic_id, question_id):
 def correct(request, classId, topicId, questionId):
     studentObj = Student.objects.get(user_id_login = request.user.id)
     questionObj = Question.objects.get(class_id = classId, topic_id = topicId, question_id = questionId)
+    contextObj = RawText.objects.get(question_id=questionId)
+
     primaryKeywords = PrimaryKeyword.objects.filter(question_id = questionId)
     studentResponse = request.POST['final_transcript']
     keywordDict = {}
