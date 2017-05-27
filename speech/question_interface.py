@@ -1,23 +1,21 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
-
-from .models import Student, Enrollments, Class, Topic, Question, Teacher, Completion, TopicProgress, PrimaryKeyword, SecondaryKeyword
-
-from .forms import LoginForm, SignupForm, TeacherSignupForm, TeacherLoginForm
-
+from django.http import HttpResponseRedirect
+from .models import Student, Class, Topic, Question, Completion, Keyword, RawText, KeywordContext
 from .data import updateSingleTopicProgress, getPercentString, greatestCompletionByStudent, getClassesOfStudent
 
-from django.contrib.auth.models import User, Group
-from django.contrib.auth import authenticate, login, logout
 
-from wiki import wiki_search
-from bs4 import BeautifulSoup
-import requests
-import re
-from wiki import search_and_process
-import json
+class Counter:
+    def __init__(self):
+        self.fast_counter = 0
+        self.slow_counter = 0
 
-import random
+    def increment(self):
+        self.fast_counter += 1
+        if self.fast_counter % 2 == 0:
+            self.slow_counter += 1
+
+        return ""
+
 
 def class_page(request):
 
@@ -92,14 +90,13 @@ def speech(request, class_id, topic_id, question_id):
 
         return render(request, 'speech.html', context)
 
+
+
 def correct(request, classId, topicId, questionId):
-
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login')
-
     studentObj = Student.objects.get(user_id_login = request.user.id)
     questionObj = Question.objects.get(class_id = classId, topic_id = topicId, question_id = questionId)
-    primaryKeywords = PrimaryKeyword.objects.filter(question_id = questionId)
+
+    keywords = Keyword.objects.filter(question_id = questionId, is_primary=True)
     studentResponse = request.POST['final_transcript']
     keywordDict = {}
 
@@ -107,22 +104,56 @@ def correct(request, classId, topicId, questionId):
     possibleScore = 0
 
     #add words to dictionary with point values
-    for keywordObj in primaryKeywords:
+    for keywordObj in keywords:
         word = keywordObj.keyword.lower()
         possibleScore += keywordObj.point_value
         if keywordDict.get(word) == None:
             keywordDict[word] = keywordObj.point_value
-        else:   # I don't think we should ever have duplicates, but just in case
-            keywordDict[word] += keywordObj.point_value
 
     #studentResponse = re.sub("~!@#$%^&*()_+=-`/*.,[];:'/?><", ' ', studentResponse) #replace illegal characters with a space
 
     #add student score
+
+    kw_list = []
+    prev_context_list = []
+    post_context_list = []
+    other_words = []
+
+    nonkw = ""
     for word in studentResponse.split(' '):
+        nonlowered_word = word
         word = word.lower()
-        if keywordDict.get(word) != None:
+        if keywordDict.get(word) is not None:
             studentScore += keywordDict[word]
             keywordDict[word] = 0 #set the point value to 0 bc the points have already been earned
+            kw_list.append(nonlowered_word)
+
+            kw = Keyword.objects.get(question_id=questionObj, keyword=word)
+
+            contextObj = KeywordContext.objects.get(question_id=questionObj, keyword=kw, previous=True)
+            prev_context_list.append(contextObj)
+
+            contextObj = KeywordContext.objects.get(question_id=questionObj, keyword=kw, previous=False)
+            post_context_list.append(contextObj)
+
+            other_words.append(nonkw)
+            nonkw = ""
+        else:
+            nonkw = nonkw + nonlowered_word + " "
+
+    other_words.append(nonkw)
+    kw_list.append("")
+
+    print prev_context_list, post_context_list, keywordDict
+
+    interleaved_transcript = []
+    i = 0
+    while i < len(other_words):
+        interleaved_transcript.append(other_words[i])
+        interleaved_transcript.append(kw_list[i])
+        i += 1
+
+    counter_instance = Counter()
 
     #create completion object
     completion = Completion.objects.create( student_id = studentObj, 
@@ -139,14 +170,19 @@ def correct(request, classId, topicId, questionId):
     else: 
         resultString = "Fail"
 
+
     #give the front end neccesary context
     context = {
         'q' : questionObj, 
         'percentage' : str(100*studentScore/possibleScore), 
         'name' : studentObj.f_name,
-        'transcript' : studentResponse,
+        'transcript' : interleaved_transcript,
+        'prev_context_list': prev_context_list,
+        'post_context_list': post_context_list,
+        'counter': counter_instance,
         'result_string' : resultString,
         'percent_to_pass' : str(100*questionObj.percent_to_pass), 
     }
 
     return context
+

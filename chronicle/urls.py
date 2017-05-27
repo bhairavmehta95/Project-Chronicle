@@ -50,5 +50,5 @@ urlpatterns = [
     url(r'^getStudentBestScore/(\d+)/', speech.data.getStudentBestScore, name='getStudentBestScore'),
 
     # Question Builder
-    url(r'^builder/$', speech.question_builder.question_builder, name='question_builder'),
+    url(r'^builder/(\d+)/(\d+)/$', speech.question_builder.question_builder, name='question_builder'),
 ]

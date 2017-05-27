@@ -32,24 +32,43 @@ class QuestionBuilderForm(forms.Form):
     keywords_to_return = forms.IntegerField(label='Keywords to Return', min_value=1, max_value=30)
 
 class QBuilderUpdateForm(forms.Form):
-    is_qbuilder_update = forms.BooleanField(initial=True, widget=forms.HiddenInput())
+    is_qbuilder_update = forms.BooleanField(label='', initial=True, widget=forms.HiddenInput())
 
     def empty_init(self, *args, **kwargs):
-        keywords = kwargs.pop('keywords', 0)
+        primary_keywords = kwargs.pop('primary_keywords', 0)
+        secondary_keywords = kwargs.pop('secondary_keywords', 0)
         data = kwargs.pop('data')
     
         super(QBuilderUpdateForm, self).__init__(*args, **kwargs)
         
         self.fields['question_title'] = forms.CharField(label='Question Title', max_length=75, initial=data['question_title'])
-        self.fields['number_of_keywords'] = forms.IntegerField(label='', initial=keywords, widget=forms.HiddenInput())
+        self.fields['num_primary_keywords'] = forms.IntegerField(label='', initial=primary_keywords, widget=forms.HiddenInput())
+        self.fields['num_secondary_keywords'] = forms.IntegerField(label='', initial=secondary_keywords, widget=forms.HiddenInput())
+        self.fields['raw_text'] = forms.CharField(label='', initial=data['raw_text'], widget=forms.HiddenInput)
 
-        for index in range(int(keywords)):
+        for index in range(primary_keywords):
             # generate extra fields in the number specified via extra_fields
-            self.fields['keyword_field_{index}'.format(index=index)] = forms.CharField(initial=data['keyword_field_{index}'.format(index=index)])
-            self.fields['keyword_point_field_{index}'.format(index=index)] = forms.IntegerField(
-                                                                                                                                            initial=data['keyword_point_field_{index}'.format(index=index)],
-                                                                                                                                            min_value=1
-                                                                                                                                             )
+            self.fields['primary_keyword_field_{index}'.format(index=index)] = forms.CharField(\
+                                                                                                                        initial=data['primary_keyword_field_{index}'.format(index=index)]
+                                                                                                                        )
+           
+            self.fields['primary_keyword_point_field_{index}'.format(index=index)] = forms.IntegerField(
+                                                                                                                                initial=data['primary_keyword_point_field_{index}'.format(index=index)],
+                                                                                                                                min_value=1
+                                                                                                                                )
+            
+        for index in range(secondary_keywords):
+            self.fields['secondary_keyword_field_{index}'.format(index=index)] = forms.CharField(
+                                                                                                                        label='', 
+                                                                                                                        initial=data['secondary_keyword_field_{index}'.format(index=index)],
+                                                                                                                        widget=forms.HiddenInput()
+                                                                                                                        ) 
+            self.fields['secondary_keyword_point_field_{index}'.format(index=index)] = forms.IntegerField(
+                                                                                                                        label='', 
+                                                                                                                        initial=data['secondary_keyword_point_field_{index}'.format(index=index)],
+                                                                                                                        widget=forms.HiddenInput()
+                                                                                                                        ) 
+
         return self
 
 class IntegerValidatorForm(forms.Form):
