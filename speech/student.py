@@ -6,7 +6,7 @@ from .forms import SignupForm
 
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import logout
-e
+
 def signup_user(request):
     # if this is a POST request we need to process the form data
     error = None
