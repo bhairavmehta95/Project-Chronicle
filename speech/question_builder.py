@@ -2,11 +2,12 @@
 
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import Class, Topic, Question, PrimaryKeyword, SecondaryKeyword, RawText
+from .models import Class, Topic, Question, PrimaryKeyword, SecondaryKeyword, RawText, KeywordContext
 from .forms import QuestionBuilderForm, QBuilderUpdateForm, IntegerValidatorForm, StringValidatorForm
 
 import requests
 import json
+import re
 from math import ceil
 
 
@@ -34,13 +35,71 @@ def question_builder(request, class_id, topic_id):
 
             RawText.objects.create(question_id=question_, raw_text=raw_text)
 
+            raw_text_list = raw_text.lower().split()
+            raw_text_list[:] = [re.sub(r'[^a-zA-Z0-9]+', '', word) for word in raw_text_list]
+
+            print raw_text_list
+
             for kw_tuple in primary_data:
-                PrimaryKeyword.objects.create(question_id=question_, keyword=kw_tuple[0],
+                kw = PrimaryKeyword.objects.create(question_id=question_, keyword=kw_tuple[0],
                                               point_value=float(kw_tuple[1]))
+                word = kw_tuple[0]
+
+                context_index = raw_text_list.index(word)
+                context = ""
+
+                i = 5
+                while (i > 0):
+                    try:
+                        context = context + raw_text_list[context_index - i] + " "
+                        i -= 1
+                    except:
+                        break
+
+                print word, context
+                KeywordContext.objects.create(question_id=question_, keyword=kw, context=context, previous=True)
+
+                context = ""
+                i = 1
+                while (i < 6):
+                    try:
+                        context = context + raw_text_list[context_index + i] + " "
+                        i += 1
+                    except:
+                        break
+
+                print word, context
+                KeywordContext.objects.create(question_id=question_, keyword=kw, context=context, previous=False)
 
             for kw_tuple in secondary_data:
                 SecondaryKeyword.objects.create(question_id=question_, keyword=kw_tuple[0],
                                                 point_value=float(kw_tuple[1]))
+
+                # word = kw_tuple[0]
+                # context_index = raw_text_list.index(word)
+                # context = ""
+                #
+                # i = 5
+                # while (i > 0):
+                #     try:
+                #         context = context + raw_text_list[context_index - i] + " "
+                #         i -= 1
+                #     except:
+                #         break
+                #
+                #
+                #
+                # KeywordContext.objects.create(question_id=question_, keyword=kw, context=context, previous=True)
+                # context = ""
+                # i = 1
+                # while (i < 6):
+                #     try:
+                #         context = context + raw_text_list[context_index + i] + " "
+                #         i += 1
+                #     except:
+                #         break
+                #
+                # KeywordContext.objects.create(question_id=question_, keyword=kw, context=context, previous=False)
 
             request.method = 'GET'
             return HttpResponseRedirect('/builder/{}/{}'.format(class_id, topic_id))

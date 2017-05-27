@@ -98,12 +98,24 @@ class PrimaryKeyword(models.Model):
     point_value = models.IntegerField()
     number_of_hits = models.IntegerField(default=0)
 
+    def __str__(self):
+        return self.keyword
+
 class SecondaryKeyword(models.Model):
     keyword_id = models.AutoField(primary_key=True)
     question_id = models.ForeignKey(Question)
     keyword = models.CharField(max_length=100)
     point_value = models.IntegerField()
     number_of_hits = models.IntegerField(default=0)
+
+class KeywordContext(models.Model):
+    question_id = models.ForeignKey(Question)
+    keyword = models.ForeignKey(PrimaryKeyword)
+    context = models.CharField(max_length=200)
+    previous = models.BooleanField()
+
+    def __str__(self):
+        return self.context
 
 class TopicProgress(models.Model):
     progress_id = models.AutoField(primary_key=True)
