@@ -1,13 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 
-from .models import Student, Enrollments, Class, Topic, Question, Teacher, Completion
-
-from .forms import LoginForm, SignupForm, TeacherSignupForm, TeacherLoginForm
+from .models import Student, Class
+from .forms import SignupForm
 
 from django.contrib.auth.models import User, Group
-from django.contrib.auth import authenticate, login, logout
-
+from django.contrib.auth import logout
 
 def signup_user(request):
     # if this is a POST request we need to process the form data
@@ -23,10 +21,9 @@ def signup_user(request):
             last_name = form.cleaned_data['last_name']
             password = form.cleaned_data['password']
             retyped = form.cleaned_data['retyped']
-            #teacher_id = form.cleaned_data['teacher_id']
 
             # Password Checking
-            if (password != retyped):
+            if password != retyped:
                 error = "Passwords don't match."
 
             # Password Length: TODO - replace with django validators
@@ -35,7 +32,7 @@ def signup_user(request):
 
             # Check existing user
             try:
-                user = User.objects.get(username=username)
+                User.objects.get(username=username)
                 error = "Username already exists in system."
             except:
                 pass
@@ -46,31 +43,31 @@ def signup_user(request):
             # if teacher_target.teacher_id != teacher_id:
             #     error = "Please pick a real teacher/class pair, this is only temporary"
 
-            print("here's what's in error:");
-            print(error);
-            if error == None:
+            print("here's what's in error:")
+            print(error)
+
+            if error is None:
 
                 user = User.objects.create_user(username=username,
-                                    email = email,
-                                    password=password)
+                                                email=email,
+                                                password=password)
 
                 try:
-                    group = Group.objects.get(name = "student")
+                    group = Group.objects.get(name="student")
                 except:
-                    group = Group.objects.create(name = "student")
+                    group = Group.objects.create(name="student")
 
-                s = Student.objects.create(user_id_login = user.id, f_name = first_name, l_name = last_name)
-                
+                Student.objects.create(user_id_login=user.id, f_name=first_name, l_name=last_name)
                 user.groups.add(group)
 
                 return HttpResponseRedirect('/login')
-            
 
     # if a GET (or any other method) we'll create a blank form
     classes = Class.objects.all()
     form = SignupForm()
 
-    return render(request, 'signup.html', {'form': form, 'classes' : classes, 'error' : error, })
+    return render(request, 'signup.html', {'form': form, 'classes': classes, 'error': error, })
+
 
 def logout_user(request):
     if request.user.is_authenticated():
