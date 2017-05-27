@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import Student, Class, Topic, Question, Completion, PrimaryKeyword, RawText, KeywordContext
+from .models import Student, Class, Topic, Question, Completion, Keyword, RawText, KeywordContext
 from .data import updateSingleTopicProgress, getPercentString, greatestCompletionByStudent, getClassesOfStudent
 
 
@@ -96,7 +96,7 @@ def correct(request, classId, topicId, questionId):
     studentObj = Student.objects.get(user_id_login = request.user.id)
     questionObj = Question.objects.get(class_id = classId, topic_id = topicId, question_id = questionId)
 
-    primaryKeywords = PrimaryKeyword.objects.filter(question_id = questionId)
+    keywords = Keyword.objects.filter(question_id = questionId, is_primary=True)
     studentResponse = request.POST['final_transcript']
     keywordDict = {}
 
@@ -104,7 +104,7 @@ def correct(request, classId, topicId, questionId):
     possibleScore = 0
 
     #add words to dictionary with point values
-    for keywordObj in primaryKeywords:
+    for keywordObj in keywords:
         word = keywordObj.keyword.lower()
         possibleScore += keywordObj.point_value
         if keywordDict.get(word) == None:
@@ -121,13 +121,14 @@ def correct(request, classId, topicId, questionId):
 
     nonkw = ""
     for word in studentResponse.split(' '):
+        nonlowered_word = word
         word = word.lower()
         if keywordDict.get(word) is not None:
             studentScore += keywordDict[word]
             keywordDict[word] = 0 #set the point value to 0 bc the points have already been earned
-            kw_list.append(word)
+            kw_list.append(nonlowered_word)
 
-            kw = PrimaryKeyword.objects.get(question_id=questionObj, keyword=word)
+            kw = Keyword.objects.get(question_id=questionObj, keyword=word)
 
             contextObj = KeywordContext.objects.get(question_id=questionObj, keyword=kw, previous=True)
             prev_context_list.append(contextObj)
@@ -138,12 +139,12 @@ def correct(request, classId, topicId, questionId):
             other_words.append(nonkw)
             nonkw = ""
         else:
-            nonkw = nonkw + word + " "
+            nonkw = nonkw + nonlowered_word + " "
 
     other_words.append(nonkw)
     kw_list.append("")
 
-    print prev_context_list, post_context_list
+    print prev_context_list, post_context_list, keywordDict
 
     interleaved_transcript = []
     i = 0

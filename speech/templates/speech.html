@@ -1,18 +1,6 @@
-﻿<!-- Google Analytics Script -->
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-83652865-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
-  {% include "base.html" %}
+{#  {% include "base.html" %}#}
 <head>
     <meta charset="UTF-8">
     <title>Answer</title>
@@ -37,7 +25,7 @@
         <div id="questionBox" class="rounded-border">
             <div class="speech-label">Our question:</div>
             <div id="questionContent" class="content">
-                <div id="questionText">{{ q.question_title }}</div>
+                <div id="questionText">{{ q.question_subject }}</div>
             </div>
             <div class="speech-label">Your response:</div>
             <div id="results" class="content">

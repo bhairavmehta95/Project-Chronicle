@@ -1,0 +1,52 @@
+form {
+    margin-top: 4em;
+    text-align: center;
+}
+
+.loginContainer {
+    font-size:15px;
+    margin-top: 6em;
+    width: 22em;
+    text-align: center;
+    font-family: "Century Gothic",sans-seif;
+}
+
+.loginContainer label {
+    float:left;
+    margin-left:0;
+    margin-bottom:0;
+}
+
+.loginContainer .formRow {
+    height: 2em;
+    line-height:2em;
+}
+
+.loginContainer input[type=text],
+.loginContainer input[type=password] {
+    width:13em;
+    text-align:left;
+    float:right;
+    text-indent:.5em;
+    box-sizing:content-box;
+    height:2em;
+    line-height:2em;
+    padding:0;
+    border: solid 1px #0f1f38;
+}
+
+.submitButton {
+    background-color: #fff;
+    color: #0f1f38;
+    border: 1px solid #0f1f38;
+    padding: .5em 0;
+    width:30%;
+}
+
+.registerLink {
+}
+
+    .submitButton:hover {
+        background-color: #f55449;
+        color: #fff;
+    }

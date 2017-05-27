@@ -1,65 +1,64 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-{% include "base.html" %}
+
 {% load speech_extras %}
 
 <head>
-
     <title>Response</title>
-{#    <meta charset="utf-8">#}
-{##}
-{#    <meta name="viewport" content="width=device-width, initial-scale=1">#}
-{#    {% load static %}#}
-{#    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">#}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-{#    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>#}
-
-{#    <link rel="stylesheet" type="text/css" href="{% static 'css/review.css' %}" />#}
     <link rel="stylesheet" type="text/css" href="https://s3-us-west-2.amazonaws.com/whynotask-bucket/semantic.min.css">
-{#    <link rel="stylesheet" type="text/css" href="https://github.com/Semantic-Org/Semantic-UI-CSS/blob/master/semantic.css">#}
 </head>
 
-<center>
-    <div id="review">
-        <br>
-        <h1>Hey {{ name }},</h1>
-        <h2> our question was {{ q.question_title }}...</h2>
-        <h2> and you answered...</h2>
-            <br>
 
-            {% for word in transcript  %}
-                {% if counter.fast_counter|divisibleby:2 %}
-                    <h4 style="display:inline"> {{ word }} </h4>
-                {% else %}
-                    <h4 data-tooltip="...{{ prev_context_list|return_item:counter.slow_counter }} {{word}}
-                        {{ post_context_list|return_item:counter.slow_counter }}..." data-position="top center"
-                        style="display:inline; color:green">{{ word }}
-                    </h4>
-                {% endif %}
-                {{ counter.increment }}
-            {% endfor %}
+<body>
 
-            <br>
-            <h2>- Your Score -</h2>
-            <span>
-                <h3>
-                    <center>
-                        {%  if result_string == "Pass" %}
-                        Congratulations, you passed with a score of:
-                        {% else %}
-                        Uh oh, you needed a {{ percent_to_pass }}%, but only scored:
-                        {% endif %}
-                    </center>
-                </h3>
-            </span>
-{#            <div class="ui green button" data-tooltip="Add users to your feed">Green</div>#}
-            <span id="percent"><h3>{{ percentage }}%</h3></span>
-            <br>
-            <a<center><a href = "/{{ q.class_id.class_id }}/{{ q.topic_id.topic_id }}"><button class = "ui green button"><span>Click here to answer more questions about {{ q.topic_id.topic_name }}</span></button></a> <br> <br></center>
+{% include "base.html" %}
+<div class="ui one column grid">
+<div class="column">
+<div class="ui main text container" style="padding-top: 70px">
+<h1 class="ui center aligned header">Hey {{ name }},</h1>
+<h2 class="ui center aligned header"> our question was {{ q.question_title }}...</h2>
+<h3 class="ui center aligned header"> and you answered...</h3>
+<div class="ui center aligned text container">
+{% for word in transcript  %}
+    {% if counter.fast_counter|divisibleby:2 %}
+        <p class="ui center aligned" style="display:inline"> {{ word }} </p>
+    {% else %}
+        <p class="ui center aligned" data-variation="wide" data-tooltip="...{{ prev_context_list|return_item:counter.slow_counter }} {{word}}
+            {{ post_context_list|return_item:counter.slow_counter }}..." data-position="top center"
+            style="display:inline; color:green">{{ word }}
+        </p>
+    {% endif %}
+    {{ counter.increment }}
+{% endfor %}
+</div>
 
-    <a href = ""> <center> Or, click here to try again. </a>
-</center>
-</center>
+<h2 class="ui center aligned header">- Your Score -</h2>
 
+<h4 class="ui center aligned header">
+    {%  if result_string == "Pass" %}
+    Congratulations, you passed with a score of:
+    {% else %}
+    Uh oh, you needed a {{ percent_to_pass }}%, but only scored:
+    {% endif %}
+</h4>
+
+
+<h4 class="ui center aligned header">{{ percentage }}%</h4>
+
+<div class="ui center aligned container">
+<div class="ui large buttons">
+  <a class="ui red button" href="">Try Again</a>
+  <div class="or"></div>
+  <a class="ui green button" href = "/{{ q.class_id.class_id }}/{{ q.topic_id.topic_id }}"> Continue </a>
+</div>
+</div>
+
+</div>
+</div>
+</div>
 </body>
+
+
+
 </html>

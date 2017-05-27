@@ -91,26 +91,21 @@ class RawText(models.Model):
     def __str__(self):
         return self.raw_text
 
-class PrimaryKeyword(models.Model):
+class Keyword(models.Model):
     keyword_id = models.AutoField(primary_key=True)
     question_id = models.ForeignKey(Question)
     keyword = models.CharField(max_length=100)
     point_value = models.IntegerField()
     number_of_hits = models.IntegerField(default=0)
+    is_primary = models.BooleanField(default=True)
 
     def __str__(self):
         return self.keyword
 
-class SecondaryKeyword(models.Model):
-    keyword_id = models.AutoField(primary_key=True)
-    question_id = models.ForeignKey(Question)
-    keyword = models.CharField(max_length=100)
-    point_value = models.IntegerField()
-    number_of_hits = models.IntegerField(default=0)
 
 class KeywordContext(models.Model):
     question_id = models.ForeignKey(Question)
-    keyword = models.ForeignKey(PrimaryKeyword)
+    keyword = models.ForeignKey(Keyword)
     context = models.CharField(max_length=200)
     previous = models.BooleanField()
 

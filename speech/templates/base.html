@@ -2,37 +2,37 @@
 <html>
 <head>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="{% static 'js/menu.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/master.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'semantic/semantic.min.css' %} ">
+    <script type="text/javascript" src="{% static 'semantic/semantic.min.js' %} "></script>
 </head>
 
-<header>
-    <div class="header">
-            <div class="menu" onclick="toggleNav()">Menu</div>
-            <span class="pc"><a href="/">Project Chronicle</a></span>
-            <img class="logo" src="http://www.freeiconspng.com/uploads/open-book-icon-icon--open-book-2-svg-12.png">
+<html>
+<body>
+<div class="ui fixed inverted menu">
+    <div class="ui container">
+        <a href="/" class="header item">
+            <img class="logo" src="{% static 'images/logo.png' %}">
+            Project Chronicle
+        </a>
+        {% if user.is_authenticated %}
+        <a href="/classes" class="item">Classes</a>
+        {% endif %}
+
+        <div class="ui simple dropdown item">
+        User <i class="dropdown icon"></i>
+        <div class="menu">
+            <a class="item" href="#">Account</a>
+            <div class="divider"></div>
+            <div class="header">User Actions</div>
+
+            {% if user.is_authenticated %}
+            <a href="/logout/" class="item">Log Out</a>
+            {% else %}
+            <a href="/login/" class="item">Log In</a>
+            {% endif %}
+        </div>
+        </div>
     </div>
-    <br> <br> <br>
-</header>
-
-<div id="pop-out" class="sidenav">
-    <!--<a href="javascript:void(0)" class="closebtn" onclick="toggleNav()">&times;</a>-->
-    <a href="/" class="nav-link noUnderline"><span>Home</span></a>
-    {% if user.is_authenticated %}
-    <a href="/classes/" class="nav-link noUnderline"><span>Classes</span></a>
-    {% endif %}
-    <a href="/about/" class="nav-link noUnderline"><span>About</span></a>
-    <a href="https://www.surveymonkey.com/r/63RJMPN" target="_blank" class="nav-link noUnderline"><span>Survey</span></a>
-    {% if user.is_authenticated %}
-    <a href="/logout/" class="nav-link noUnderline"><span>Log Out</span></a>
-    <a class="nav-link noUnderline"> <span>{{ user }} </span></a>
-    {% else %}
-    <a href="/login/" class="nav-link noUnderline"><span>Log In</span></a>
-    {% endif %}
-</div>
-
+  </div>
+</body>
 </html>

@@ -2,7 +2,7 @@
 
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import Class, Topic, Question, PrimaryKeyword, SecondaryKeyword, RawText, KeywordContext
+from .models import Class, Topic, Question, Keyword, RawText, KeywordContext
 from .forms import QuestionBuilderForm, QBuilderUpdateForm, IntegerValidatorForm, StringValidatorForm
 
 import requests
@@ -41,8 +41,8 @@ def question_builder(request, class_id, topic_id):
             print raw_text_list
 
             for kw_tuple in primary_data:
-                kw = PrimaryKeyword.objects.create(question_id=question_, keyword=kw_tuple[0],
-                                              point_value=float(kw_tuple[1]))
+                kw = Keyword.objects.create(question_id=question_, keyword=kw_tuple[0],
+                                              point_value=float(kw_tuple[1]), is_primary=True)
                 word = kw_tuple[0]
 
                 context_index = raw_text_list.index(word)
@@ -72,8 +72,8 @@ def question_builder(request, class_id, topic_id):
                 KeywordContext.objects.create(question_id=question_, keyword=kw, context=context, previous=False)
 
             for kw_tuple in secondary_data:
-                SecondaryKeyword.objects.create(question_id=question_, keyword=kw_tuple[0],
-                                                point_value=float(kw_tuple[1]))
+                Keyword.objects.create(question_id=question_, keyword=kw_tuple[0],
+                                                point_value=float(kw_tuple[1]), is_primary=False)
 
                 # word = kw_tuple[0]
                 # context_index = raw_text_list.index(word)

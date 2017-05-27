@@ -1,0 +1,66 @@
+html {
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+body{
+  background-color: white;
+}
+
+h1{
+  color: #0f1f38;
+  text-align: center;
+  font-family: 'trebuchet ms';
+}
+
+.in-page-nav{
+  color: #8e7970;
+}
+
+.in-page-nav:hover{
+  color: #f55449;
+}
+
+.classContainer {
+  height:4em;
+  line-height:4em;
+  text-align:center;
+  width:18em;
+  background-color: #fff;
+  color:#0f1f38;
+  margin:1em;
+  border: solid 1px #0f1f38;
+  cursor: pointer;
+}
+
+.classContainer:hover {
+  background-color: #f55449;
+  color:white;
+}
+
+.classContainer span:hover {
+    text-decoration:none;
+}
+
+.noUnderline {
+    text-decoration:none!important;
+}
+
+.enroll-box {
+  width: 300px;
+  left: calc(50vw - 150px);
+  position: absolute;
+  bottom: 50px;
+  font-size: 16px;
+}
+
+.enroll-box label {
+  padding-right: 2px;
+}
+
+.enroll-box input {
+  text-indent: .5em;
+  height: 2.5em;
+  line-height: 2.5em;
+  width: 75px;
+}

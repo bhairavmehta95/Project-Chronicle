@@ -1,0 +1,57 @@
+h1 h2 h3 h4 h5{
+  color: #0f1f38;
+  text-align: center;
+  font-family: 'trebuchet ms';
+}
+
+a {
+  border: black;
+}
+
+.in-page-nav{
+  color: #8e7970;
+}
+
+.in-page-nav:hover{
+  color: #f55449;
+}
+
+.button {
+  display: inline-block;
+  border-radius: 2px;
+  background-color: #ffffff;
+  border: 2px solid #1b4b5a;
+  color: #0f1f38;
+  text-align: center;
+  font-size: 12px;
+  right-padding: 40px;
+  left-padding: 40px;
+  top-padding: 40px;
+  bottom-padding: 40px;
+  width: 200px;
+  height: 60px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+}
+
+
+.button:hover {
+  background-color: #f55459;
+  border-color: white;
+  color: #ffffff;
+}
+  
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.answer_more{
+  border: 10px solid red;
+}

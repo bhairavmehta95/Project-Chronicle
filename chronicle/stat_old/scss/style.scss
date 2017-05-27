@@ -1,0 +1,159 @@
+//CSS Color Scheme:
+//Deep Green: #303C18
+//White: #fff
+//Plants: #5C821A
+//New Growth: #C6D166
+$color1: #756867; //WOOD
+$color2: #D5D6D2; //SAND
+$color3: #FF8D3F; //ORANGE
+$black: #353C3F;
+
+body {
+  font-size: 20px;
+}
+
+.rounded-border {
+  border: 1px solid $color2;
+  border-radius: 3px;
+}
+
+.shadow1 {
+  box-shadow: 0 10px 20px rgba(0,0,0,.2), 0 6px 6px rgba(0,0,0,.2);
+}
+
+.shadow2 {
+  box-shadow: 0 1px 3px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.2);
+}
+
+.hover-lighten {
+  transition: 150ms ease;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+}
+
+#mainHeader {
+  height: 3em;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #eee;
+  border: 1px solid #ddd;
+  position:relative;
+  .header-wrapper {
+    margin-top: 1em;
+    #subjectLink {
+      margin-left: 1em;
+      color: $black;
+    }
+    #progressBar {
+      position:absolute;
+      right:1em;
+      top:.4em;
+      height:2em;
+      width:5em;
+      text-align: center;
+      .progressIndicator {
+        position:absolute;
+        left:0;
+        top:0;
+        width: 4em;
+        height: 2em;
+        background-color: #33cc33;
+        opacity:.9;
+        z-index:29;
+      }
+      #progressNumber {
+        z-index:30;
+        position: relative;
+        margin-top:.5em;
+        color:$black;
+      }
+    }
+  }
+}
+
+.interim {
+  color: gray;
+}
+.final {
+  color: black;
+  padding-right: 3px;
+}
+
+#questionBox {
+  position:relative;
+  height: 25em;
+  margin-top: 2em;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  #questionLabel {
+    font-size: 2em;
+    padding: 0.25em 0.75em;
+    border-bottom: 2px solid #ccc;
+    color: $black;
+    background-color: #eee;
+  }
+  #questionContent {
+    font-size: 1.5em;
+    color: $black;
+    padding: 1em;
+    position: relative;
+  }
+}
+
+#bottomRow {
+  height:4em;
+  text-align:center;
+  position:absolute;
+  width:100%;
+  bottom:.5em;
+  #recordTimer {
+    width:4em;
+    margin:0 auto;
+  }
+  #buttons{
+    height:2em;
+    line-height:2em;
+    position:absolute;
+    bottom:0;
+    width:100%;
+    button{
+      height:3em;
+      line-height:3em;
+      width:7em;
+      margin:0 .5em;
+      outline:none;
+      &:hover {
+        cursor:pointer;
+      }
+    }
+    #recordButton {
+      border: 1px solid #ff3957;
+      color: #fff;
+      background-color: #ff3957;      
+      &:hover {
+        border-color:black;
+        box-shadow: 0 1px 3px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.2);
+      }
+    }
+    #submitButton {
+      border: 1px solid #185c9a;
+      color: #fff;
+      background-color: #185c9a;
+      &:hover {
+        border-color:black;
+        box-shadow: 0 1px 3px rgba(0,0,0,.1), 0 1px 2px rgba(0,0,0,.2);
+      }
+      &.disabled {
+        opacity:.5;
+        &:hover {
+          border: 1px solid #185c9a;
+          cursor: default;
+        }
+      }
+    }
+  }
+}
