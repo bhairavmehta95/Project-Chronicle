@@ -1,3 +1,3 @@
-$(document).ready(function() {
+$(document).click(function() {
     $('.progress').progress();
 });

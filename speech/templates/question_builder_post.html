@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Question Builder</title>
+  <meta charset="utf-8">
+
+  {% load static %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="{% static 'js/builder_viz.js' %}"></script>
+</head>
+{% include "base.html" %}
+<body>
+
+<h1 class="ui center aligned header" style="padding-top: 70px">Question Builder</h1>
+<div class="ui very padded center aligned container">
+  <h4 class="ui header">{{ q_title }}</h4>
+  <div class="ui three column grid">
+  <div class="column"><h5 class="ui header">Phrase</h5></div>
+  <div class="column"><h5 class="ui header">Points</h5></div>
+  <div class="column"><h5 class="ui header">Relative Weight</h5></div>
+  </div>
+  <form class="ui equal width form" method="post">
+  <div class="ui three column grid">
+    {% csrf_token %}
+
+    {{ form.errors }}
+    {{ form.non_field_errors }}
+    {% for field in form.visible_fields %}
+        <div class="column">
+        <div class="field">
+            {% if forloop.counter|divisibleby:2 %}
+                <div class="ui input points">
+                    {{ field }}
+                </div>
+            {% else %}
+                <div class="ui input keyword">
+                    {{ field }}
+                </div>
+            {% endif %}
+        </div>
+        </div>
+
+        {% if forloop.counter|divisibleby:2 %}
+            <div class="column">
+                <div class="ui indicating progress" style="margin-top:7px">
+                  <div class="bar"></div>
+                </div>
+            </div>
+        {% endif %}
+
+    {% endfor %}
+
+    {% if error != None %}
+      {{ error }}
+    {% endif %}
+
+    {% for field in form.hidden_fields %}
+        {{ field }}
+    {% endfor %}
+
+  </div>
+    <button class="ui green button" type="submit">
+      Submit
+    </button>
+  </form>
+
+</div>
+
+</body>
+</html>

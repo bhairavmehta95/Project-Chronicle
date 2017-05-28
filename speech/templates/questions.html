@@ -1,17 +1,13 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-
+{% include "base.html" %}
 <head>
   <title>Questions in {{topic}}</title>
   {% load static %}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="{% static 'js/progress_viz.js' %}"></script>
 </head>
 
-<script>
 
-</script>
-{% include "base.html" %}
 
 
 <h1 class="ui center aligned header" style="padding-top: 70px">Questions in {{ topic }}</h1>
@@ -33,11 +29,11 @@
                   Highest Score: {{ q.best }}%
               </div>
               {% if q.best > q.percent_to_pass %}
-              <div class="ui green bottom indicating attached progress" data-percent="{{ q.best }}" id="prog_{{q.question_id}}">
+              <div class="ui bottom indicating attached progress" data-percent="{{ q.best }}" id="prog_{{q.question_id}}">
                 <div class="bar"></div>
               </div>
               {% else %}
-              <div class="ui red bottom indicating attached progress" data-percent="{{ q.best }}" id="prog_{{q.question_id}}">
+              <div class="ui bottom indicating attached progress" data-percent="{{ q.best }}" id="prog_{{q.question_id}}">
                 <div class="bar"></div>
               </div>
               {% endif %}

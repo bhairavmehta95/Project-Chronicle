@@ -14,15 +14,19 @@ from math import ceil
 def question_builder(request, class_id, topic_id):
     class_ = Class.objects.get(class_id=class_id)
     topic_ = Topic.objects.get(topic_id=topic_id)
+    form = QuestionBuilderForm()
 
     if class_ is None or topic_ is None:
-        return "error should go here"
+        # TODO
+        print("error should go here")
 
     if request.method == 'POST':
         builder_form = QuestionBuilderForm(request.POST)
+        print(request.POST.get('is_qbuilder_update'))
 
         # Question Update Form was submitted, time to validate
         if not builder_form.is_valid() and request.POST.get('is_qbuilder_update'):
+
             num_keywords, question_title, primary_data, secondary_data, raw_text, error = \
                 verify_question_update_form(request.POST)
 
@@ -37,8 +41,6 @@ def question_builder(request, class_id, topic_id):
 
             raw_text_list = raw_text.lower().split()
             raw_text_list[:] = [re.sub(r'[^a-zA-Z0-9]+', '', word) for word in raw_text_list]
-
-            print raw_text_list
 
             for kw_tuple in primary_data:
                 kw = Keyword.objects.create(question_id=question_, keyword=kw_tuple[0],
@@ -74,32 +76,6 @@ def question_builder(request, class_id, topic_id):
             for kw_tuple in secondary_data:
                 Keyword.objects.create(question_id=question_, keyword=kw_tuple[0],
                                        point_value=float(kw_tuple[1]), is_primary=False)
-
-                # word = kw_tuple[0]
-                # context_index = raw_text_list.index(word)
-                # context = ""
-                #
-                # i = 5
-                # while (i > 0):
-                #     try:
-                #         context = context + raw_text_list[context_index - i] + " "
-                #         i -= 1
-                #     except:
-                #         break
-                #
-                #
-                #
-                # KeywordContext.objects.create(question_id=question_, keyword=kw, context=context, previous=True)
-                # context = ""
-                # i = 1
-                # while (i < 6):
-                #     try:
-                #         context = context + raw_text_list[context_index + i] + " "
-                #         i += 1
-                #     except:
-                #         break
-                #
-                # KeywordContext.objects.create(question_id=question_, keyword=kw, context=context, previous=False)
 
             request.method = 'GET'
             return HttpResponseRedirect('/builder/{}/{}'.format(class_id, topic_id))
@@ -145,8 +121,7 @@ def question_builder(request, class_id, topic_id):
                 data=form_fields
             )
 
-    else:
-        form = QuestionBuilderForm()
+            return render(request, 'question_builder_post.html', {'form': form, 'q_title': q_title  })
 
     return render(request, 'question_builder.html', {'form': form})
 
