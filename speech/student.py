@@ -7,10 +7,14 @@ from .forms import SignupForm
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import logout
 
-
 def signup_user(request):
     # if this is a POST request we need to process the form data
     error = None
+
+    # if a GET (or any other method) we'll create a blank form
+    classes = Class.objects.all()
+    form = SignupForm()
+
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = SignupForm(request.POST)
@@ -35,6 +39,7 @@ def signup_user(request):
             try:
                 User.objects.get(username=username)
                 error = "Username already exists in system."
+                form.cleaned_data['username'] = ""
             except:
                 pass
 
@@ -43,9 +48,6 @@ def signup_user(request):
 
             # if teacher_target.teacher_id != teacher_id:
             #     error = "Please pick a real teacher/class pair, this is only temporary"
-
-            print("here's what's in error:")
-            print(error)
 
             if error is None:
 
@@ -62,10 +64,6 @@ def signup_user(request):
                 user.groups.add(group)
 
                 return HttpResponseRedirect('/login')
-
-    # if a GET (or any other method) we'll create a blank form
-    classes = Class.objects.all()
-    form = SignupForm()
 
     return render(request, 'signup.html', {'form': form, 'classes': classes, 'error': error, })
 

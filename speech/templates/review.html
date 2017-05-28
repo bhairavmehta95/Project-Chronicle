@@ -6,19 +6,24 @@
 <head>
     <title>Response</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://s3-us-west-2.amazonaws.com/whynotask-bucket/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="https://s3-us-west-2.amazonaws.com/whynotask-bucket/semantic.css">
 </head>
 
 
 <body>
 
 {% include "base.html" %}
-<div class="ui one column grid">
-<div class="column">
-<div class="ui main text container" style="padding-top: 70px">
-<h1 class="ui center aligned header">Hey {{ name }},</h1>
-<h2 class="ui center aligned header"> our question was {{ q.question_title }}...</h2>
-<h3 class="ui center aligned header"> and you answered...</h3>
+<div class="ui main center aligned text container" style="padding-top: 70px">
+<h2 class="ui header"> Question from: <a href="/{{q.class_id.class_id}}/{{ q.topic_id.topic_id }}"> {{ q.topic_id}} </a></h2>
+<h4 class="ui horizontal divider header" style="margin-top: 50px">
+  OUR QUESTION
+</h4>
+<h5 id="questionContent" class="ui header">
+    {{ q.question_title }}
+</h5>
+<h4 class="ui horizontal divider header">
+  YOUR RESPONSE
+</h4>
 <div class="ui center aligned text container">
 {% for word in transcript  %}
     {% if counter.fast_counter|divisibleby:2 %}
@@ -55,8 +60,7 @@
 </div>
 
 </div>
-</div>
-</div>
+
 </body>
 
 

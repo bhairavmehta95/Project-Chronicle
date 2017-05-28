@@ -1,56 +1,45 @@
-﻿<!-- Google Analytics Script -->
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-83652865-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
-
+﻿
 <!DOCTYPE html>
 <html lang="en">
-{% include "base.html" %}
 <head>
     <title>Log In</title>
     <meta charset="utf-8">
 
-
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}" />
+
 </head>
 <body>
-    <div class="container loginContainer">
-        <form method="post">
-            {% csrf_token %}
+{% include "base.html" %}
 
+<h1 class="ui center aligned header" style="padding-top: 70px">Login</h1>
+<div class="ui very padded center aligned container">
+    <form class="ui equal width form" method="post">
+        {% csrf_token %}
+        <div class="two fields">
             {% for field in form %}
-            <div class="formRow">
-                <label>{{ field.label_tag }}</label> {{ field }}
+            <div class="small field">
+            <label> {{ field.label_tag }} </label>
+                <div class="ui input">
+                    {{ field }}
+                </div>
             </div>
-
-            <br>
             {% endfor %}
+        </div>
 
-            {% if error != None %}
-            
+        {% if error != None %}
             {{ error }}
             <br>
-            {% endif %}
+        {% endif %}
 
-            <input type="submit" class="submitButton" value="Log In!" />
-            <br> <br>
-            <a class="registerLink" href="/signup"> Need an account? Click here to register!</a> <br><br><br>
+        <button class="ui green button" type="submit">
+          Login
+        </button>
+    </form>
 
-            <a class="registerLink" href="/demo"> Just want to mess around? Demo our system!</a>
+    <br> <br>
+    <a class="registerLink" href="/signup"> Need an account? Click here to register!</a> <br><br><br>
 
-        </form>
-    </div>
+</div>
 </body>
 </html>

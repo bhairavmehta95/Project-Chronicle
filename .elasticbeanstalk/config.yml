@@ -1,17 +1,16 @@
 branch-defaults:
   master:
     environment: project-chronicle-dev
-  reed:
-    environment: pc-env
 environment-defaults:
-  pc-env:
-    branch: reed
-    repository: origin
+  project-chronicle-dev:
+    branch: null
+    repository: null
 global:
   application_name: project-chronicle
   branch: null
   default_ec2_keyname: null
-  default_platform: python2.7
+  default_platform: arn:aws:elasticbeanstalk:us-west-2::platform/Python 2.7 running
+    on 64bit Amazon Linux/2.3.3
   default_region: us-west-2
   instance_profile: null
   platform_name: null

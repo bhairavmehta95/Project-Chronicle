@@ -14,15 +14,19 @@ from math import ceil
 def question_builder(request, class_id, topic_id):
     class_ = Class.objects.get(class_id=class_id)
     topic_ = Topic.objects.get(topic_id=topic_id)
+    form = QuestionBuilderForm()
 
     if class_ is None or topic_ is None:
-        return "error should go here"
+        # TODO
+        print("error should go here")
 
     if request.method == 'POST':
         builder_form = QuestionBuilderForm(request.POST)
+        print(request.POST.get('is_qbuilder_update'))
 
         # Question Update Form was submitted, time to validate
         if not builder_form.is_valid() and request.POST.get('is_qbuilder_update'):
+
             num_keywords, question_title, primary_data, secondary_data, raw_text, error = \
                 verify_question_update_form(request.POST)
 
@@ -38,11 +42,9 @@ def question_builder(request, class_id, topic_id):
             raw_text_list = raw_text.lower().split()
             raw_text_list[:] = [re.sub(r'[^a-zA-Z0-9]+', '', word) for word in raw_text_list]
 
-            print raw_text_list
-
             for kw_tuple in primary_data:
                 kw = Keyword.objects.create(question_id=question_, keyword=kw_tuple[0],
-                                              point_value=float(kw_tuple[1]), is_primary=True)
+                                            point_value=float(kw_tuple[1]), is_primary=True)
                 word = kw_tuple[0]
 
                 context_index = raw_text_list.index(word)
@@ -73,33 +75,7 @@ def question_builder(request, class_id, topic_id):
 
             for kw_tuple in secondary_data:
                 Keyword.objects.create(question_id=question_, keyword=kw_tuple[0],
-                                                point_value=float(kw_tuple[1]), is_primary=False)
-
-                # word = kw_tuple[0]
-                # context_index = raw_text_list.index(word)
-                # context = ""
-                #
-                # i = 5
-                # while (i > 0):
-                #     try:
-                #         context = context + raw_text_list[context_index - i] + " "
-                #         i -= 1
-                #     except:
-                #         break
-                #
-                #
-                #
-                # KeywordContext.objects.create(question_id=question_, keyword=kw, context=context, previous=True)
-                # context = ""
-                # i = 1
-                # while (i < 6):
-                #     try:
-                #         context = context + raw_text_list[context_index + i] + " "
-                #         i += 1
-                #     except:
-                #         break
-                #
-                # KeywordContext.objects.create(question_id=question_, keyword=kw, context=context, previous=False)
+                                       point_value=float(kw_tuple[1]), is_primary=False)
 
             request.method = 'GET'
             return HttpResponseRedirect('/builder/{}/{}'.format(class_id, topic_id))
@@ -121,7 +97,7 @@ def question_builder(request, class_id, topic_id):
             # keyword api
             r = requests.post('http://pc-builder-dev2.us-west-2.elasticbeanstalk.com/index', json=data)
             response_json = json.loads(r.text)
- 
+
             form_fields = dict()
 
             form_fields['question_title'] = q_title
@@ -137,18 +113,15 @@ def question_builder(request, class_id, topic_id):
                 form_fields['secondary_keyword_point_field_{index}'.format(index=idx)] = \
                     response_json['secondary_point_values'][idx]
 
-
-
             update_form = QBuilderUpdateForm()
             form = QBuilderUpdateForm.empty_init(
-                    update_form, 
-                    primary_keywords=len(response_json['primary_words']), 
-                    secondary_keywords=len(response_json['secondary_words']), 
-                    data=form_fields
-                    )
-            
-    else:
-        form = QuestionBuilderForm()
+                update_form,
+                primary_keywords=len(response_json['primary_words']),
+                secondary_keywords=len(response_json['secondary_words']),
+                data=form_fields
+            )
+
+            return render(request, 'question_builder_post.html', {'form': form, 'q_title': q_title  })
 
     return render(request, 'question_builder.html', {'form': form})
 
@@ -158,12 +131,12 @@ def verify_question_update_form(post_data):
     secondary_data = []
     error = False
     test_form = IntegerValidatorForm(data={'integer': post_data.get('num_primary_keywords')})
-    
+
     if test_form.is_valid():
         num_primary_keywords = test_form.cleaned_data.get('integer')
     else:
         error = True
-    
+
     test_form = StringValidatorForm(data={'string': post_data.get('question_title')})
 
     if test_form.is_valid():
