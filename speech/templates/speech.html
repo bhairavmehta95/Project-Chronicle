@@ -1,18 +1,6 @@
-﻿<!-- Google Analytics Script -->
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-83652865-1', 'auto');
-  ga('send', 'pageview');
-
-</script>
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
-  {% include "base.html" %}
+
 <head>
     <meta charset="UTF-8">
     <title>Answer</title>
@@ -20,48 +8,55 @@
 
     {% load static %}
 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/speech.css' %}" />
+    <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+
     <script type="text/javascript" src="{% static 'js/speech.js' %}"></script>
 
+
 </head>
-
+{% include "base.html" %}
 <body>
-    <div id="speechPage">
-        <br />
-        <div id="mainHeader" class="rounded-border">
-            <div class="hover-lighten header-wrapper">
-                <span id="subjectLink" style="margin-left:1em;">Question from: <a href="/{{class.class_id}}/{{ topic_id.topic_id }}"> {{ topic }} </a> </span>
-            </div>
-        </div>
+<div class="ui very padded center aligned container" style="margin-top: 70px">
+        <h2 class="ui header"> Question from: <a href="/{{q.class_id.class_id}}/{{ q.topic_id.topic_id }}"> {{ q.topic_id }} </a></h2>
 
-        <div id="questionBox" class="rounded-border">
-            <div class="speech-label">Our question:</div>
-            <div id="questionContent" class="content">
-                <div id="questionText">{{ q.question_subject }}</div>
-            </div>
-            <div class="speech-label">Your response:</div>
-            <div id="results" class="content">
+
+        <div id="questionBox" class="ui text container" style="margin-top: 50px">
+            <h4 class="ui horizontal divider header">
+              OUR QUESTION
+            </h4>
+            <h5 id="questionContent" class="ui header">
+                {{ q.question_title }}
+            </h5>
+            <h4 class="ui horizontal divider header">
+              YOUR RESPONSE
+            </h4>
+            <div id="results" class="ui container" style="min-height: 200px">
                 <span class="final" id="final_span"></span> <span class="interim" id="interim_span"></span>
             </div>
-            <div id="bottomRow">
-                <div id="recordTimer" class="rounded-border">
-                    <span id="minutes"></span>:<span id="seconds"></span>
+            <div class="ui container">
+                <div class="ui center aligned container">
+                    <button id="recordTimer" class="ui basic disabled button">
+                        <span class="ui center aligned" id="minutes"></span>:<span class="ui center aligned" id="seconds"></span>
+                </button>
                 </div>
-                <div id="buttons">
-                    <button id="recordButton" class="rounded-border">Record</button>
-                    <button id="submitButton" class="rounded-border disabled">Submit</button>
+                <div class="ui buttons">
+
+                  <button id="recordButton" class="ui basic button">
+                    <i class="circle icon"></i>
+                    Record
+                  </button>
+                  <button id="submitButton" class="ui basic disabled button">
+                    Submit
+                    <i class="right chevron icon"></i>
+                  </button>
                 </div>
             </div>
         </div>
-    </div>
+</div>
 
     <form method="post" id="form_transcript">
         {% csrf_token %}
         <input type="hidden" id="final_transcript" name="final_transcript" value="">
     </form>
-
-    <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js'></script>
-
 </body>
 </html>

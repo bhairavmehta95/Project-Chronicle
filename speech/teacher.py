@@ -1,19 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 
-from .models import Student, Enrollments, Class, Topic, Question, Teacher, Completion, PrimaryKeyword
+from .models import Student, Enrollments, Class, Topic, Question, Teacher, Keyword
 
 from .forms import LoginForm, SignupForm, TeacherSignupForm, TeacherLoginForm
-from .topic_progress import updateProgressesFromTopic
+from .data import updateProgressesFromTopic
 
 from django.contrib.auth.models import User, Group
-from django.contrib.auth import authenticate, login, logout
 
-from wiki import wiki_search
-from bs4 import BeautifulSoup
-import requests
-import re
-from wiki import search_and_process
 import json
 from django.core import serializers
 
@@ -170,7 +164,7 @@ def addKeyword(request):
     word = request.POST['keyword']
     points = request.POST['points']
 
-    new_keyword = PrimaryKeyword.objects.create(    question_id = questionObj,
+    new_keyword = Keyword.objects.create(    question_id = questionObj,
                                                     keyword = word,
                                                     point_value = points    )
     return HttpResponse(1, content_type='application/json')

@@ -1,4 +1,3 @@
-  var create_email = false;
   var final_transcript = '';
   var recognizing = false;
   var ignore_onend;
@@ -57,13 +56,26 @@
     }
     for (var i = event.resultIndex; i < event.results.length; ++i) {
       if (event.results[i].isFinal) {
-        final_transcript += event.results[i][0].transcript;
+        final_transcript += event.results[i][0].transcript + '. ';
       } else {
         interim_transcript += event.results[i][0].transcript;
       }
     }
-    
-    final_transcript = capitalize(final_transcript);
+
+    try {
+        final_transcript_list = final_transcript.match(/[^\.!\?]+[\.!\?]+/g);
+
+        final_transcript = "";
+
+        for (i = 0; i < final_transcript_list.length; ++i) {
+            final_transcript = final_transcript + capitalize(final_transcript_list[i]);
+        }
+    }
+
+    catch(err){
+      final_transcript = capitalize(final_transcript);
+    }
+
     final_span.innerHTML = linebreak(final_transcript);
     interim_span.innerHTML = linebreak(interim_transcript);
   };
@@ -159,13 +171,13 @@ var Functions = {
     Click: function() {
       switch(Data.TimerState) {
         case 'New':
-          HTML.RecordButton.html('Recording');
+          HTML.RecordButton.html('<i class="circle icon"></i>Recording');
           break;
         case 'Recording':
-          HTML.RecordButton.html('Start Over');          
+          HTML.RecordButton.html('<i class="refresh icon"></i> Start Over');
           break;
         case 'Stopped':
-          HTML.RecordButton.html('Recording');
+          HTML.RecordButton.html('<i class="circle icon"></i>Recording');
           break;
       }
       Functions.Timer.Set();
