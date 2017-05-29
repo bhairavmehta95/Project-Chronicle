@@ -121,10 +121,12 @@ def correct(request, classId, topicId, questionId):
 
     nonkw = ""
 
-    studentResponseLemmatized = [lemmatizer.lemmatize(item.lower()) for item in studentResponse]
+    studentResponseLemmatized = [lemmatizer.lemmatize(item.lower()) for item in studentResponse.split(' ')]
+    print("SRL", studentResponseLemmatized)
     studentResponseList = studentResponse.split(' ')
-    for idx, word in enumerate(studentResponseLemmatized.split(' ')):
-        word = word.lower()
+
+    print studentResponseList, studentResponseLemmatized
+    for idx, word in enumerate(studentResponseLemmatized):
         if keywordDict.get(word) is not None:
             studentScore += keywordDict[word]
             keywordDict[word] = 0  # set the point value to 0 bc the points have already been earned
@@ -143,7 +145,7 @@ def correct(request, classId, topicId, questionId):
             other_words.append(nonkw)
             nonkw = ""
         else:
-            nonkw = nonkw + nonlowered_word + " "
+            nonkw = nonkw + studentResponseList[idx] + " "
 
     other_words.append(nonkw)
     kw_list.append("")

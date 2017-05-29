@@ -22,7 +22,7 @@ def question_builder(request, class_id, topic_id):
 
     if request.method == 'POST':
         builder_form = QuestionBuilderForm(request.POST)
-        print(request.POST.get('is_qbuilder_update'))
+        print
 
         # Question Update Form was submitted, time to validate
         if not builder_form.is_valid() and request.POST.get('is_qbuilder_update'):
@@ -46,7 +46,7 @@ def question_builder(request, class_id, topic_id):
                 kw = Keyword.objects.create(question_id=question_, keyword=kw_tuple[0],
                                             point_value=float(kw_tuple[1]), is_primary=True)
                 word = kw_tuple[0]
-
+                print raw_text_list
                 context_index = raw_text_list.index(word)
                 context = ""
 
