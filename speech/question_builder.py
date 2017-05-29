@@ -86,7 +86,8 @@ def question_builder(request, class_id, topic_id):
             q_title = builder_form.cleaned_data['question_title']
             num_keywords = builder_form.cleaned_data['keywords_to_return']
 
-            sources_list = sources.split('\n')
+            sources_list = [s.strip() for s in sources.splitlines()]
+            sources_list = filter(lambda a: a != '', sources_list)
 
             data = {
                 'documents': sources_list,
@@ -96,6 +97,7 @@ def question_builder(request, class_id, topic_id):
 
             # keyword api
             r = requests.post('http://pc-builder-dev2.us-west-2.elasticbeanstalk.com/index', json=data)
+            # r = requests.post('http://0.0.0.0:5000/index', json=data)
             response_json = json.loads(r.text)
 
             form_fields = dict()
