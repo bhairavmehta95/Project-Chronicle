@@ -6,3 +6,4 @@ wikipedia==1.4.0
 psycopg2==2.6.2
 SpeechRecognition==3.4.6
 django-extensions==1.7.8
+nltk==3.2.2

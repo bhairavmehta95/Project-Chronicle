@@ -22,7 +22,7 @@ def question_builder(request, class_id, topic_id):
 
     if request.method == 'POST':
         builder_form = QuestionBuilderForm(request.POST)
-        print(request.POST.get('is_qbuilder_update'))
+        print
 
         # Question Update Form was submitted, time to validate
         if not builder_form.is_valid() and request.POST.get('is_qbuilder_update'):
@@ -46,7 +46,7 @@ def question_builder(request, class_id, topic_id):
                 kw = Keyword.objects.create(question_id=question_, keyword=kw_tuple[0],
                                             point_value=float(kw_tuple[1]), is_primary=True)
                 word = kw_tuple[0]
-
+                print raw_text_list
                 context_index = raw_text_list.index(word)
                 context = ""
 
@@ -86,7 +86,8 @@ def question_builder(request, class_id, topic_id):
             q_title = builder_form.cleaned_data['question_title']
             num_keywords = builder_form.cleaned_data['keywords_to_return']
 
-            sources_list = sources.split('\n')
+            sources_list = [s.strip() for s in sources.splitlines()]
+            sources_list = filter(lambda a: a != '', sources_list)
 
             data = {
                 'documents': sources_list,
@@ -96,6 +97,7 @@ def question_builder(request, class_id, topic_id):
 
             # keyword api
             r = requests.post('http://pc-builder-dev2.us-west-2.elasticbeanstalk.com/index', json=data)
+            # r = requests.post('http://0.0.0.0:5000/index', json=data)
             response_json = json.loads(r.text)
 
             form_fields = dict()

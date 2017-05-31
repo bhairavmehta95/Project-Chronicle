@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from .models import Student, Class, Topic, Question, Completion, Keyword, RawText, KeywordContext
 from .data import updateSingleTopicProgress, getPercentString, greatestCompletionByStudent, getClassesOfStudent
 
+from nltk.stem import WordNetLemmatizer
 
 class Counter:
     def __init__(self):
@@ -91,6 +92,7 @@ def speech(request, class_id, topic_id, question_id):
 
 
 def correct(request, classId, topicId, questionId):
+    lemmatizer = WordNetLemmatizer()
     studentObj = Student.objects.get(user_id_login=request.user.id)
     questionObj = Question.objects.get(class_id=classId, topic_id=topicId, question_id=questionId)
 
@@ -118,13 +120,19 @@ def correct(request, classId, topicId, questionId):
     other_words = []
 
     nonkw = ""
-    for word in studentResponse.split(' '):
-        nonlowered_word = word
-        word = word.lower()
+
+    studentResponseLemmatized = [lemmatizer.lemmatize(item.lower()) for item in studentResponse.split(' ')]
+    print("SRL", studentResponseLemmatized)
+    studentResponseList = studentResponse.split(' ')
+
+    print studentResponseList, studentResponseLemmatized
+    for idx, word in enumerate(studentResponseLemmatized):
         if keywordDict.get(word) is not None:
             studentScore += keywordDict[word]
             keywordDict[word] = 0  # set the point value to 0 bc the points have already been earned
-            kw_list.append(nonlowered_word)
+
+            # Add the NON Lemmatized word for output
+            kw_list.append(studentResponseList[idx])
 
             kw = Keyword.objects.get(question_id=questionObj, keyword=word)
 
@@ -137,7 +145,7 @@ def correct(request, classId, topicId, questionId):
             other_words.append(nonkw)
             nonkw = ""
         else:
-            nonkw = nonkw + nonlowered_word + " "
+            nonkw = nonkw + studentResponseList[idx] + " "
 
     other_words.append(nonkw)
     kw_list.append("")
