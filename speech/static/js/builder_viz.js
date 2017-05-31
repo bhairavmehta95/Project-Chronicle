@@ -19,9 +19,8 @@ function updateValues(){
 $(document).ready(function() {
     updateValues();
 
-    $('.points').keyup(function() {
+    $('.points').change(function() {
         updateValues();
-        console.log('hi');
     });
 
 });

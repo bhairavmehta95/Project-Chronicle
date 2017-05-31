@@ -10,6 +10,26 @@ import json
 import re
 from math import ceil
 
+def getIndex(raw_text_list, word, get_by_str_search):
+    word_index = -1
+
+    for idx, val in enumerate(raw_text_list):
+        if get_by_str_search:
+            try:
+                word_index = raw_text_list[idx].find(word)
+                if word_index != -1:
+                    break
+            except:
+                pass
+
+        else:
+            try:
+                word_index = raw_text_list.index(word)
+            except:
+                pass
+
+    return word_index
+
 
 def question_builder(request, class_id, topic_id):
     class_ = Class.objects.get(class_id=class_id)
@@ -46,32 +66,43 @@ def question_builder(request, class_id, topic_id):
                 kw = Keyword.objects.create(question_id=question_, keyword=kw_tuple[0],
                                             point_value=float(kw_tuple[1]), is_primary=True)
                 word = kw_tuple[0]
-                print raw_text_list
-                context_index = raw_text_list.index(word)
-                context = ""
+
+                context_index = -1
+
+                try:
+                    context_index = getIndex(raw_text_list, word, get_by_str_search=False)
+                except:
+                    pass
+
+                if context_index == -1:
+                    try:
+                        context_index = getIndex(raw_text_list, word, get_by_str_search=True)
+                    except:
+                        pass
+
+                prev_context = ""
 
                 i = 5
                 while (i > 0):
                     try:
-                        context = context + raw_text_list[context_index - i] + " "
+                        prev_context = prev_context + raw_text_list[context_index - i] + " "
                         i -= 1
                     except:
                         break
 
-                print word, context
-                KeywordContext.objects.create(question_id=question_, keyword=kw, context=context, previous=True)
 
-                context = ""
+                KeywordContext.objects.create(question_id=question_, keyword=kw, context=prev_context, previous=True)
+
+                post_context = ""
                 i = 1
                 while (i < 6):
                     try:
-                        context = context + raw_text_list[context_index + i] + " "
+                        post_context = post_context + raw_text_list[context_index + i] + " "
                         i += 1
                     except:
                         break
 
-                print word, context
-                KeywordContext.objects.create(question_id=question_, keyword=kw, context=context, previous=False)
+                KeywordContext.objects.create(question_id=question_, keyword=kw, context=post_context, previous=False)
 
             for kw_tuple in secondary_data:
                 Keyword.objects.create(question_id=question_, keyword=kw_tuple[0],
@@ -108,12 +139,12 @@ def question_builder(request, class_id, topic_id):
             for idx, word in enumerate(response_json['primary_words']):
                 form_fields['primary_keyword_field_{index}'.format(index=idx)] = response_json['primary_words'][idx]
                 form_fields['primary_keyword_point_field_{index}'.format(index=idx)] = \
-                    response_json['primary_point_values'][idx]
+                    int(response_json['primary_point_values'][idx])
 
             for idx, word in enumerate(response_json['secondary_words']):
                 form_fields['secondary_keyword_field_{index}'.format(index=idx)] = response_json['secondary_words'][idx]
                 form_fields['secondary_keyword_point_field_{index}'.format(index=idx)] = \
-                    response_json['secondary_point_values'][idx]
+                    int(response_json['secondary_point_values'][idx])
 
             update_form = QBuilderUpdateForm()
             form = QBuilderUpdateForm.empty_init(
