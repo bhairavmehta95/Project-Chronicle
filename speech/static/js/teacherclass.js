@@ -52,7 +52,7 @@ function renderTopics(topicArray) {
 			.data("topicNumber", topicArray[i].pk);
 		var name = $("<span></span>").text(topicArray[i].fields.topic_name);
 		var downArrow = $("<i onclick='toggleQuestionsInTopic(this)' class='fa fa-chevron-down'> </i>");
-		var plusIcon = $("<i onclick='questionBuilderModal.open(this)' class='fa fa-plus-square-o'> </i>");
+		var plusIcon = $("<i onclick='goToBuilder(this)' class='fa fa-plus-square-o'> </i>");
 		var editIcon = $("<i onclick='openEditTopicModal(this)' class='fa fa-edit'> </i>");
 		var deleteIcon = $("<i onclick='openConfirmDeleteTopicModal(this)' class='fa fa-trash-o'> </i>");
 		
@@ -62,6 +62,14 @@ function renderTopics(topicArray) {
 		$('.question-panel').append(link);
 		$('.question-panel').append(questionContainer);
 	}
+}
+
+function goToBuilder(icon) {
+	var classId = $('#classId').val();
+	console.log(classId);
+	var topicId = $(icon).closest('.topic-link').data().topicNumber;
+	console.log(topicId);
+	window.location = '/builder/' + classId + '/' + topicId;
 }
 
 var questionBuilderModal = {
@@ -90,11 +98,48 @@ var questionBuilderModal = {
 function openEditTopicModal(editIcon) {
 	var container = editIcon.closest('.topic-link');
 	$('#editTopicModalTopicName').val($(container).find('span').text());
+	console.log( $(container).data().topicNumber );
+	$('#hiddenTopicId').val($(container).data().topicNumber);
 	$('#editTopicModal').modal();
 }
 
+function postEditTopic() {
+	postData = {
+		topicId: $('#hiddenTopicId').val(),
+		topicName: $('#editTopicModalTopicName').val()
+	}
+	$.ajax({
+		type: 'POST',
+		url: '/teacher/ajax/editTopic/',
+		data: postData,
+		success: function(result) {
+			$('#editTopicModal').modal('toggle');
+			$('.modal-backdrop').hide();
+		}
+	})	
+}
+
 function openConfirmDeleteTopicModal(deleteIcon) {
-	var container = deleteIcon.closest('.topic-link');
+	var topicContainer = $(deleteIcon).closest('.topic-link');
+	var topicId = topicContainer.data().topicNumber;
+	$('#hiddenTopicId').val(topicId);
+	$('#deleteConfirmModal').modal();
+}
+
+function confirmDeleteTopic() {
+	if ($('.confirm-txt').val() == 'YES') {
+		var postData = {
+			topicId: $('.hidden-delete-key').val()
+		}
+		$.ajax({
+			type: 'POST',
+			url: '/teacher/ajax/deleteTopic/',
+			data: postData,
+			success: function(result) {
+				alert('unbelievable');
+			}
+		})
+	}
 }
 
 function toggleQuestionsInTopic(arrowIcon) {
@@ -120,10 +165,11 @@ function toggleQuestionsInTopic(arrowIcon) {
 					var questionRow = $("<div class='question-row'></div>")
 						.data("questionId", result[i].pk);
 					var questionName = $("<span></span>")
-						.text(result[i].fields.question_subject);
-					var goIcon = $("<i class='fa fa-plus' onclick='openAddKeywordModal(this)' />")
+						.text(result[i].fields.question_title);
+					var goIcon = $("<i class='fa fa-plus' onclick='openAddKeywordModal(this)' />");
+					var deleteIcon = $("<i class='fa fa-trash-o' onclick='deleteQuestion(this)' />");
 
-					questionRow.append(questionName, goIcon);
+					questionRow.append(questionName, deleteIcon, goIcon);
 					questionContainer.append(questionRow);
 
 				}
@@ -151,6 +197,21 @@ function toggleQuestionsInTopic(arrowIcon) {
 		$(arrowIcon).removeClass('fa-chevron-down').addClass('fa-chevron-up');
 
 	}
+}
+
+function deleteQuestion(icon) {
+	console.log($(icon).closest('div.question-row').data().questionId)
+	postData = {
+		questionId: $(icon).closest('div.question-row').data().questionId
+	}
+	$.ajax({
+		type: 'POST',
+		url: '/teacher/ajax/deleteQuestion/',
+		data: postData,
+		success: function(result) {
+			alert("deleted");
+		}
+	})
 }
 
 function openAddKeywordModal(icon) {

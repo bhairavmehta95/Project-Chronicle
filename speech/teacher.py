@@ -123,11 +123,31 @@ def addTopic(request):
 def getTopics(request, classKey):
     if (request.method == 'GET'):
         teacherId = getTeacherId(request)
-        if (teacherOwnsClass(teacherId, classKey)):
-            c = Class.objects.get(class_key = classKey)
-            result = Topic.objects.filter(class_id = c)
-            response = serializers.serialize("json", result)
-            return HttpResponse(response, content_type='application/json')
+        c = Class.objects.get(teacher_id = teacherId, class_key = classKey)
+        result = Topic.objects.filter(class_id = c)
+        response = serializers.serialize("json", result)
+        return HttpResponse(response, content_type='application/json')
+
+def ajaxEditTopic(request):
+    if (request.method == 'POST'):
+        teacherId = getTeacherId(request)
+        data = request.POST
+        TopicObj = Topic.objects.get(topic_id = data['topicId'])
+        TopicId = TopicObj.topic_id
+        if (teacherOwnsTopic(teacherId, TopicId)):
+            TopicObj.topic_name = data['topicName']
+            TopicObj.save()
+            return HttpResponse(1, content_type="application/json")
+
+def ajaxDeleteTopic(request):
+    if (request.method == 'POST'):
+        teacherId = getTeacherId(request)
+        topicId = request.POST['topicId']
+        TopicObj = Topic.objects.get(topic_id = topicId)
+        TopicId = TopicObj.topic_id
+        if (teacherOwnsTopic(teacherId, TopicId)):
+            TopicObj.delete()
+            return HttpResponse(1, content_type="application/json")
 
 
 # Questions
@@ -142,18 +162,38 @@ def createQuestion(request):
 
     new_question = Question.objects.create( class_id = class_instance,
                                             topic_id = topic_instance,
-                                            question_subject = title )
+                                            question_title = title )
     updateProgressesFromTopic(topicId)
     return HttpResponse(1, content_type='application/json')
 
 def getQuestionsInTopic(request):
-
+    teacherId = getTeacherId(request)
     topicId = request.POST['topicId']
-    #TODO: make sure user owns this topic
+    if (teacherOwnsTopic(teacherId, topicId)):
+        result = Question.objects.filter(topic_id = topicId)
+        response = serializers.serialize("json", result)
+        return HttpResponse(response, content_type='application/json')
 
-    result = Question.objects.filter(topic_id = topicId)
-    response = serializers.serialize("json", result)
-    return HttpResponse(response, content_type='application/json')
+def ajaxEditQuestion(request):
+    if (request.method == 'POST'):
+        teacherId = getTeacherId(request)
+        data = request.POST
+        QuestionObj = Question.objects.get(topic_id = data['topicId'])
+        topicId = QuestionObj.topic_id
+        if (teacherOwnsTopic(teacherId, topicId)):
+            QuestionObj.question_title = data['quesionTitle']
+            QuestionObj.save()
+            return HttpResponse(1, content_type="application/json")
+
+def ajaxDeleteQuestion(request):
+    if (request.method == 'POST'):
+        teacherId = getTeacherId(request)
+        data = request.POST
+        QuestionObj = Question.objects.get(question_id = data['questionId'])
+        topicId = QuestionObj.topic_id.pk
+        if (teacherOwnsTopic(teacherId, topicId)):
+            QuestionObj.delete()
+            return HttpResponse(1, content_type="application/json")
 
 
 # Keywords
@@ -182,6 +222,9 @@ def teacher_portal(request):
         else:
             return render(request, 'teacherlanding.html')
 
+def teacher_home(request):
+    return render(request, 'teacherhome.html')
+
 def classPage(request, classKey):
     t = getTeacherId(request)
     c = Class.objects.get(teacher_id = t, class_key = classKey)
@@ -197,6 +240,8 @@ def getTeacherId(request):
     teacher = Teacher.objects.get(user_id_login = user)
     return teacher.get_teacher_id()
 
-def teacherOwnsClass(teacherId, classKey):
-    result = Class.objects.filter(teacher_id = teacherId, class_key = classKey)
-    return result.count() == 1
+def teacherOwnsTopic(teacherId, topicId):
+    TopicObj = Topic.objects.get(topic_id = topicId)
+    classId = TopicObj.class_id.pk
+    ClassQuery = Class.objects.filter(teacher_id = teacherId, class_id = classId)
+    return ClassQuery.count

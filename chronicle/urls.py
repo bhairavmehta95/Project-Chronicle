@@ -26,13 +26,17 @@ urlpatterns = [
     
     # Teacher
     url(r'^teacher/$', speech.teacher.teacher_portal),
+    url(r'^teacherhome/', speech.teacher.teacher_home),
     url(r'^teacher/signup/', speech.teacher.signup_teacher),
     url(r'^teacher/createClass/', speech.teacher.createClass),
     url(r'^teacher/getClasses/', speech.teacher.getClasses),
     url(r'^teacher/gettopics/(?P<classKey>[0-9A-Z]{6})/', speech.teacher.getTopics),
     url(r'^teacher/classPage/(?P<classKey>[0-9A-Z]{6})/', speech.teacher.classPage),
     url(r'^teacher/addtopic/', speech.teacher.addTopic),
+    url(r'^teacher/ajax/deleteTopic/', speech.teacher.ajaxDeleteTopic),
+    url(r'^teacher/ajax/editTopic/', speech.teacher.ajaxEditTopic),
     url(r'^teacher/createQuestion/', speech.teacher.createQuestion),
+    url(r'^teacher/ajax/deleteQuestion/', speech.teacher.ajaxDeleteQuestion),
     url(r'^teacher/ajax/getClass', speech.teacher.ajaxGetClass),
     url(r'^teacher/ajax/editClass', speech.teacher.ajaxEditClass),
     url(r'^teacher/ajax/deleteClass', speech.teacher.ajaxDeleteClass),
