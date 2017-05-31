@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Teacher|Project Chronicle</title>
+    {% load static %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/teacher.js' %}"></script>
+    <script type="text/javascript" src="{% static 'semantic/components/modal.js' %} "></script>
+</head>
+{% include "base.html" %}
+
+<body>
+<div class="body-container" style="margin-top:125px;">
+
+  <div class="ui container">
+
+    <div class="ui large menu">
+      <a href="/teacherhome/" class="active item">
+        <i class="home icon"></i> Home
+      </a>
+      <div class="right menu">
+        <div class="item">
+            <div onclick="openAddClassModal()" class="ui teal button">Add Class</div>
+        </div>
+      </div></div>
+
+    <div class="ui link stackable cards" id="classContainer">
+
+      <div class="card template">
+        <div class="image">
+          <img src="http://images.clipartpanda.com/campus-clipart-MP00640_.jpg">
+        </div>
+        <div class="content">
+          <div class="header">Template Class</div>
+        </div>
+        <div class="extra content">
+          <div class="ui compact menu floated right">
+            <div class="ui simple dropdown item">
+              Action
+              <i class="dropdown icon"></i>
+              <div class="menu">
+                <div class="item">Edit</div>
+                <div class="item">Delete</div>
+              </div>
+            </div>
+          </div>
+          <span>
+            <i class="user icon"></i>
+            <span class="enrollments-count">100</span><span> Enrollments</span>
+          </span>
+        </div>
+      </div></div>
+
+    <div class="ui small modal" id="addClassModal">
+      <div class="header">Add A Class</div>
+      <div class="content">
+        <div class="ui padded fluid icon input">
+          <input id="newClassName" type="text" placeholder="Class Name">
+        </div>
+      </div>
+      <div class="actions">
+        <div class="ui approve teal button">Create</div>
+        <div class="ui cancel button">Cancel</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</body>
