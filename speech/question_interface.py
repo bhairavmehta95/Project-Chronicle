@@ -23,6 +23,10 @@ def class_page(request):
         print("not authenticated")
         return HttpResponseRedirect('/login')
 
+    if not request.user.groups.filter(name='student').exists():
+        print("teacher")
+        return HttpResponseRedirect('/')
+
     studentObj = Student.objects.get(user_id_login=request.user.id)
     classes = getClassesOfStudent(studentObj.student_id)
 
