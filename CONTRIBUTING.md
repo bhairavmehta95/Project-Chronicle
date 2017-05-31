@@ -1,6 +1,6 @@
 **Want to contribute to Project-Chronicle? Here's how.**
 
-**Download [Git for Windows] (https://git-scm.com/download/win) here.**
+**Download [Git for Windows](https://git-scm.com/download/win) here.**
 
 ## Cloning the Repository
 
