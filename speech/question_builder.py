@@ -10,7 +10,18 @@ import json
 import re
 from math import ceil
 
-def getIndex(raw_text_list, word, get_by_str_search):
+
+# TODO
+def get_synonyms(primary_words_list):
+    synonymsDict = dict()
+
+    for word in primary_words_list:
+        synonymsDict[word] = ['word', word, 'hello']
+
+    return synonymsDict
+
+
+def get_index(raw_text_list, word, get_by_str_search):
     word_index = -1
 
     for idx, val in enumerate(raw_text_list):
@@ -70,13 +81,13 @@ def question_builder(request, class_id, topic_id):
                 context_index = -1
 
                 try:
-                    context_index = getIndex(raw_text_list, word, get_by_str_search=False)
+                    context_index = get_index(raw_text_list, word, get_by_str_search=False)
                 except:
                     pass
 
                 if context_index == -1:
                     try:
-                        context_index = getIndex(raw_text_list, word, get_by_str_search=True)
+                        context_index = get_index(raw_text_list, word, get_by_str_search=True)
                     except:
                         pass
 
@@ -146,6 +157,8 @@ def question_builder(request, class_id, topic_id):
                 form_fields['secondary_keyword_point_field_{index}'.format(index=idx)] = \
                     int(response_json['secondary_point_values'][idx])
 
+            # get synonyms
+            synoymns_dict = get_synonyms(response_json['primary_words'])
             update_form = QBuilderUpdateForm()
             form = QBuilderUpdateForm.empty_init(
                 update_form,
@@ -154,7 +167,11 @@ def question_builder(request, class_id, topic_id):
                 data=form_fields
             )
 
-            return render(request, 'question_builder_post.html', {'form': form, 'q_title': q_title  })
+            return render(request, 'question_builder_post.html', {
+                'form': form,
+                'q_title': q_title,
+                'synonyms_dict': synoymns_dict,
+            })
 
     return render(request, 'question_builder.html', {'form': form})
 

@@ -9,3 +9,8 @@ def return_item(l, i):
         return l[i]
     except:
         return None
+
+
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)

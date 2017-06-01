@@ -17,9 +17,10 @@
 <div class="ui very padded center aligned container">
   <h4 class="ui header">{{ q_title }}</h4>
   <div class="ui three column grid">
-      <div class="column"><h5 class="ui header">Phrase</h5></div>
-      <div class="column"><h5 class="ui header">Points</h5></div>
-      <div class="column">
+      <div class="eight wide column">
+          <h5 class="ui header">Phrase</h5></div>
+      <div class="two wide column"><h5 class="ui header">Points</h5></div>
+      <div class="six wide column">
           <div class="ui two column grid">
           <div class="column"><h5 class="ui header">Relative Weight</h5></div>
           <div class="column"><h5 class="ui header">Remove Phrase</h5></div>
@@ -28,7 +29,12 @@
   </div>
   <form class="ui fixed width form" method="post">
     <div class="ui three column grid" id="phraseArea">
-        <div class="row"><div class="column"></div><div class="column"></div><div class="column"></div></div>
+        <div class="row">
+            <div class="eight wide column"></div>
+            <div class="two wide column"></div>
+            <div class="six wide column"></div>
+        </div>
+
         {% csrf_token %}
 
         {{ form.errors }}
@@ -38,22 +44,48 @@
                 <div class="row">
             {% endif %}
 
-                <div class="column">
-                <div class="field">
                     {% if forloop.counter|divisibleby:2 %}
+                        <div class="two wide column">
+                        <div class="field">
                         <div class="ui input points">
                             {{ field }}
                         </div>
                     {% else %}
-                        <div class="ui input keyword">
-                            {{ field }}
+                        <div class="eight wide column">
+                        <div class="field">
+                        <div class="row">
+                            <div class="ui input keyword">
+                                {{ field }}
+                            </div>
+                        </div>
+                        <div class="row left aligned" style="margin-top: 3px">
+                            <span>
+                                <p><strong>Also accept: </strong>
+                                    {% for word, synonyms in synonyms_dict.items %}
+                                        {% if word == field.value %}
+                                            {%  for syn in synonyms %}
+                                            <button class="ui basic icon button syn" style="margin-top: 3px" type="button">
+                                                {{ syn }}
+                                                <i class="icon remove removesyn"></i>
+                                            </button>
+                                            {%  endfor %}
+                                            <span class="ui input syninput" style="display:none;">
+                                                <input type="text" style="margin-top: 3px" placeholder="Press Enter to Add">
+                                            </span>
+                                            <button class="ui basic icon button addsyn" style="margin-top: 3px" type="button">
+                                                <i class="icon add"></i>
+                                            </button>
+                                        {% endif %}
+                                    {% endfor %}
+                                </p>
+                            </span>
                         </div>
                     {% endif %}
                 </div>
                 </div>
 
                 {% if forloop.counter|divisibleby:2 %}
-                    <div class="column">
+                    <div class="six wide column">
                         <div class="ui two column grid">
                             <div class="column">
                                 <div class="ui indicating progress" style="margin-top:7px">
@@ -62,7 +94,7 @@
                             </div>
                             <div class="column">
                                 <button type="button" class="circular ui basic icon button remove">
-                                  <i class="icon remove"></i>
+                                  <i class="icon remove removephrase"></i>
                                 </button>
                             </div>
                         </div>
@@ -83,6 +115,12 @@
         {% for field in form.hidden_fields %}
             {{ field }}
         {% endfor %}
+
+        <div class="row">
+            <div class="eight wide column"></div>
+            <div class="two wide column"></div>
+            <div class="six wide column"></div>
+        </div>
 
     </div>
 
