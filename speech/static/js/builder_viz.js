@@ -17,6 +17,7 @@ function updateValues(){
 }
 
 $(document).ready(function() {
+    $('.dropdown').dropdown();
     updateValues();
 
     $('.points').change(function() {

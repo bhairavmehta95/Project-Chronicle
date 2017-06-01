@@ -1,9 +1,7 @@
 function addPhrase(){
-    var cloned = document.getElementsByClassName("row")[1].cloneNode(true);
+    var cloned = $('.row').eq(1).clone(true);
 
-    var addHtml = "<div class='row'>" + cloned.innerHTML + "</div>";
-    var newHtml = $('#phraseArea').html() + addHtml;
-    $('#phraseArea').html(newHtml)
+    $('#phraseArea').append(cloned);
 
     var num_primary = parseInt($('#id_num_primary_keywords').val());
     $('#id_num_primary_keywords').val(num_primary + 1);
@@ -30,22 +28,28 @@ function updateDOM() {
 
     $(document).keypress(function(e) {
         if(e.which == 13 && $(':focus').parent().hasClass('syninput')){
-            // e.preventDefault();
-            console.log('hi')
             var text = $(':focus').val();
-            var add = $(':focus').parent().next();
-            htmlToAdd = '<button class="ui basic icon button syn" style="margin-top: 3px" type="button">' + text +
-                '<i class="icon remove removesyn"></i></button>';
+            text = text.replace(/[^a-zA-Z0-9 ]/g, '');
 
-            $(':focus').parent().prev().after(htmlToAdd);
+            var add = $(':focus').parent().next();
+
+            if (text != '') {
+                htmlToAdd = '<button class="ui basic icon button syn" style="margin-top: 3px" type="button">' + text +
+                    '<i class="icon remove removesyn"></i></button>';
+                $(':focus').parent().prev().after(htmlToAdd);
+            }
+
             add.css('display','inline');
             $(':focus').val('');
             $(':focus').parent().css('display', 'none');
+
+            updateDOM();
         }
 
         if(e.which == 13){
             e.preventDefault();
         }
+
     });
 }
 

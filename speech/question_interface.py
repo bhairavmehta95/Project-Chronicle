@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from .models import Student, Class, Topic, Question, Completion, Keyword, RawText, KeywordContext
 from .data import updateSingleTopicProgress, getPercentString, greatestCompletionByStudent, getClassesOfStudent
 
-#from nltk.stem import WordNetLemmatizer
+from nltk.stem import WordNetLemmatizer
 
 class Counter:
     def __init__(self):

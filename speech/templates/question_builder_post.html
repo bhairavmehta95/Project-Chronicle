@@ -15,7 +15,7 @@
 
 <h1 class="ui center aligned header" style="padding-top: 70px">Question Builder</h1>
 <div class="ui very padded center aligned container">
-  <h4 class="ui header">{{ q_title }}</h4>
+  <h3 class="ui header">{{ q_title }}</h3>
   <div class="ui three column grid">
       <div class="eight wide column">
           <h5 class="ui header">Phrase</h5></div>
@@ -60,7 +60,7 @@
                         </div>
                         <div class="row left aligned" style="margin-top: 3px">
                             <span>
-                                <p><strong>Also accept: </strong>
+                                <p style="margin-top: 3px"><strong>Also accept: </strong>
                                     {% for word, synonyms in synonyms_dict.items %}
                                         {% if word == field.value %}
                                             {%  for syn in synonyms %}
@@ -115,23 +115,40 @@
         {% for field in form.hidden_fields %}
             {{ field }}
         {% endfor %}
-
-        <div class="row">
-            <div class="eight wide column"></div>
-            <div class="two wide column"></div>
-            <div class="six wide column"></div>
-        </div>
-
     </div>
 
-    <button id="addPhrase" class="ui basic right icon button" type="button">
-        Add A Phrase
-        <i class="icon add"></i>
-    </button>
+    <div class="ui two column grid" style="margin: 15px">
+        <div class="two column">
+            <div id="perfect" class="field">
+                <label>Perfect Answer</label>
+                <textarea rows="2">{{ perfect_answer }}</textarea>
+            </div>
+        </div>
+        <div class="one column">
+            <div class="ui form">
+              <div class="field">
+                <label>Allow students to see:</label>
+                <select multiple="" class="ui dropdown">
+                    <option value="">Pick Options</option>
+                    <option value="HintsEnable">Hints</option>
+                    <option value="PerfectEnable">Perfect Answer</option>
+                    <option value="MissedEnable">Missed Phrases</option>
+                </select>
+              </div>
+            </div>
+        </div>
+    </div>
 
-    <button class="ui green button" type="submit">
-      Submit
-    </button>
+    <div class="ui container" style="margin: 15px">
+        <button id="addPhrase" class="ui basic right icon button" type="button">
+            Add A Phrase
+            <i class="icon add"></i>
+        </button>
+
+        <button class="ui green button" type="submit">
+          Submit
+        </button>
+    </div>
   </form>
 
 </div>

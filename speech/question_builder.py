@@ -12,11 +12,16 @@ from math import ceil
 
 
 # TODO
+def get_perfect_answer(raw_text):
+    return "This is a test perfect answer, which will be coming from our summarizer."
+
+
+# TODO
 def get_synonyms(primary_words_list):
     synonymsDict = dict()
 
     for word in primary_words_list:
-        synonymsDict[word] = ['word', word, 'hello']
+        synonymsDict[word] = ['synonyms', 'for', word]
 
     return synonymsDict
 
@@ -167,10 +172,13 @@ def question_builder(request, class_id, topic_id):
                 data=form_fields
             )
 
+            perfect_answer = get_perfect_answer(response_json['raw_text'])
+
             return render(request, 'question_builder_post.html', {
                 'form': form,
                 'q_title': q_title,
                 'synonyms_dict': synoymns_dict,
+                'perfect_answer': perfect_answer
             })
 
     return render(request, 'question_builder.html', {'form': form})
