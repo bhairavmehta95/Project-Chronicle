@@ -20,34 +20,68 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Raleway:700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Raleway:700" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/teacher.css' %}" />
+    <script type="text/javascript" src="{% static 'js/teacherlanding.js' %}"></script>
+    <script type="text/javascript" src="{% static 'semantic/components/transition.js' %} "></script>
 </head>
 
 
 
 <body>
-    <div class="welcome">
-        <h2>Welcome, Teachers</h2>
-        <div class="info">
-        	<i class="fa fa-info-circle"></i>
-        	<span>Oops! You are not yet logged in. Please log in or register below.</span>
+    <h1 class="ui center aligned header" style="padding-top: 70px">Login or Register</h1>
+    
+    <div class="ui very padded center aligned container" style="padding-top: 30px">
+      <div class="ui green two item inverted menu">
+        <a class="item login active" onclick="loginClick()">
+          Login
+        </a>
+        <a class="item register" onclick="registerClick()">
+          Register
+        </a>
+      </div>
+    </div>
+
+    <div class="ui very padded center aligned container" style="padding-top: 30px">
+      
+      <form action="/login/" id="loginForm" class="ui form" method="post">
+        {% csrf_token %}
+            {% for field in form %}
+            <div class="small field">
+            <label> {{ field.label_tag }} </label>
+                <div class="ui input">
+                    {{ field }}
+                </div>
+            </div>
+            {% endfor %}
+
+        <button class="ui green button" type="submit">
+          Login
+        </button>
+    </form>
+
+    <form class="ui form" id="signupForm" style="display:none" action="/teacher/signup/" method="post">
+        <div class="teacher-signup-form">
+            {% csrf_token %}
+              {% for field in signup_form %}
+              <div class="small field">
+                <label> {{ field.label_tag }} </label>
+                <div class="ui input">
+                  {{ field }}
+                </div>
+              </div>
+              {% endfor %}
+              
+              <button class="ui green button" type="submit">
+                Login
+              </button>
         </div>
-        <div class="teacher-login-buttons">
-	        <a href="/login" class="teacher-button">
-	        	<div>
-	        		<span>Log In</span>
-	        	</div>
-	        </a>
-        	<a href="/teacher/signup" class="teacher-button">
-        		<div>
-	        		<span>Register</span>
-	        	</div>
-        	</a>
-        </div>
+    </form>
+
+    </div>
+
+    <div class="ui very padded center aligned container" style="padding-top: 30px">
     </div>
 </body>

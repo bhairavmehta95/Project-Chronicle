@@ -61,8 +61,9 @@ function addClass() {
 		data: postData,
 		success: function(result) {
 			renderClasses($.parseJSON(result));
-			$('#myModal').modal('toggle');
+			$('#addClassModal').modal('toggle');
 			$('.modal-backdrop').hide();
+			$('#className').val('');
 		}
 	})
 }
