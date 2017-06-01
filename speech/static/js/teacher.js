@@ -7,19 +7,20 @@ function populateClasses() {
 		type: 'GET',
 		url: "/teacher/getClasses/",
 		success: function (results) {
-			console.log(results.length)
 			results.forEach(function (myClass) {
 				var data = myClass.fields;
-				renderClass(data.class_name, data.num_enrollments);
+				renderClass(data);
 			})
 		}
 	})
 }
 
-function renderClass(name, numEnrollments) {
+function renderClass(data) {
 	var newCard = $('#classContainer .card.template').clone();
-	newCard.find('.header').text(name);
-	newCard.find('.enrollments-count').text(numEnrollments);
+	newCard.find('.header').text(data.class_name);
+	newCard.find('.enrollments-count').text(data.num_enrollments);
+	newCard.find('.class-key').text(data.class_key);
+	newCard.data(data)
 	newCard.removeClass('template').appendTo('#classContainer');
 }
 
@@ -49,10 +50,13 @@ function addClass(name) {
 	}
 	$.ajax({
 		type: 'POST',
-		url: 'createClass/',
+		url: '/teacher/createClass/',
 		data: postData,
 		success: function(result) {
-			renderClass(name, 0);
+			data = $.parseJSON(result);
+			console.log(result);
+			console.log(result.fields);
+			renderClass(data);
 		}
 	})
 }
