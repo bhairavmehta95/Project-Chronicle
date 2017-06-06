@@ -6,6 +6,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" src="{% static 'js/teacher.js' %}"></script>
     <script type="text/javascript" src="{% static 'semantic/components/modal.js' %} "></script>
+    <script type="text/javascript" src="{% static 'semantic/components/accordion.js' %} "></script>
 </head>
 {% include "base.html" %}
 
@@ -14,15 +15,22 @@
 
   <div class="ui container">
 
-    <div class="ui large menu">
-      <a href="/teacherhome/" class="active item">
-        <i class="home icon"></i> Home
-      </a>
+    <div class="ui large menu" id="mainMenu">
+      <div class="left menu">
+        <a onclick="showHomeDetails()" class="active item">
+          <i class="home icon"></i> 
+          <span>Home</span>
+        </a>
+      </div>
       <div class="right menu">
-        <div class="item">
-            <div onclick="openAddClassModal()" class="ui teal button">Add Class</div>
+        <div class="item addClass">
+            <div onclick="openModal('addClass')" class="ui teal button">Add Class</div>
         </div>
-      </div></div>
+        <div class="item addTopic" style="display: none;">
+            <div onclick="openModal('addTopic')" class="ui teal button">Add Topic</div>
+        </div>
+      </div>
+    </div>
 
     <div class="ui link stackable cards" id="classContainer">
 
@@ -42,8 +50,9 @@
               Action
               <i class="dropdown icon"></i>
               <div class="menu">
-                <div class="item">Edit</div>
-                <div class="item">Delete</div>
+                <div class="detail item">Show Details</div>
+                <div class="edit item">Edit</div>
+                <div class="delete item">Delete</div>
               </div>
             </div>
           </div>
@@ -52,22 +61,73 @@
             <span class="enrollments-count">100</span><span> Enrollments</span>
           </span>
         </div>
-      </div></div>
+      </div>
+    </div>
 
-    <div class="ui small modal" id="addClassModal">
+    <div class="ui styled fluid accordion" id="topicContainer" style="display: none;">
+      <div class="accordion-row template">
+        <div class="title">
+          <i class="dropdown icon"></i>
+          <span></span>
+        </div>
+        <div class="content">
+          <div class="ui fluid container right aligned">
+            <button onclick="openModal('confirmDeleteTopic', this)" class="ui button">
+              Delete Topic
+            </button>
+            <button onclick="openModal('editTopic', this)" class="ui button">
+              Edit Topic
+            </button>
+            <button class="ui teal button">
+              Add Question
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="ui small modal" id="classModal">
       <div class="header">Add A Class</div>
       <div class="content">
         <div class="ui padded fluid icon input">
           <input id="newClassName" type="text" placeholder="Class Name">
+          <input class="hidden-id" type="hidden">
         </div>
       </div>
       <div class="actions">
-        <div class="ui approve teal button">Create</div>
         <div class="ui cancel button">Cancel</div>
+        <div class="ui approve teal button">Create</div>
+      </div>
+    </div>
+    <div class="ui small modal" id="confirmModal">
+      <div class="header">Are You Sure?</div>
+      <div class="content">
+        This cannot be undone.
+        <input type="hidden" class="hidden-id"></input>
+      </div>
+      <div class="actions">
+        <div class="ui cancel button">Cancel</div>
+        <div class="ui approve red button">Delete</div>
+      </div>
+    </div>
+    <div class="ui small modal" id="topicModal">
+      <div class="header"></div>
+      <div class="content">
+        <div class="ui padded fluid icon input">
+          <input id="topicNameField" type="text" placeholder="Topic Name">
+          <input class="hidden-id" type="hidden">
+        </div>
+      </div>
+      <div class="actions">
+        <div class="ui cancel button">Cancel</div>
+        <div class="ui approve teal button">Create</div>
       </div>
     </div>
 
   </div>
+
+<input id="classKey" type="hidden"></input>
 
 </div>
 </body>

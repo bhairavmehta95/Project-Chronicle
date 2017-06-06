@@ -109,9 +109,9 @@ def addTopic(request):
 
     if (request.method == 'POST'):
         
-        class_id = request.POST['classId']
+        class_key = request.POST['classKey']
         topic_name = request.POST['topicName']
-        class_instance = Class.objects.get(class_id = class_id)
+        class_instance = Class.objects.get(class_key = class_key)
 
         new_topic = Topic.objects.create(class_id=class_instance, topic_name=topic_name)
 
