@@ -17,7 +17,7 @@
 
     <div class="ui large menu" id="mainMenu">
       <div class="left menu">
-        <a onclick="showHomeDetails()" class="active item">
+        <a onclick="showHomeDetails()" class="active item home">
           <i class="home icon"></i> 
           <span>Home</span>
         </a>
@@ -71,6 +71,11 @@
           <span></span>
         </div>
         <div class="content">
+          <div class="ui segments question">
+            <div class="ui segment template question">
+              <span>Question Title Here</span>
+            </div>
+          </div>
           <div class="ui fluid container right aligned">
             <button onclick="openModal('confirmDeleteTopic', this)" class="ui button">
               Delete Topic
@@ -78,7 +83,7 @@
             <button onclick="openModal('editTopic', this)" class="ui button">
               Edit Topic
             </button>
-            <button class="ui teal button">
+            <button onclick="openQuestionBuilder(this)" class="ui teal button">
               Add Question
             </button>
           </div>
@@ -128,6 +133,7 @@
   </div>
 
 <input id="classKey" type="hidden"></input>
+<input id="classId" type="hidden"></input>
 
 </div>
 </body>

@@ -18,8 +18,8 @@ function addClassToMenu(className) {
 }
 
 function removeClassFromMenu() {
-	menuItem = $('#mainMenu .item.class-item')
-	menuItem.remove();
+	$('#mainMenu .item.class-item').remove();
+	$('#mainMenu .item.home').addClass('active');
 }
 
 
@@ -38,6 +38,7 @@ function populateClasses() {
 		success: function (results) {
 			results.forEach(function (myClass) {
 				var data = myClass.fields;
+				data.class_id =  myClass.pk;
 				renderClass(data);
 			})
 		}
@@ -54,6 +55,7 @@ function addClass(name) {
 		data: postData,
 		success: function(result) {
 			data = $.parseJSON(result)[0].fields;
+			data.class_id =  $.parseJSON(result)[0].pk;
 			renderClass(data, true);
 		}
 	})
@@ -97,7 +99,7 @@ function renderClass(data, atFront) {
 	newCard.find('.class-key').text(data.class_key);
 	newCard.find('.menu .detail.item').click(function() {
 		var $classCard = $(this).closest('.card');
-		showClassDetails($classCard.data().class_key);
+		showClassDetails($classCard.data().class_key, $classCard.data().class_id);
 		addClassToMenu($classCard.data().class_name)
 	});
 	newCard.find('.menu .edit.item').click(function() {
@@ -116,10 +118,11 @@ function renderClass(data, atFront) {
 
 
 /* TOPICS */
-function showClassDetails(classKey) {
+function showClassDetails(classKey, classId) {
 	$('#classContainer').hide();
 	$('#topicContainer').show();
-	$('#classKey').val(classKey)
+	$('#classKey').val(classKey);
+	$('#classId').val(classId);
 	populateTopics(classKey);
 }
 
@@ -130,7 +133,7 @@ function populateTopics(classKey) {
 		success: function (results) {
 			results.forEach(function (topic) {
 				var data = topic.fields;
-				data.topic_id = topic.pk
+				data.topic_id = topic.pk;
 				renderTopic(data);
 			})
 		}
@@ -161,6 +164,7 @@ function renderTopic(topicData) {
 		.removeClass('template')
 		.data(topicData)
 		.appendTo('#topicContainer');
+	populateQuestions($accordionRow, topicData);
 }
 
 function editTopic(name, topicId) {
@@ -197,6 +201,42 @@ function deleteTopic(topicId) {
 			})
 		}
 	})
+}
+
+
+/* Questions */
+function populateQuestions($accordionRow, topicData) {
+	postData = {
+		topicId: topicData.topic_id
+	}
+	$.ajax({
+		type: 'POST',
+		url: '/teacher/ajax/getQuestionsInTopic/',
+		data: postData,
+		success: function(results) {
+			results.forEach(function (question) {
+				var data = question.fields;
+				data.question_id = question.pk;
+				renderQuestion($accordionRow, data);
+			})
+		}
+	});
+}
+
+function renderQuestion($accordionRow, questionData) {
+	var newQuestion = $accordionRow.find('.segment.question.template').clone();
+	var contentArea = $accordionRow.find('.question.segments')
+	newQuestion.find('span').text(questionData.question_title);
+	newQuestion
+		.data(questionData)
+		.removeClass('template')
+		.appendTo(contentArea);
+}
+
+function openQuestionBuilder(trigger) {
+	var classId = $('#classId').val();
+	var topicId = $(trigger).closest('.accordion-row').data().topic_id;
+	window.location = '/builder/' + classId + '/' + topicId;
 }
 
 
