@@ -13,20 +13,27 @@
 <body>
 
 {% include "base.html" %}
+<div class="ui middle aligned center aligned grid">
+<div class="twelve wide column">
+<h1 class="ui header" style="padding-top: 70px">Sign Up</h1>
 
-<h1 class="ui center aligned header" style="padding-top: 70px">Sign Up</h1>
-<div class="ui very padded center aligned container">
-    <form class="ui equal width form" method="post">
+    <form class="ui form" method="post">
         {% csrf_token %}
         {% for field in form %}
+            {% if forloop.counter0|divisibleby:2 %}
+            <div class="two fields">
+            {% endif %}
             <div class="field">
             <label> {{ field.label_tag }} </label>
                 <div class="ui input">
                     {{ field }}
                 </div>
             </div>
-        {% endfor %}
+            {% if not forloop.counter0|divisibleby:2 %}
+            </div>
+            {% endif %}
 
+        {% endfor %}
 
         {% if error != None %}
           <div class="ui horizontal divider">
@@ -35,11 +42,12 @@
           <h5>{{ error }}</h5>
         {% endif %}
 
-        <button class="ui green button" type="submit">
+        <button class="ui basic button" type="submit">
           Signup
         </button>
 
     </form>
+</div>
 </div>
 
 </body>
