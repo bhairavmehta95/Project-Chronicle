@@ -3,7 +3,9 @@ from django.http import HttpResponseRedirect
 from .models import Student, Class, Topic, Question, Completion, Keyword, RawText, KeywordContext
 from .data import updateSingleTopicProgress, getPercentString, greatestCompletionByStudent, getClassesOfStudent
 
-#from nltk.stem import WordNetLemmatizer
+from nltk.stem import WordNetLemmatizer
+
+import re
 
 class Counter:
     def __init__(self):
@@ -22,6 +24,10 @@ def class_page(request):
     if not request.user.is_authenticated():
         print("not authenticated")
         return HttpResponseRedirect('/login')
+
+    if not request.user.groups.filter(name='student').exists():
+        print("teacher")
+        return HttpResponseRedirect('/')
 
     studentObj = Student.objects.get(user_id_login=request.user.id)
     classes = getClassesOfStudent(studentObj.student_id)
@@ -110,7 +116,8 @@ def correct(request, classId, topicId, questionId):
         if keywordDict.get(word) == None:
             keywordDict[word] = keywordObj.point_value
 
-    # studentResponse = re.sub("~!@#$%^&*()_+=-`/*.,[];:'/?><", ' ', studentResponse) #replace illegal characters with a space
+    # studentResponse = re.sub("~!@#$%^&*()_+=-`/*.,[];:'/?><", ' ', studentResponse)
+    #replace illegal characters with a space
 
     # add student score
 
@@ -121,8 +128,9 @@ def correct(request, classId, topicId, questionId):
 
     nonkw = ""
 
-    studentResponseLemmatized = [lemmatizer.lemmatize(item.lower()) for item in studentResponse.split(' ')]
-    print("SRL", studentResponseLemmatized)
+    studentResponseLemmatized = [lemmatizer.lemmatize(re.sub(r'\W+', '', item.lower()))
+                                 for item in studentResponse.split(' ')]
+
     studentResponseList = studentResponse.split(' ')
 
     print studentResponseList, studentResponseLemmatized

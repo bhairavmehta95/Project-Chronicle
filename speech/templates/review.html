@@ -52,11 +52,15 @@
 <h4 class="ui center aligned header">{{ percentage }}%</h4>
 
 <div class="ui center aligned container">
-<div class="ui large buttons">
-  <a class="ui red button" href="">Try Again</a>
-  <div class="or"></div>
-  <a class="ui green button" href = "/{{ q.class_id.class_id }}/{{ q.topic_id.topic_id }}"> Continue </a>
-</div>
+  <a class="ui basic icon button" href="">
+      Try Again
+      <i class="icon refresh"></i>
+  </a>
+
+  <a class="ui basic icon button" href = "/{{ q.class_id.class_id }}/{{ q.topic_id.topic_id }}">
+      Continue
+      <i class="right chevron icon"></i>
+  </a>
 </div>
 
 </div>

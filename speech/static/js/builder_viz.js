@@ -17,11 +17,11 @@ function updateValues(){
 }
 
 $(document).ready(function() {
+    $('.dropdown').dropdown();
     updateValues();
 
-    $('.points').keyup(function() {
+    $('.points').change(function() {
         updateValues();
-        console.log('hi');
     });
 
 });
