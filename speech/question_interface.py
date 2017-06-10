@@ -5,6 +5,8 @@ from .data import updateSingleTopicProgress, getPercentString, greatestCompletio
 
 from nltk.stem import WordNetLemmatizer
 
+import re
+
 class Counter:
     def __init__(self):
         self.fast_counter = 0
@@ -114,7 +116,8 @@ def correct(request, classId, topicId, questionId):
         if keywordDict.get(word) == None:
             keywordDict[word] = keywordObj.point_value
 
-    # studentResponse = re.sub("~!@#$%^&*()_+=-`/*.,[];:'/?><", ' ', studentResponse) #replace illegal characters with a space
+    # studentResponse = re.sub("~!@#$%^&*()_+=-`/*.,[];:'/?><", ' ', studentResponse)
+    #replace illegal characters with a space
 
     # add student score
 
@@ -125,8 +128,9 @@ def correct(request, classId, topicId, questionId):
 
     nonkw = ""
 
-    studentResponseLemmatized = [lemmatizer.lemmatize(item.lower()) for item in studentResponse.split(' ')]
-    print("SRL", studentResponseLemmatized)
+    studentResponseLemmatized = [lemmatizer.lemmatize(re.sub(r'\W+', '', item.lower()))
+                                 for item in studentResponse.split(' ')]
+
     studentResponseList = studentResponse.split(' ')
 
     print studentResponseList, studentResponseLemmatized
