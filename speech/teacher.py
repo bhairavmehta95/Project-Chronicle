@@ -7,6 +7,7 @@ from .forms import LoginForm, SignupForm, TeacherSignupForm, TeacherLoginForm
 from .data import updateProgressesFromTopic
 
 from django.contrib.auth.models import User, Group
+from .forms import LoginForm
 
 import json
 from django.core import serializers
@@ -108,9 +109,9 @@ def addTopic(request):
 
     if (request.method == 'POST'):
         
-        class_id = request.POST['classId']
+        class_key = request.POST['classKey']
         topic_name = request.POST['topicName']
-        class_instance = Class.objects.get(class_id = class_id)
+        class_instance = Class.objects.get(class_key = class_key)
 
         new_topic = Topic.objects.create(class_id=class_instance, topic_name=topic_name)
 
@@ -220,7 +221,9 @@ def teacher_portal(request):
             else:
                 return HttpResponseRedirect('/classes')
         else:
-            return render(request, 'teacherlanding.html')
+            signup_form = TeacherSignupForm()
+            form = LoginForm()
+            return render(request, 'teacherlanding.html', {'form': form, 'signup_form': signup_form})
 
 def teacher_home(request):
     return render(request, 'teacherhome.html')
