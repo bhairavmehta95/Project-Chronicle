@@ -11,35 +11,36 @@
 </head>
 <body>
 {% include "base.html" %}
+    <div class="ui middle aligned center aligned grid">
+        <div class="four wide column">
+        <h1 class="ui center aligned header" style="padding-top: 70px">Login</h1>
 
-<h1 class="ui center aligned header" style="padding-top: 70px">Login</h1>
-<div class="ui very padded center aligned container">
-    <form class="ui equal width form" method="post">
-        {% csrf_token %}
-        <div class="two fields">
-            {% for field in form %}
-            <div class="small field">
-            <label> {{ field.label_tag }} </label>
-                <div class="ui input">
-                    {{ field }}
+        <form class="ui equal width form" method="post">
+            {% csrf_token %}
+                {% for field in form %}
+                <div class="small field">
+                <label> {{ field.label_tag }} </label>
+                    <div class="ui input">
+                        {{ field }}
+                    </div>
                 </div>
-            </div>
-            {% endfor %}
+                {% endfor %}
+
+            {% if error != None %}
+                {{ error }}
+                <br>
+            {% endif %}
+
+            <button class="ui basic icon button" type="submit">
+              Login
+              <i class="right chevron icon"></i>
+            </button>
+        </form>
+
+        <br> <br>
+        <a class="registerLink" href="/signup"> Need an account? Click here to register!</a> <br><br><br>
+
         </div>
-
-        {% if error != None %}
-            {{ error }}
-            <br>
-        {% endif %}
-
-        <button class="ui green button" type="submit">
-          Login
-        </button>
-    </form>
-
-    <br> <br>
-    <a class="registerLink" href="/signup"> Need an account? Click here to register!</a> <br><br><br>
-
-</div>
+    </div>
 </body>
 </html>
