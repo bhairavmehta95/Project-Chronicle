@@ -5,7 +5,6 @@
   <title>Topics in {{class}}</title>
   {% load static %}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="{% static 'js/progress_viz.js' %}"></script>
 </head>
 {% include "base.html" %}
 
@@ -18,9 +17,9 @@
     <div class="ui six doubling cards">
         {% for topic in topics %}
             <a class="ui raised card" href="/{{topic.class_id.class_id}}/{{ topic.topic_id }}">
-              <div class="image">
-                    <img src="{% static 'images/logo.png' %}"/>
-              </div>
+{#              <div class="image">#}
+{#                    <img src="{% static 'images/logo.png' %}"/>#}
+{#              </div>#}
               <div class="content">
                 <div class="header">{{ topic }}</div>
               </div>
