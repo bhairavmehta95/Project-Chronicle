@@ -58,7 +58,6 @@ def question_builder(request, class_id, topic_id):
 
     if request.method == 'POST':
         builder_form = QuestionBuilderForm(request.POST)
-        print
 
         # Question Update Form was submitted, time to validate
         if not builder_form.is_valid() and request.POST.get('is_qbuilder_update'):
@@ -145,7 +144,13 @@ def question_builder(request, class_id, topic_id):
             # keyword api
             r = requests.post('http://pc-builder-dev2.us-west-2.elasticbeanstalk.com/index', json=data)
             # r = requests.post('http://0.0.0.0:5000/index', json=data)
-            response_json = json.loads(r.text)
+            try:
+                response_json = json.loads(r.text)
+            except:
+                builder_form = QuestionBuilderForm(request.POST)
+                error = "Oops, we've had a hiccup. Please try again."
+                return render(request, 'question_builder.html', {'form': builder_form, 'error':error})
+
 
             form_fields = dict()
 
