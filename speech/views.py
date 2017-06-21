@@ -17,22 +17,6 @@ def landing(request):
     return render(request, 'landing.html')
 
 
-# loads the demo
-def demo(request):
-    if request.user.is_authenticated():
-        return HttpResponseRedirect('/classes')
-
-    username = 'DEMOUSER'
-    password = 'USER$PASSWORD'
-    user = authenticate(username=username, password=password)
-    
-    if user is not None:
-        login(request, user)
-        return HttpResponseRedirect('/classes')
-
-    return HttpResponseRedirect('/login')
-
-
 # Create your views here.
 def login_user(request):
 
