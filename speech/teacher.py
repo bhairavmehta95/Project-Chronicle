@@ -7,6 +7,8 @@ from .forms import LoginForm, SignupForm, TeacherSignupForm, TeacherLoginForm
 from .data import updateProgressesFromTopic
 
 from django.contrib.auth.models import User, Group
+import django.contrib.auth.password_validation as password_validation
+
 from .forms import LoginForm
 
 import json
@@ -34,7 +36,15 @@ def signup_teacher(request):
 
             # Password Checking
             if (password != retyped):
-                error = "Passwords don't match"
+                error = "Passwords don't match."
+
+            if len(password) < 8:
+                error = "Password is too short."
+
+            try:
+                password_validation.validate_password(password)
+            except:
+                error = "Please use a better password. The attempted password may be too similar to username or too common."
 
             if error == None:
                 user = User.objects.create_user(username=username,
