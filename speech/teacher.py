@@ -7,7 +7,7 @@ from .forms import LoginForm, SignupForm, TeacherSignupForm, TeacherLoginForm
 from .data import updateProgressesFromTopic
 
 from django.contrib.auth.models import User, Group
-from .forms import LoginForm
+from .forms import LoginForm, QuestionBuilderForm
 
 import json
 from django.core import serializers
@@ -226,7 +226,8 @@ def teacher_portal(request):
             return render(request, 'teacherlanding.html', {'form': form, 'signup_form': signup_form})
 
 def teacher_home(request):
-    return render(request, 'teacherhome.html')
+    form = QuestionBuilderForm()
+    return render(request, 'teacherhome.html', {'form': form })
 
 def classPage(request, classKey):
     t = getTeacherId(request)

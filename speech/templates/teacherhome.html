@@ -32,7 +32,7 @@
       </div>
     </div>
 
-    <div class="ui link stackable cards" id="classContainer">
+    <div class="ui link stackable cards hideable" id="classContainer">
 
       <div class="card template">
         <div class="image">
@@ -64,7 +64,7 @@
       </div>
     </div>
 
-    <div class="ui styled fluid accordion" id="topicContainer" style="display: none;">
+    <div class="ui styled fluid accordion hideable" id="topicContainer" style="display: none;">
       <div class="accordion-row template">
         <div class="title">
           <i class="dropdown icon"></i>
@@ -91,6 +91,48 @@
       </div>
     </div>
 
+    <div class="ui container hideable" id="questionContainer" style="display: none;">
+
+      <h1 class="ui center aligned header" style="padding-top: 70px">Question Builder</h1>
+      <div class="ui very padded center aligned container">
+        <form class="ui equal width form" method="post">
+        <div class="ui three column grid">
+          {% csrf_token %}
+          {{ form.errors }}
+          {{ form.non_field_errors }}
+
+          {% for field in form %}
+              <div class="column">
+                  <div class="field">
+                  <label> {{ field.label_tag }} </label>
+                      {% if field.help_text %}
+                      <div class="ui input" data-tooltip="{{ field.help_text }}" data-position="bottom right">
+                      {% else %}
+                      <div class="ui input" data-position="bottom right">
+                      {%  endif %}
+                          {{ field }}
+                      </div>
+                  </div>
+              </div>
+          {% endfor %}
+
+          {% if error != None %}
+            {{ error }}
+          {% endif %}
+        </div>
+
+        <div class="ui very padded center aligned container" style="padding-top: 30px">
+          <button class="ui green button" type="submit">
+            Submit
+          </button>
+        </div>
+        </form>
+
+      </div>
+
+    </div>
+
+
     <!-- Modals -->
     <div class="ui small modal" id="classModal">
       <div class="header">Add A Class</div>
@@ -105,6 +147,7 @@
         <div class="ui approve teal button">Create</div>
       </div>
     </div>
+
     <div class="ui small modal" id="confirmModal">
       <div class="header">Are You Sure?</div>
       <div class="content">
@@ -116,6 +159,7 @@
         <div class="ui approve red button">Delete</div>
       </div>
     </div>
+
     <div class="ui small modal" id="topicModal">
       <div class="header"></div>
       <div class="content">

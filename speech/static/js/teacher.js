@@ -12,6 +12,23 @@ function addClassToMenu(className) {
 	$newItem.find('i').remove();
 	$newItem
 		.addClass('class-item')
+		.appendTo('#mainMenu .left.menu')
+		.click(function () {
+			alert('got it');
+			showClassDetails($('#classKey').val(), $('#classId').val());
+		});
+	$('#mainMenu .right.menu .item.addClass').hide();
+	$('#mainMenu .right.menu .item.addTopic').show();
+}
+
+function addNewQuestionToMenu() {
+	$activeItem = $('#mainMenu .item.active');
+	$newItem = $activeItem.clone();
+	$activeItem.removeClass('active');
+	$newItem.find('span').text('New Question');
+	$newItem.find('i').remove();
+	$newItem
+		.addClass('question-item')
 		.appendTo('#mainMenu .left.menu');
 	$('#mainMenu .right.menu .item.addClass').hide();
 	$('#mainMenu .right.menu .item.addTopic').show();
@@ -25,9 +42,7 @@ function removeClassFromMenu() {
 
 /* CLASSES */
 function showHomeDetails() {
-	$('#topicContainer').hide();
-	$('#topicContainer').find('.accordion-row:not(.template)').remove();
-	$('#classContainer').show();
+	closeHideablesExcept('classContainer');
 	removeClassFromMenu();
 }
 
@@ -119,8 +134,7 @@ function renderClass(data, atFront) {
 
 /* TOPICS */
 function showClassDetails(classKey, classId) {
-	$('#classContainer').hide();
-	$('#topicContainer').show();
+	closeHideablesExcept('topicContainer');
 	$('#classKey').val(classKey);
 	$('#classId').val(classId);
 	populateTopics(classKey);
@@ -234,9 +248,21 @@ function renderQuestion($accordionRow, questionData) {
 }
 
 function openNewQuestionBuilder(trigger) {
-	var classId = $('#classId').val();
-	var topicId = $(trigger).closest('.accordion-row').data().topic_id;
-	window.location = '/builder/' + classId + '/' + topicId;
+	addNewQuestionToMenu();
+	closeHideablesExcept('questionContainer');
+	// var classId = $('#classId').val();
+	// var topicId = $(trigger).closest('.accordion-row').data().topic_id;
+	// window.location = '/builder/' + classId + '/' + topicId;
+}
+
+
+/* GENERAL */
+function closeHideablesExcept(hideableID) {
+	$('.hideable').hide();
+	if (hideableID != 'topicConainer') {
+		$('#topicContainer').find('.accordion-row:not(.template)').remove();
+	}
+	$('#' + hideableID).show();
 }
 
 
