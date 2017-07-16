@@ -57,6 +57,7 @@ function populateClasses() {
 				data.class_id =  myClass.pk;
 				renderClass(data);
 			})
+			toggleMessage('noClasses');
 		}
 	})
 }
@@ -73,6 +74,7 @@ function addClass(name) {
 			data = $.parseJSON(result)[0].fields;
 			data.class_id =  $.parseJSON(result)[0].pk;
 			renderClass(data, true);
+			toggleMessage('noClasses');
 		}
 	})
 }
@@ -86,7 +88,8 @@ function deleteClass(classKey) {
 			url: '/teacher/ajax/deleteClass/',
 			data: postData,
 			success: function(result) {
-				$('.card:contains(' + classKey + ')').remove()
+				$('.card:contains(' + classKey + ')').remove();
+				toggleMessage('noClasses');
 			}
 		})
 }
@@ -264,6 +267,16 @@ function closeHideablesExcept(hideableID) {
 		$('#topicContainer').find('.accordion-row:not(.template)').remove();
 	}
 	$('#' + hideableID).show();
+}
+
+function toggleMessage(message) {
+	if (message == 'noClasses') {
+		if (!$('#classContainer .card:not(.template)').length) {
+			$('#noClassesMessage').show();
+		} else {
+			$('#noClassesMessage').hide();
+		}
+	}
 }
 
 
