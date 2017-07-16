@@ -21,6 +21,9 @@
           <i class="home icon"></i> 
           <span>Home</span>
         </a>
+        <a class="item template">
+          <span></span>
+        </a>
       </div>
       <div class="right menu">
         <div class="item addClass">
@@ -32,7 +35,15 @@
       </div>
     </div>
 
-    <div class="ui link stackable cards" id="classContainer">
+    <div class="ui link stackable cards hideable" id="classContainer">
+      <div class="ui container" id="noClassesMessage" style="display:none; margin-top: 3em">
+        <div class="ui message info">
+          <div class="header">
+            No Classes
+          </div>
+          <p>It appears you do not have any classes. Click the "Add Class" button to create a new class.</p>
+        </div>
+      </div>
 
       <div class="card template">
         <div class="image">
@@ -64,7 +75,16 @@
       </div>
     </div>
 
-    <div class="ui styled fluid accordion" id="topicContainer" style="display: none;">
+    <div class="ui styled fluid accordion hideable" id="topicContainer" style="display: none;">
+      <div class="ui container" id="noTopicsMessage" style="display:none; margin-top: 3em">
+        <div class="ui message info">
+          <div class="header">
+            No Topics
+          </div>
+          <p>It appears you do not have any topics. Click the "Add Topic" button to create a new topic.</p>
+        </div>
+      </div>
+      
       <div class="accordion-row template">
         <div class="title">
           <i class="dropdown icon"></i>
@@ -72,6 +92,12 @@
         </div>
         <div class="content">
           <div class="ui segments question">
+            <div class="ui message info noQuestionsMessage" style="display:none; margin-bottom:0;">
+              <div class="header">
+                No Questions
+              </div>
+              <p>It appears you do not have any questions in this topic. Click the "Add Question" button to create a new question.</p>
+            </div>
             <div class="ui segment template question">
               <span>Question Title Here</span>
             </div>
@@ -83,13 +109,55 @@
             <button onclick="openModal('editTopic', this)" class="ui button">
               Edit Topic
             </button>
-            <button onclick="openQuestionBuilder(this)" class="ui teal button">
+            <button onclick="openNewQuestionBuilder(this)" class="ui teal button">
               Add Question
             </button>
           </div>
         </div>
       </div>
     </div>
+
+    <div class="ui container hideable" id="questionContainer" style="display: none;">
+
+      <h1 class="ui center aligned header" style="padding-top: 70px">Question Builder</h1>
+      <div class="ui very padded center aligned container">
+        <form class="ui equal width form" method="post">
+        <div class="ui three column grid">
+          {% csrf_token %}
+          {{ form.errors }}
+          {{ form.non_field_errors }}
+
+          {% for field in form %}
+              <div class="column">
+                  <div class="field">
+                  <label> {{ field.label_tag }} </label>
+                      {% if field.help_text %}
+                      <div class="ui input" data-tooltip="{{ field.help_text }}" data-position="bottom right">
+                      {% else %}
+                      <div class="ui input" data-position="bottom right">
+                      {%  endif %}
+                          {{ field }}
+                      </div>
+                  </div>
+              </div>
+          {% endfor %}
+
+          {% if error != None %}
+            {{ error }}
+          {% endif %}
+        </div>
+
+        <div class="ui very padded center aligned container" style="padding-top: 30px">
+          <button class="ui green button" type="submit">
+            Submit
+          </button>
+        </div>
+        </form>
+
+      </div>
+
+    </div>
+
 
     <!-- Modals -->
     <div class="ui small modal" id="classModal">
@@ -105,6 +173,7 @@
         <div class="ui approve teal button">Create</div>
       </div>
     </div>
+
     <div class="ui small modal" id="confirmModal">
       <div class="header">Are You Sure?</div>
       <div class="content">
@@ -116,6 +185,7 @@
         <div class="ui approve red button">Delete</div>
       </div>
     </div>
+
     <div class="ui small modal" id="topicModal">
       <div class="header"></div>
       <div class="content">

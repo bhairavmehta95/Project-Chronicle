@@ -5,29 +5,52 @@ $(document).ready(function() {
 
 /* MENU */
 function addClassToMenu(className) {
+	$('#mainMenu .item.active').removeClass('active');;
+	$templateItem = $('#mainMenu .item.template')
+	$newItem = $templateItem.clone();
+	$newItem.find('span').text(className);
+	$newItem
+		.addClass('class-item active')
+		.removeClass('template')
+		.appendTo('#mainMenu .left.menu')
+		.click(function () {
+			showClassDetails($('#classKey').val(), $('#classId').val());
+			$(this).addClass('active')
+			$(this).nextAll().remove();
+			setRightMenu('addTopic');
+		});
+	setRightMenu('addTopic');
+}
+
+function addNewQuestionToMenu() {
 	$activeItem = $('#mainMenu .item.active');
 	$newItem = $activeItem.clone();
 	$activeItem.removeClass('active');
-	$newItem.find('span').text(className);
+	$newItem.find('span').text('New Question');
 	$newItem.find('i').remove();
 	$newItem
-		.addClass('class-item')
+		.addClass('question-item')
 		.appendTo('#mainMenu .left.menu');
-	$('#mainMenu .right.menu .item.addClass').hide();
-	$('#mainMenu .right.menu .item.addTopic').show();
+	setRightMenu();
 }
 
 function removeClassFromMenu() {
 	$('#mainMenu .item.class-item').remove();
 	$('#mainMenu .item.home').addClass('active');
+	setRightMenu('addClass');
+}
+
+function setRightMenu(setting) {
+	$('#mainMenu .right.menu .item').hide();
+	if (setting) {
+		$('#mainMenu .right.menu .item.' + setting).show();
+	}
 }
 
 
 /* CLASSES */
 function showHomeDetails() {
-	$('#topicContainer').hide();
-	$('#topicContainer').find('.accordion-row:not(.template)').remove();
-	$('#classContainer').show();
+	closeHideablesExcept('classContainer');
 	removeClassFromMenu();
 }
 
@@ -41,6 +64,7 @@ function populateClasses() {
 				data.class_id =  myClass.pk;
 				renderClass(data);
 			})
+			toggleMessage('noClasses');
 		}
 	})
 }
@@ -57,6 +81,7 @@ function addClass(name) {
 			data = $.parseJSON(result)[0].fields;
 			data.class_id =  $.parseJSON(result)[0].pk;
 			renderClass(data, true);
+			toggleMessage('noClasses');
 		}
 	})
 }
@@ -70,7 +95,8 @@ function deleteClass(classKey) {
 			url: '/teacher/ajax/deleteClass/',
 			data: postData,
 			success: function(result) {
-				$('.card:contains(' + classKey + ')').remove()
+				$('.card:contains(' + classKey + ')').remove();
+				toggleMessage('noClasses');
 			}
 		})
 }
@@ -119,8 +145,7 @@ function renderClass(data, atFront) {
 
 /* TOPICS */
 function showClassDetails(classKey, classId) {
-	$('#classContainer').hide();
-	$('#topicContainer').show();
+	closeHideablesExcept('topicContainer');
 	$('#classKey').val(classKey);
 	$('#classId').val(classId);
 	populateTopics(classKey);
@@ -136,6 +161,7 @@ function populateTopics(classKey) {
 				data.topic_id = topic.pk;
 				renderTopic(data);
 			})
+			toggleMessage('noTopics');
 		}
 	})
 }
@@ -153,6 +179,7 @@ function addTopic(topicName) {
 			data = $.parseJSON(result)[0].fields;
 			data.topic_id = $.parseJSON(result)[0].pk;
 			renderTopic(data);
+			toggleMessage('noTopics');
 		}
 	})
 }
@@ -199,6 +226,7 @@ function deleteTopic(topicId) {
 					$(this).remove();
 				}
 			})
+			toggleMessage('noTopics');
 		}
 	})
 }
@@ -219,6 +247,7 @@ function populateQuestions($accordionRow, topicData) {
 				data.question_id = question.pk;
 				renderQuestion($accordionRow, data);
 			})
+			toggleMessage('noQuestions', $accordionRow);
 		}
 	});
 }
@@ -233,10 +262,45 @@ function renderQuestion($accordionRow, questionData) {
 		.appendTo(contentArea);
 }
 
-function openQuestionBuilder(trigger) {
-	var classId = $('#classId').val();
-	var topicId = $(trigger).closest('.accordion-row').data().topic_id;
-	window.location = '/builder/' + classId + '/' + topicId;
+function openNewQuestionBuilder(trigger) {
+	addNewQuestionToMenu();
+	closeHideablesExcept('questionContainer');
+}
+
+
+/* GENERAL */
+function closeHideablesExcept(hideableID) {
+	$('.hideable').hide();
+	if (hideableID != 'topicConainer') {
+		$('#topicContainer').find('.accordion-row:not(.template)').remove();
+	}
+	$('#' + hideableID).show();
+}
+
+function toggleMessage(message, $container) {
+	switch(message) {
+		case 'noClasses':
+			if (!$('#classContainer .card:not(.template)').length) {
+				$('#noClassesMessage').show();
+			} else {
+				$('#noClassesMessage').hide();
+			}
+			break;
+		case 'noTopics':
+			if (!$('#topicContainer .accordion-row:not(.template)').length) {
+				$('#noTopicsMessage').show();
+			} else {
+				$('#noTopicsMessage').hide();
+			}
+			break;
+		case 'noQuestions':
+			if (!$container.find('.question.segment:not(.template)').length) {
+				$container.find('.noQuestionsMessage').show();
+			} else {
+				$container.find('.noQuestionsMessage').hide();
+			}
+			break;
+	}
 }
 
 
