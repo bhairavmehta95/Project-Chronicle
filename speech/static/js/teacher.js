@@ -233,7 +233,7 @@ function renderQuestion($accordionRow, questionData) {
 		.appendTo(contentArea);
 }
 
-function openQuestionBuilder(trigger) {
+function openNewQuestionBuilder(trigger) {
 	var classId = $('#classId').val();
 	var topicId = $(trigger).closest('.accordion-row').data().topic_id;
 	window.location = '/builder/' + classId + '/' + topicId;
