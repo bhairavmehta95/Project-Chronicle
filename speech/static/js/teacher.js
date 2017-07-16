@@ -17,9 +17,9 @@ function addClassToMenu(className) {
 			showClassDetails($('#classKey').val(), $('#classId').val());
 			$(this).addClass('active')
 			$(this).nextAll().remove();
+			setRightMenu('addTopic');
 		});
-	$('#mainMenu .right.menu .item.addClass').hide();
-	$('#mainMenu .right.menu .item.addTopic').show();
+	setRightMenu('addTopic');
 }
 
 function addNewQuestionToMenu() {
@@ -31,13 +31,20 @@ function addNewQuestionToMenu() {
 	$newItem
 		.addClass('question-item')
 		.appendTo('#mainMenu .left.menu');
-	$('#mainMenu .right.menu .item.addClass').hide();
-	$('#mainMenu .right.menu .item.addTopic').show();
+	setRightMenu();
 }
 
 function removeClassFromMenu() {
 	$('#mainMenu .item.class-item').remove();
 	$('#mainMenu .item.home').addClass('active');
+	setRightMenu('addClass');
+}
+
+function setRightMenu(setting) {
+	$('#mainMenu .right.menu .item').hide();
+	if (setting) {
+		$('#mainMenu .right.menu .item.' + setting).show();
+	}
 }
 
 
@@ -287,7 +294,6 @@ function toggleMessage(message, $container) {
 			}
 			break;
 		case 'noQuestions':
-			alert('question');
 			if (!$container.find('.question.segment:not(.template)').length) {
 				$container.find('.noQuestionsMessage').show();
 			} else {
