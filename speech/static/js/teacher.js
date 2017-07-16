@@ -5,17 +5,18 @@ $(document).ready(function() {
 
 /* MENU */
 function addClassToMenu(className) {
-	$activeItem = $('#mainMenu .item.active');
-	$newItem = $activeItem.clone();
-	$activeItem.removeClass('active');
+	$('#mainMenu .item.active').removeClass('active');;
+	$templateItem = $('#mainMenu .item.template')
+	$newItem = $templateItem.clone();
 	$newItem.find('span').text(className);
-	$newItem.find('i').remove();
 	$newItem
-		.addClass('class-item')
+		.addClass('class-item active')
+		.removeClass('template')
 		.appendTo('#mainMenu .left.menu')
 		.click(function () {
-			alert('got it');
 			showClassDetails($('#classKey').val(), $('#classId').val());
+			$(this).addClass('active')
+			$(this).nextAll().remove();
 		});
 	$('#mainMenu .right.menu .item.addClass').hide();
 	$('#mainMenu .right.menu .item.addTopic').show();
