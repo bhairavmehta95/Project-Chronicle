@@ -154,6 +154,7 @@ function populateTopics(classKey) {
 				data.topic_id = topic.pk;
 				renderTopic(data);
 			})
+			toggleMessage('noTopics');
 		}
 	})
 }
@@ -171,6 +172,7 @@ function addTopic(topicName) {
 			data = $.parseJSON(result)[0].fields;
 			data.topic_id = $.parseJSON(result)[0].pk;
 			renderTopic(data);
+			toggleMessage('noTopics');
 		}
 	})
 }
@@ -217,6 +219,7 @@ function deleteTopic(topicId) {
 					$(this).remove();
 				}
 			})
+			toggleMessage('noTopics');
 		}
 	})
 }
@@ -237,6 +240,7 @@ function populateQuestions($accordionRow, topicData) {
 				data.question_id = question.pk;
 				renderQuestion($accordionRow, data);
 			})
+			toggleMessage('noQuestions', $accordionRow);
 		}
 	});
 }
@@ -266,13 +270,30 @@ function closeHideablesExcept(hideableID) {
 	$('#' + hideableID).show();
 }
 
-function toggleMessage(message) {
-	if (message == 'noClasses') {
-		if (!$('#classContainer .card:not(.template)').length) {
-			$('#noClassesMessage').show();
-		} else {
-			$('#noClassesMessage').hide();
-		}
+function toggleMessage(message, $container) {
+	switch(message) {
+		case 'noClasses':
+			if (!$('#classContainer .card:not(.template)').length) {
+				$('#noClassesMessage').show();
+			} else {
+				$('#noClassesMessage').hide();
+			}
+			break;
+		case 'noTopics':
+			if (!$('#topicContainer .accordion-row:not(.template)').length) {
+				$('#noTopicsMessage').show();
+			} else {
+				$('#noTopicsMessage').hide();
+			}
+			break;
+		case 'noQuestions':
+			alert('question');
+			if (!$container.find('.question.segment:not(.template)').length) {
+				$container.find('.noQuestionsMessage').show();
+			} else {
+				$container.find('.noQuestionsMessage').hide();
+			}
+			break;
 	}
 }
 
