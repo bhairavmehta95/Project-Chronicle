@@ -254,9 +254,6 @@ function renderQuestion($accordionRow, questionData) {
 function openNewQuestionBuilder(trigger) {
 	addNewQuestionToMenu();
 	closeHideablesExcept('questionContainer');
-	// var classId = $('#classId').val();
-	// var topicId = $(trigger).closest('.accordion-row').data().topic_id;
-	// window.location = '/builder/' + classId + '/' + topicId;
 }
 
 
