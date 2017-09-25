@@ -263,8 +263,31 @@ function renderQuestion($accordionRow, questionData) {
 }
 
 function openNewQuestionBuilder(trigger) {
-	addNewQuestionToMenu();
-	closeHideablesExcept('questionContainer');
+	var topicId = $(trigger).closest('.accordion-row').data().topic_id
+	window.location = '/builder/' + $('#classId').val() + '/' + topicId
+	// console.log($(trigger).closest('.accordion-row').data().topic_id)
+	// $('#topicId').val($(trigger).closest('.accordion-row').data().topic_id)
+	// addNewQuestionToMenu();
+	// closeHideablesExcept('questionContainer');
+}
+
+function submitQuestion() {
+	alert($('#classId').val())
+	postData = {
+		classId: $('#classId').val(),
+		topicId: $('#topicId').val(),
+		sources: $('#id_sources').val(),
+		questionTitle: $('#id_question_title').val(),
+		numKeywords: $('#id_keywords_to_return').val()
+	}
+	$.ajax({
+		type: 'POST',
+		url: '/buildNewQuestion/',
+		data: postData,
+		success: function(results) {
+			alert("Reed, you did it!");
+		}
+	});
 }
 
 

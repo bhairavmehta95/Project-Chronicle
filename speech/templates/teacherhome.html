@@ -121,7 +121,6 @@
 
       <h1 class="ui center aligned header" style="padding-top: 70px">Question Builder</h1>
       <div class="ui very padded center aligned container">
-        <form class="ui equal width form" method="post">
         <div class="ui three column grid">
           {% csrf_token %}
           {{ form.errors }}
@@ -148,12 +147,10 @@
         </div>
 
         <div class="ui very padded center aligned container" style="padding-top: 30px">
-          <button class="ui green button" type="submit">
+          <button class="ui green button" onclick="submitQuestion()">
             Submit
           </button>
         </div>
-        </form>
-
       </div>
 
     </div>
@@ -204,6 +201,7 @@
 
 <input id="classKey" type="hidden"></input>
 <input id="classId" type="hidden"></input>
+<input id="topicId" type="hidden"></input>
 
 </div>
 </body>

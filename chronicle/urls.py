@@ -53,4 +53,5 @@ urlpatterns = [
 
     # Question Builder
     url(r'^builder/(\d+)/(\d+)/$', speech.question_builder.question_builder, name='question_builder'),
+    url(r'^buildNewQuestion/', speech.question_builder.build_question),
 ]
