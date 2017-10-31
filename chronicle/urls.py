@@ -8,6 +8,7 @@ import speech.student
 import speech.teacher
 import speech.question_interface
 import speech.question_builder
+import speech.metrics
 
 
 urlpatterns = [
@@ -53,5 +54,10 @@ urlpatterns = [
 
     # Question Builder
     url(r'^builder/(\d+)/(\d+)/$', speech.question_builder.question_builder, name='question_builder'),
+    url(r'^builder/(\d+)/(\d+)/(\d+)/$', speech.question_builder.question_builder_existing, name='question_builder_existing'),
     url(r'^buildNewQuestion/', speech.question_builder.build_question),
+
+    # Metrics
+    url(r'^metrics/$', speech.metrics.metrics, name='metrics'),
+    url(r'^metrics/ajax/getStudentPerformance/$', speech.metrics.getStudentPerformance, name='getStudentPerformance')
 ]

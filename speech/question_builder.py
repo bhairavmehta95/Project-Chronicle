@@ -183,6 +183,44 @@ def question_builder(request, class_id, topic_id):
 
     return render(request, 'question_builder.html', {'form': form})
 
+def question_builder_existing (request, class_id, topic_id, question_id):
+    question_ = Question.objects.get(class_id=class_id, topic_id=topic_id, question_id=question_id)
+    keywords = Keyword.objects.filter(question_id=question_id)
+    form = QuestionBuilderForm()
+
+    if question_ is None:
+        # TODO
+        print("error should go here")
+
+    form_fields = dict()
+
+    form_fields['question_title'] = question_.question_title
+
+    form_fields['raw_text'] = dict()
+
+    for idx, word in enumerate(keywords):
+        form_fields['primary_keyword_field_{index}'.format(index=idx)] = word.keyword
+        form_fields['primary_keyword_point_field_{index}'.format(index=idx)] = word.point_value
+
+    # get synonyms
+    synoymns_dict = dict()
+    
+    form = QBuilderUpdateForm.empty_init(
+        QBuilderUpdateForm(),
+        primary_keywords=len(keywords),
+        secondary_keywords=0,
+        data=form_fields
+    )
+
+    perfect_answer = get_perfect_answer('')
+
+    return render(request, 'question_builder_post.html', {
+        'form': form,
+        'q_title': question_.question_title,
+        'synonyms_dict': synoymns_dict,
+        'perfect_answer': perfect_answer
+    })
+
 
 def build_question(request):
     

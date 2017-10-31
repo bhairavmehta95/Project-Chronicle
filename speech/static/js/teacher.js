@@ -271,6 +271,11 @@ function openNewQuestionBuilder(trigger) {
 	// closeHideablesExcept('questionContainer');
 }
 
+function goToBuilder(trigger) {
+	var data = $(trigger).data()
+	window.location = '/builder/' + $('#classId').val() + '/' + data.topic_id + '/' + data.question_id
+}
+
 function submitQuestion() {
 	alert($('#classId').val())
 	postData = {

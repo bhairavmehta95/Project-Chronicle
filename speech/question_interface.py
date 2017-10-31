@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import Student, Class, Topic, Question, Completion, Keyword, RawText, KeywordContext
+from .models import Student, Class, Topic, Question, Completion, Keyword, RawText, KeywordContext, Teacher
 from .data import updateSingleTopicProgress, getPercentString, greatestCompletionByStudent, getClassesOfStudent
 
 from nltk.stem import WordNetLemmatizer
@@ -25,13 +25,12 @@ def class_page(request):
         print("not authenticated")
         return HttpResponseRedirect('/login')
 
-    if not request.user.groups.filter(name='student').exists():
+    elif Teacher.objects.filter(user_id_login = request.user.id).count: # Teacher
         print("teacher")
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/teacher')
 
     studentObj = Student.objects.get(user_id_login=request.user.id)
     classes = getClassesOfStudent(studentObj.student_id)
-
     return render(request, 'class.html', {'classes': classes})
 
 
