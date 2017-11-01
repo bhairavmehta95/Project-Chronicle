@@ -28,167 +28,83 @@
                         <span>Student Performance</span>
                     </div>
                     <!-- Row Content -->
-                    <div class="content ui equal width grid">
-                        <!-- Nested Rows -->
+                    <div id="performances" class="content ui equal width grid">
+                        <!-- Header Rows -->
                         <div class="row">
-                            <div class="two wide column">
-                                <h4 class="ui header">Class</h4>
-                            </div>
-                            <div class="six wide column">
+                            <div class="four wide column">
                                 <h4 class="ui header">Student Name</h4>
                             </div>
+                            <div class="four wide column">
+                                <h4 class="ui header">Class</h4>
+                            </div>
                             <div class="two wide column">
+                                <h4 class="ui header">Total Answers</h4>
+                            </div>
+                            <div class="column">
                                 <h4 class="ui header">Questions Attempted</h4>
+                            </div>
+                            <div class="column">
+                                <h4 class="ui header">Questions Passed</h4>
+                            </div>
+                        </div>
+                        <!-- Template Row -->
+                        <div id="perfRowTemplate" class="row template">
+                            <div class="four wide column name">
+                                <p></p>
+                            </div>
+                            <div class="four wide column class">
+                                <p></p>
+                            </div>
+                            <div class="two wide column total-responses">
+                                <p></p>
+                            </div>
+                            <div class="column total-questions">
+                                <p></p>
+                            </div>
+                            <div class="column total-passes">
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-row">
+                    <!-- Row Title -->
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        <span>Question Statistics</span>
+                    </div>
+                    <!-- Row Content -->
+                    <div id="questions" class="content ui equal width grid">
+                        <!-- Header Rows -->
+                        <div class="row">
+                            <div class="eight wide column">
+                                <h4 class="ui header">Question</h4>
+                            </div>
+                            <div class="column">
+                                <h4 class="ui header">Total Responses</h4>
+                            </div>
+                            <div class="column">
+                                <h4 class="ui header">Passing Responses</h4>
                             </div>
                             <div class="column">
                                 <h4 class="ui header">Average Score</h4>
                             </div>
-                            <div class="column">
-                                <h4 class="ui header">Best Score</h4>
-                            </div>
                         </div>
-                        <div class="row">
-                            <div class="two wide column">
-                                <p>AP Euro</p>
+                        <!-- Template Row -->
+                        <div id="questionRowTemplate" class="row">
+                                <div class="eight wide column">
+                                    <p class="question">Question</p>
+                                </div>
+                                <div class="column">
+                                    <p class="responses">Total Responses</p>
+                                </div>
+                                <div class="column">
+                                    <p class="passing">Passing Responses</p>
+                                </div>
+                                <div class="column">
+                                    <p class="average">Average Score</p>
+                                </div>
                             </div>
-                            <div class="six wide column">
-                                <p>Luke Abbott</p>
-                            </div>
-                            <div class="two wide column">
-                                <p>23</p>
-                            </div>
-                            <div class="column">
-                                <p>60.3</p>
-                            </div>
-                            <div class="column">
-                                <p>80.1</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="two wide column">
-                                <p>AP USH</p>
-                            </div>
-                            <div class="six wide column">
-                                <p>Reed Anderson</p>
-                            </div>
-                            <div class="two wide column">
-                                <p>106</p>
-                            </div>
-                            <div class="column">
-                                <p>56.3</p>
-                            </div>
-                            <div class="column">
-                                <p>74.9</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-row">
-                    <!-- Row Title -->
-                    <div class="title">
-                        <i class="dropdown icon"></i>
-                        <span>Most Successful Questions</span>
-                    </div>
-                    <!-- Row Content -->
-                    <div class="content">
-                        <!-- Nested Rows -->
-                        <div class="ui segments question">
-                            <div class="ui segment question" onclick="goToBuilder(this)" style="cursor: pointer">
-                                <span>Reed Anderson</span>
-                            </div>
-                        </div>
-                        <div class="ui segments question">
-                            <div class="ui segment question" onclick="goToBuilder(this)" style="cursor: pointer">
-                                <span>Bhairav Mehta</span>
-                            </div>
-                        </div>
-                        <div class="ui segments question">
-                            <div class="ui segment question" onclick="goToBuilder(this)" style="cursor: pointer">
-                                <span>Lucas Abbott</span>
-                            </div>
-                        </div>
-                        <div class="ui segments question">
-                            <div class="ui segment question" onclick="goToBuilder(this)" style="cursor: pointer">
-                                <span>Victor Troung</span>
-                            </div>
-                        </div>
-                        <div class="ui segments question">
-                            <div class="ui segment question" onclick="goToBuilder(this)" style="cursor: pointer">
-                                <span>Bill Gates</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-row">
-                    <!-- Row Title -->
-                    <div class="title">
-                        <i class="dropdown icon"></i>
-                        <span>Least Successful Questions</span>
-                    </div>
-                    <!-- Row Content -->
-                    <div class="content">
-                        <!-- Nested Rows -->
-                        <div class="ui segments question">
-                            <div class="ui segment question" onclick="goToBuilder(this)" style="cursor: pointer">
-                                <span>Reed Anderson</span>
-                            </div>
-                        </div>
-                        <div class="ui segments question">
-                            <div class="ui segment question" onclick="goToBuilder(this)" style="cursor: pointer">
-                                <span>Bhairav Mehta</span>
-                            </div>
-                        </div>
-                        <div class="ui segments question">
-                            <div class="ui segment question" onclick="goToBuilder(this)" style="cursor: pointer">
-                                <span>Lucas Abbott</span>
-                            </div>
-                        </div>
-                        <div class="ui segments question">
-                            <div class="ui segment question" onclick="goToBuilder(this)" style="cursor: pointer">
-                                <span>Victor Troung</span>
-                            </div>
-                        </div>
-                        <div class="ui segments question">
-                            <div class="ui segment question" onclick="goToBuilder(this)" style="cursor: pointer">
-                                <span>Bill Gates</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="accordion-row">
-                    <!-- Row Title -->
-                    <div class="title">
-                        <i class="dropdown icon"></i>
-                        <span>All Questions</span>
-                    </div>
-                    <!-- Row Content -->
-                    <div class="content">
-                        <!-- Nested Rows -->
-                        <div class="ui segments question">
-                            <div class="ui segment question" onclick="goToBuilder(this)" style="cursor: pointer">
-                                <span>Reed Anderson</span>
-                            </div>
-                        </div>
-                        <div class="ui segments question">
-                            <div class="ui segment question" onclick="goToBuilder(this)" style="cursor: pointer">
-                                <span>Bhairav Mehta</span>
-                            </div>
-                        </div>
-                        <div class="ui segments question">
-                            <div class="ui segment question" onclick="goToBuilder(this)" style="cursor: pointer">
-                                <span>Lucas Abbott</span>
-                            </div>
-                        </div>
-                        <div class="ui segments question">
-                            <div class="ui segment question" onclick="goToBuilder(this)" style="cursor: pointer">
-                                <span>Victor Troung</span>
-                            </div>
-                        </div>
-                        <div class="ui segments question">
-                            <div class="ui segment question" onclick="goToBuilder(this)" style="cursor: pointer">
-                                <span>Bill Gates</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

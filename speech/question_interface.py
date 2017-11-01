@@ -21,17 +21,17 @@ class Counter:
 
 
 def class_page(request):
-    if not request.user.is_authenticated():
-        print("not authenticated")
-        return HttpResponseRedirect('/login')
 
-    elif Teacher.objects.filter(user_id_login = request.user.id).count: # Teacher
-        print("teacher")
+    if (request.user.groups.filter(name='student').exists()):
+        studentObj = Student.objects.get(user_id_login=request.user.id)
+        classes = getClassesOfStudent(studentObj.student_id)
+        return render(request, 'class.html', {'classes': classes})
+    
+    elif (request.user.groups.filter(name='teacher').exists()):
         return HttpResponseRedirect('/teacher')
 
-    studentObj = Student.objects.get(user_id_login=request.user.id)
-    classes = getClassesOfStudent(studentObj.student_id)
-    return render(request, 'class.html', {'classes': classes})
+    else:
+        return HttpResponseRedirect('/')
 
 
 def topic_page(request, class_id):
@@ -127,8 +127,7 @@ def correct(request, classId, topicId, questionId):
 
     nonkw = ""
 
-    studentResponseLemmatized = [lemmatizer.lemmatize(re.sub(r'\W+', '', item.lower()))
-                                 for item in studentResponse.split(' ')]
+    studentResponseLemmatized = [lemmatizer.lemmatize(re.sub(r'\W+', '', item.lower())) for item in studentResponse.split()]
 
     studentResponseList = studentResponse.split(' ')
 
