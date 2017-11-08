@@ -68,7 +68,7 @@ def numQuestionsAnsweredByStudent(topicId, studentId):
 
     questionsInTopic = Question.objects.filter(topic_id = topicId)
     count = 0
-    for question in questionsInTopic:
+    for index, question in enumerate(questionsInTopic):
         questionResponses = Completion.objects.filter(question_id = question.question_id, student_id = studentId, percent_scored__gte = question.percent_to_pass)
         if questionResponses.count() > 0:
             count += 1
