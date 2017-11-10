@@ -70,6 +70,7 @@ class Question(models.Model):
     is_user_generated = models.BooleanField(default=False)
     is_mandatory = models.BooleanField(default=False)
     percent_to_pass = models.FloatField(default=.50)
+    perfect_answer = models.CharField(max_length=1000, default='')
 
     def __str__(self):
         return self.question_title
