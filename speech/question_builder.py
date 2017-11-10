@@ -134,7 +134,7 @@ def question_builder(request, class_id, topic_id):
             num_keywords = builder_form.cleaned_data['keywords_to_return']
 
             sources_list = [s.strip() for s in sources.splitlines()]
-            sources_list = filter(lambda a: a != '', sources_list)
+            sources_list = list(filter(lambda a: a != '', sources_list))
 
             data = {
                 'documents': sources_list,
