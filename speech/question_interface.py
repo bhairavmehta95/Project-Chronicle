@@ -131,7 +131,6 @@ def correct(request, classId, topicId, questionId):
 
     studentResponseList = studentResponse.split(' ')
 
-    print studentResponseList, studentResponseLemmatized
     for idx, word in enumerate(studentResponseLemmatized):
         if keywordDict.get(word) is not None:
             studentScore += keywordDict[word]
