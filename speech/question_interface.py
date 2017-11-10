@@ -155,8 +155,6 @@ def correct(request, classId, topicId, questionId):
     other_words.append(nonkw)
     kw_list.append("")
 
-    print prev_context_list, post_context_list, keywordDict
-
     interleaved_transcript = []
     i = 0
     while i < len(other_words):
