@@ -13,7 +13,8 @@ from math import ceil
 
 # TODO
 def get_perfect_answer(raw_text):
-    return "This is a test perfect answer, which will be coming from our summarizer."
+    # return "This is a test perfect answer, which will be coming from our summarizer."
+    return ""
 
 
 # TODO
@@ -63,7 +64,7 @@ def question_builder(request, class_id, topic_id):
         # Question Update Form was submitted, time to validate
         if not builder_form.is_valid() and request.POST.get('is_qbuilder_update'):
 
-            num_keywords, question_title, primary_data, secondary_data, raw_text, error = \
+            num_keywords, question_title, primary_data, secondary_data, raw_text, perfect_answer, error = \
                 verify_question_update_form(request.POST)
 
             if error:
@@ -71,7 +72,7 @@ def question_builder(request, class_id, topic_id):
                 return HttpResponseRedirect('/builder/{}/{}'.format(class_id, topic_id))
 
             # Add question to database
-            question_ = Question.objects.create(class_id=class_, topic_id=topic_, question_title=question_title)
+            question_ = Question.objects.create(class_id=class_, topic_id=topic_, question_title=question_title, perfect_answer=perfect_answer)
 
             RawText.objects.create(question_id=question_, raw_text=raw_text)
 
@@ -185,7 +186,7 @@ def question_builder(request, class_id, topic_id):
 
 def question_builder_existing (request, class_id, topic_id, question_id):
     question_ = Question.objects.get(class_id=class_id, topic_id=topic_id, question_id=question_id)
-    keywords = Keyword.objects.filter(question_id=question_id)
+    keywords = Keyword.objects.filter(question_id=question_id, is_primary=True)
     form = QuestionBuilderForm()
 
     if question_ is None:
@@ -212,13 +213,11 @@ def question_builder_existing (request, class_id, topic_id, question_id):
         data=form_fields
     )
 
-    perfect_answer = get_perfect_answer('')
-
     return render(request, 'question_builder_post.html', {
         'form': form,
         'q_title': question_.question_title,
+        'perfect_answer': question_.perfect_answer,
         'synonyms_dict': synoymns_dict,
-        'perfect_answer': perfect_answer
     })
 
 
@@ -305,6 +304,9 @@ def verify_question_update_form(post_data):
     else:
         error = True
 
+    perfect_answer = post_data.get('perfect_answer')
+    print(perfect_answer)
+
     test_form = StringValidatorForm(data={'string': post_data.get('raw_text')})
 
     if test_form.is_valid():
@@ -342,7 +344,7 @@ def verify_question_update_form(post_data):
             secondary_data.append((kw, point_value))
 
         return num_primary_keywords + int(num_secondary_keywords), question_title, primary_data, \
-               secondary_data, raw_text, error
+               secondary_data, raw_text, perfect_answer, error
 
     # Return an error
     return None, None, None, None, None, error
