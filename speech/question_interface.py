@@ -139,7 +139,7 @@ def correct(request, classId, topicId, questionId):
             # Add the NON Lemmatized word for output
             kw_list.append(studentResponseList[idx])
 
-            kw = Keyword.objects.get(question_id=questionObj, keyword=word)
+            kw = Keyword.objects.get(question_id=questionObj, keyword=word, is_primary=True)
 
             contextObj = KeywordContext.objects.get(question_id=questionObj, keyword=kw, previous=True)
             prev_context_list.append(contextObj)
@@ -191,7 +191,7 @@ def correct(request, classId, topicId, questionId):
     # give the front end neccesary context
     context = {
         'q': questionObj,
-        'percentage': str(100 * studentScore / possibleScore),
+        'percentage': str(int(1000 * studentScore / possibleScore) / 10),
         'name': studentObj.f_name,
         'transcript': interleaved_transcript,
         'prev_context_list': prev_context_list,
