@@ -13,11 +13,11 @@ def metrics(request):
     if not request.user.is_authenticated(): # Not logged in
         return HttpResponseRedirect('/login')
 
-    elif Teacher.objects.filter(user_id_login = request.user.id).count: # Teacher
+    elif request.user.groups.filter(name='teacher').exists() # Teacher
         return render(request, 'teacher_metrics.html')
 
     else: # Student
-        return HttpResponseRedirect('/classes')
+        return render(request, 'message.html', { 'title': 'Oops!', 'message': 'Unfortunately, we haven\'t implemented this feature for students yet. This is currently in development and a high priority at Project Chronicle. Check back later!' })
 
 def get_student_performance(request):
     teacher = Teacher.objects.get(user_id_login = request.user.id)
