@@ -160,7 +160,7 @@ def correct(request, classId, topicId, questionId):
     recommended_keyword_value = 0
 
     for idx, word in enumerate(keywordDict):
-        if (keywordDict[word] > recommended_keyword_value):
+        if (recommended_keyword is '' or keywordDict[word] < recommended_keyword_value):
             recommended_keyword = word
             recommended_keyword_value = keywordDict[word]
 
