@@ -155,6 +155,15 @@ def correct(request, classId, topicId, questionId):
     other_words.append(nonkw)
     kw_list.append("")
 
+    # Find the lowest valued missed word to recommend
+    recommended_keyword = ''
+    recommended_keyword_value = 0
+
+    for idx, word in enumerate(keywordDict):
+        if (keywordDict[word] > recommended_keyword_value):
+            recommended_keyword = word
+            recommended_keyword_value = keywordDict[word]
+
     interleaved_transcript = []
     i = 0
     while i < len(other_words):
@@ -190,6 +199,8 @@ def correct(request, classId, topicId, questionId):
         'counter': counter_instance,
         'result_string': resultString,
         'percent_to_pass': str(100 * questionObj.percent_to_pass),
+        'perfect_answer': questionObj.perfect_answer,
+        'recommended_keyword': recommended_keyword
     }
 
     return context
