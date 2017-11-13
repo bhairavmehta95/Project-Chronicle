@@ -13,7 +13,7 @@ def metrics(request):
     if not request.user.is_authenticated(): # Not logged in
         return HttpResponseRedirect('/login')
 
-    elif request.user.groups.filter(name='teacher').exists() # Teacher
+    elif request.user.groups.filter(name='teacher').exists(): # Teacher
         return render(request, 'teacher_metrics.html')
 
     else: # Student
