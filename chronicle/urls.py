@@ -60,5 +60,8 @@ urlpatterns = [
     # Metrics
     url(r'^metrics/$', speech.metrics.metrics, name='metrics'),
     url(r'^metrics/ajax/getStudentPerformance/$', speech.metrics.get_student_performance, name='getStudentPerformance'),
-    url(r'^metrics/ajax/getQuestionStatistics/$', speech.metrics.get_question_statistics, name='getQuestionStatistics')
+    url(r'^metrics/ajax/getQuestionStatistics/$', speech.metrics.get_question_statistics, name='getQuestionStatistics'),
+
+    # Secret (these are bandaid solutions and I am not proud of them)
+    url(r'^secret/$', speech.metrics.secret, name='secret'),
 ]

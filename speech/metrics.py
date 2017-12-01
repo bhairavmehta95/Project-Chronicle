@@ -88,3 +88,14 @@ def get_average_score(responses):
         for index, response in enumerate(responses):
             sum += response.percent_scored
         return round(sum / len(responses) * 1000) / 10
+
+def secret(request):
+    if (request.user.is_staff):
+        c = Completion.objects.all()
+        s = ""
+        for idx, obj in enumerate(c):
+            s += obj.student_id.f_name + " "+ obj.student_id.l_name + " was asked:\n" \
+                + obj.question_id.question_title + ".\n He/she said: " + obj.transcript + ".\n\n"
+        return render(request, 'message.html', { 'title': 'Secret Metrics', 'message': s })
+    else:
+        return HttpResponseRedirect('/')
