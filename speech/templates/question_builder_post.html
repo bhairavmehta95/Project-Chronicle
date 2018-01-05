@@ -29,83 +29,46 @@
   </div>
   <form class="ui fixed width form" method="post">
     <div class="ui three column grid" id="phraseArea">
-        <div class="row">
-            <div class="eight wide column"></div>
-            <div class="two wide column"></div>
-            <div class="six wide column"></div>
-        </div>
+        <div class="row"><!-- row for space --></div>
 
         {% csrf_token %}
-
         {{ form.errors }}
         {{ form.non_field_errors }}
         {% for field in form.visible_fields %}
+            
             {% if forloop.counter0|divisibleby:2 %}
-                <div class="row">
-            {% endif %}
-
-                    {% if forloop.counter|divisibleby:2 %}
-                        <div class="two wide column">
-                        <div class="field">
-                        <div class="ui input points">
-                            {{ field }}
-                        </div>
-                    {% else %}
-                        <div class="eight wide column">
-                        <div class="field">
+                <div class="row"> <!-- open the row -->
+                <div class="eight wide column">
+                    <div class="field">
                         <div class="row">
-                            <div class="ui input keyword">
-                                {{ field }}
-                            </div>
+                            <div class="ui input keyword">{{ field }}</div>
                         </div>
                         <div class="row left aligned" style="margin-top: 3px">
-                            <span>
-                                <p style="margin-top: 3px"><strong>Also accept: </strong>
-                                    {% for word, synonyms in synonyms_dict.items %}
-                                        {% if word == field.value %}
-                                            {%  for syn in synonyms %}
-                                            <button class="ui basic icon button syn" style="margin-top: 3px" type="button">
-                                                {{ syn }}
-                                                <i class="icon remove removesyn"></i>
-                                            </button>
-                                            {%  endfor %}
-                                            <span class="ui input syninput" style="display:none;">
-                                                <input type="text" style="margin-top: 3px" placeholder="Press Enter to Add">
-                                            </span>
-                                            <button class="ui basic icon button addsyn" style="margin-top: 3px" type="button">
-                                                <i class="icon add"></i>
-                                            </button>
-                                        {% endif %}
-                                    {% endfor %}
-                                </p>
-                            </span>
-                        </div>
-                    {% endif %}
-                </div>
-                </div>
-
-                {% if forloop.counter|divisibleby:2 %}
-                    <div class="six wide column">
-                        <div class="ui two column grid">
-                            <div class="column">
-                                <div class="ui indicating progress" style="margin-top:7px">
-                                  <div class="bar"></div>
-                                </div>
-                            </div>
-                            <div class="column">
-                                <button type="button" class="circular ui basic icon button remove">
-                                  <i class="icon remove removephrase"></i>
-                                </button>
-                            </div>
+                            <p style="margin-top: 3px"><strong>Hint for this keyword:</strong></p>
                         </div>
                     </div>
-                {% endif %}
-
-            {% if forloop.counter0|divisibleby:2 %}
-                {#  Do nothing  #}
+                </div>
             {% else %}
-                </div> {# Row #}
+                <div class="two wide column">
+                    <div class="ui input points">{{ field }}</div>
+                </div>
+                <div class="six wide column">
+                    <div class="ui two column grid">
+                        <div class="column">
+                            <div class="ui indicating progress" style="margin-top:7px">
+                                <div class="bar"></div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <button type="button" class="circular ui basic icon button remove">
+                                <i class="icon remove removephrase"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- close the row -->
             {% endif %}
+    
         {% endfor %}
 
         {% if error != None %}
