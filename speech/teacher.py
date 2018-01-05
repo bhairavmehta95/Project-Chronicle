@@ -9,7 +9,7 @@ from .data import updateProgressesFromTopic
 from django.contrib.auth.models import User, Group
 import django.contrib.auth.password_validation as password_validation
 
-from .forms import LoginForm
+from .forms import LoginForm, QuestionBuilderForm
 
 import json
 from django.core import serializers
@@ -64,7 +64,7 @@ def signup_teacher(request):
                 return HttpResponseRedirect('/teacher')
 
     # if a GET (or any other method) we'll create a blank form
-    form = TeacherSignupForm();
+    form = TeacherSignupForm()
     return render(request, 'teachersignup.html', {'form': form, 'error' : error, })
 
 # Classes
@@ -227,21 +227,14 @@ def teacher_portal(request):
         teacher = Teacher.objects.filter(user_id_login=request.user.id)
         if (request.user.is_authenticated):
             if teacher.count():
-                return render(request, 'teacherportal.html')
+                form = QuestionBuilderForm()
+                return render(request, 'teacherhome.html', {'form': form })
             else:
                 return HttpResponseRedirect('/classes')
         else:
             signup_form = TeacherSignupForm()
             form = LoginForm()
             return render(request, 'teacherlanding.html', {'form': form, 'signup_form': signup_form})
-
-def teacher_home(request):
-    return render(request, 'teacherhome.html')
-
-def classPage(request, classKey):
-    t = getTeacherId(request)
-    c = Class.objects.get(teacher_id = t, class_key = classKey)
-    return render(request, 'teacherclass.html', {'class_name':c, 'class_key':classKey, 'class_id':c.get_class_id()})
 
 
 # General Functions

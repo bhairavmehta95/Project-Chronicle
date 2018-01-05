@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Metrics|Project Chronicle</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% load static %}
+    <title>Teacher|Project Chronicle</title>
+    {% load static %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/teacher_metrics.js' %}"></script>
+    <script type="text/javascript" src="{% static 'semantic/components/modal.js' %} "></script>
+    <script type="text/javascript" src="{% static 'semantic/components/accordion.js' %} "></script>
+
+</head>
+{% include "base.html" %}
+<body>
+<div class="body-container" style="margin-top:125px;">
+    <h1 class="ui header centered">Metrics</h1>
+    <div class="ui container">
+            <div class="ui styled fluid accordion hideable" id="metricsAccordion">
+                <div class="accordion-row">
+                    <!-- Row Title -->
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        <span>Student Performance</span>
+                    </div>
+                    <!-- Row Content -->
+                    <div id="performances" class="content ui equal width grid">
+                        <!-- Header Rows -->
+                        <div class="row">
+                            <div class="four wide column">
+                                <h4 class="ui header">Student Name</h4>
+                            </div>
+                            <div class="four wide column">
+                                <h4 class="ui header">Class</h4>
+                            </div>
+                            <div class="two wide column">
+                                <h4 class="ui header">Total Answers</h4>
+                            </div>
+                            <div class="column">
+                                <h4 class="ui header">Questions Attempted</h4>
+                            </div>
+                            <div class="column">
+                                <h4 class="ui header">Questions Passed</h4>
+                            </div>
+                        </div>
+                        <!-- Template Row -->
+                        <div id="perfRowTemplate" class="row template">
+                            <div class="four wide column name">
+                                <p></p>
+                            </div>
+                            <div class="four wide column class">
+                                <p></p>
+                            </div>
+                            <div class="two wide column total-responses">
+                                <p></p>
+                            </div>
+                            <div class="column total-questions">
+                                <p></p>
+                            </div>
+                            <div class="column total-passes">
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-row">
+                    <!-- Row Title -->
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        <span>Question Statistics</span>
+                    </div>
+                    <!-- Row Content -->
+                    <div id="questions" class="content ui equal width grid">
+                        <!-- Header Rows -->
+                        <div class="row">
+                            <div class="eight wide column">
+                                <h4 class="ui header">Question</h4>
+                            </div>
+                            <div class="column">
+                                <h4 class="ui header">Total Responses</h4>
+                            </div>
+                            <div class="column">
+                                <h4 class="ui header">Passing Responses</h4>
+                            </div>
+                            <div class="column">
+                                <h4 class="ui header">Average Score</h4>
+                            </div>
+                        </div>
+                        <!-- Template Row -->
+                        <div id="questionRowTemplate" class="row">
+                                <div class="eight wide column">
+                                    <p class="question">Question</p>
+                                </div>
+                                <div class="column">
+                                    <p class="responses">Total Responses</p>
+                                </div>
+                                <div class="column">
+                                    <p class="passing">Passing Responses</p>
+                                </div>
+                                <div class="column">
+                                    <p class="average">Average Score</p>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+</body>

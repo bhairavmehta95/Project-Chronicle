@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}|Project Chronicle</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% load static %}
+    <title>Teacher|Project Chronicle</title>
+    {% load static %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/teacher_metrics.js' %}"></script>
+    <script type="text/javascript" src="{% static 'semantic/components/modal.js' %} "></script>
+    <script type="text/javascript" src="{% static 'semantic/components/accordion.js' %} "></script>
+
+</head>
+{% include "base.html" %}
+<body>
+<div class="body-container" style="margin-top:125px;">
+    <h1 class="ui header centered">{{ title }}</h1>
+    <div class="ui container">
+        <div style="white-space: pre; margin-bottom: 24px;" class="ui blue message">{{ message }}</div>
+    </div>
+</div>
+</body>

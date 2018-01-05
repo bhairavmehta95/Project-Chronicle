@@ -19,9 +19,9 @@
     <div class="ui six doubling cards">
         {% for q in questions %}
             <a class="ui raised card" href="/{{q.class_id.class_id}}/{{ q.topic_id.topic_id }}/{{q.question_id}}">
-              <div class="image">
-                <img src="{% static 'images/logo.png' %}"/>
-              </div>
+{#              <div class="image">#}
+{#                <img src="{% static 'images/logo.png' %}"/>#}
+{#              </div>#}
               <div class="content">
                 <div class="header">{{ q }}</div>
               </div>

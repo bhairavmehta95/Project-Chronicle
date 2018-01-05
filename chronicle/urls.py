@@ -8,6 +8,7 @@ import speech.student
 import speech.teacher
 import speech.question_interface
 import speech.question_builder
+import speech.metrics
 
 
 urlpatterns = [
@@ -24,12 +25,10 @@ urlpatterns = [
     
     # Teacher
     url(r'^teacher/$', speech.teacher.teacher_portal),
-    url(r'^teacherhome/', speech.teacher.teacher_home),
     url(r'^teacher/signup/', speech.teacher.signup_teacher),
     url(r'^teacher/createClass/', speech.teacher.createClass),
     url(r'^teacher/getClasses/', speech.teacher.getClasses),
     url(r'^teacher/gettopics/(?P<classKey>[0-9A-Z]{6})/', speech.teacher.getTopics),
-    url(r'^teacher/classPage/(?P<classKey>[0-9A-Z]{6})/', speech.teacher.classPage),
     url(r'^teacher/addtopic/', speech.teacher.addTopic),
     url(r'^teacher/ajax/deleteTopic/', speech.teacher.ajaxDeleteTopic),
     url(r'^teacher/ajax/editTopic/', speech.teacher.ajaxEditTopic),
@@ -53,4 +52,14 @@ urlpatterns = [
 
     # Question Builder
     url(r'^builder/(\d+)/(\d+)/$', speech.question_builder.question_builder, name='question_builder'),
+    url(r'^builder/(\d+)/(\d+)/(\d+)/$', speech.question_builder.question_builder_existing, name='question_builder_existing'),
+    url(r'^buildNewQuestion/', speech.question_builder.build_question),
+
+    # Metrics
+    url(r'^metrics/$', speech.metrics.metrics, name='metrics'),
+    url(r'^metrics/ajax/getStudentPerformance/$', speech.metrics.get_student_performance, name='getStudentPerformance'),
+    url(r'^metrics/ajax/getQuestionStatistics/$', speech.metrics.get_question_statistics, name='getQuestionStatistics'),
+
+    # Secret (these are bandaid solutions and I am not proud of them)
+    url(r'^secret/$', speech.metrics.secret, name='secret'),
 ]

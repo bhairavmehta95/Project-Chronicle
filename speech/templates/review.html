@@ -63,6 +63,24 @@
   </a>
 </div>
 
+{%  if result_string == "Pass" %}
+<div class="ui success message">
+  <i class="close icon"></i>
+  <div class="header">
+    The following is an example of a perfectly scored answer:
+  </div>
+  <p>{{ perfect_answer }}</p>
+</div>
+{% else %}
+<div class="ui success message">
+  <i class="close icon"></i>
+  <div class="header">
+    Hint:
+  </div>
+  <p>Consider including "<bold>{{ recommended_keyword }}</bold>" in your answer.</p>
+</div>
+{% endif %}
+
 </div>
 
 </body>

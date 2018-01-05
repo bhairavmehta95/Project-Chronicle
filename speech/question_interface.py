@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import Student, Class, Topic, Question, Completion, Keyword, RawText, KeywordContext
+from .models import Student, Class, Topic, Question, Completion, Keyword, RawText, KeywordContext, Teacher
 from .data import updateSingleTopicProgress, getPercentString, greatestCompletionByStudent, getClassesOfStudent
 
 from nltk.stem import WordNetLemmatizer
@@ -21,18 +21,17 @@ class Counter:
 
 
 def class_page(request):
-    if not request.user.is_authenticated():
-        print("not authenticated")
-        return HttpResponseRedirect('/login')
 
-    if not request.user.groups.filter(name='student').exists():
-        print("teacher")
+    if (request.user.groups.filter(name='student').exists()):
+        studentObj = Student.objects.get(user_id_login=request.user.id)
+        classes = getClassesOfStudent(studentObj.student_id)
+        return render(request, 'class.html', {'classes': classes})
+    
+    elif (request.user.groups.filter(name='teacher').exists()):
+        return HttpResponseRedirect('/teacher')
+
+    else:
         return HttpResponseRedirect('/')
-
-    studentObj = Student.objects.get(user_id_login=request.user.id)
-    classes = getClassesOfStudent(studentObj.student_id)
-
-    return render(request, 'class.html', {'classes': classes})
 
 
 def topic_page(request, class_id):
@@ -128,12 +127,10 @@ def correct(request, classId, topicId, questionId):
 
     nonkw = ""
 
-    studentResponseLemmatized = [lemmatizer.lemmatize(re.sub(r'\W+', '', item.lower()))
-                                 for item in studentResponse.split(' ')]
+    studentResponseLemmatized = [lemmatizer.lemmatize(re.sub(r'\W+', '', item.lower())) for item in studentResponse.split()]
 
     studentResponseList = studentResponse.split(' ')
 
-    print studentResponseList, studentResponseLemmatized
     for idx, word in enumerate(studentResponseLemmatized):
         if keywordDict.get(word) is not None:
             studentScore += keywordDict[word]
@@ -142,7 +139,7 @@ def correct(request, classId, topicId, questionId):
             # Add the NON Lemmatized word for output
             kw_list.append(studentResponseList[idx])
 
-            kw = Keyword.objects.get(question_id=questionObj, keyword=word)
+            kw = Keyword.objects.get(question_id=questionObj, keyword=word, is_primary=True)
 
             contextObj = KeywordContext.objects.get(question_id=questionObj, keyword=kw, previous=True)
             prev_context_list.append(contextObj)
@@ -158,7 +155,14 @@ def correct(request, classId, topicId, questionId):
     other_words.append(nonkw)
     kw_list.append("")
 
-    print prev_context_list, post_context_list, keywordDict
+    # Find the lowest valued missed word to recommend
+    recommended_keyword = ''
+    recommended_keyword_value = 0
+
+    for idx, word in enumerate(keywordDict):
+        if (recommended_keyword is '' or (keywordDict[word] > 0 and keywordDict[word] < recommended_keyword_value)):
+            recommended_keyword = word
+            recommended_keyword_value = keywordDict[word]
 
     interleaved_transcript = []
     i = 0
@@ -187,7 +191,7 @@ def correct(request, classId, topicId, questionId):
     # give the front end neccesary context
     context = {
         'q': questionObj,
-        'percentage': str(100 * studentScore / possibleScore),
+        'percentage': str(int(1000 * studentScore / possibleScore) / 10),
         'name': studentObj.f_name,
         'transcript': interleaved_transcript,
         'prev_context_list': prev_context_list,
@@ -195,6 +199,8 @@ def correct(request, classId, topicId, questionId):
         'counter': counter_instance,
         'result_string': resultString,
         'percent_to_pass': str(100 * questionObj.percent_to_pass),
+        'perfect_answer': questionObj.perfect_answer,
+        'recommended_keyword': recommended_keyword
     }
 
     return context

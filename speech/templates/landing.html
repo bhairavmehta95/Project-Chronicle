@@ -16,24 +16,27 @@
 
     <h3 class="ui header">Click. Speak. Learn.</h3>
 
-    <div class="four column ui grid">
-        <div class="four column"></div>
-        <div class="one column">
-            <a href="/login" class="ui fluid basic button">Login</a>
+    {% if not user.is_authenticated %}
+        <div class="four column ui grid">
+            <div class="four column"></div>
+            <div class="one column">
+                <a href="/login" class="ui fluid basic button">Login</a>
+            </div>
+            <div class="one column">
+                <a href="/signup" class="ui fluid basic button">Sign Up</a>
+            </div>
+            <div class="four column"></div>
         </div>
-        <div class="one column">
-            <a href="/signup" class="ui fluid basic button">Sign Up</a>
+        <div class="teacher-section">
+            <h4 class="ui header">Are you a teacher? Check out our new Teacher Portal!</h4>
+            <a href="/teacher" class="ui primary basic button">Go!</a>
         </div>
-        <div class="four column"></div>
-    </div>
+        <br/><br/>    
+    {% else %}
+        <br/><br/>
+        <h4 class="ui header">You are currently signed in as {{ user }}</h4>
+    {% endif %}
 
-    <br/><br/>
-
-
-    <div class="teacher-section">
-      <h4 class="ui header">Are you a teacher? Check out our new Teacher Portal!</h4>
-      <a href="/teacher" class="ui primary basic button">Go!</a>
-    </div>
 
     <h4 class="ui header">Our mission is to empower students with the ownership of stories and enhance their learning through the power of speech.</h4>
 </div>
