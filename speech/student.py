@@ -6,6 +6,7 @@ from .forms import SignupForm
 
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import logout
+import django.contrib.auth.password_validation as password_validation
 
 def signup_user(request):
     # if this is a POST request we need to process the form data
@@ -42,6 +43,11 @@ def signup_user(request):
                 form.cleaned_data['username'] = ""
             except:
                 pass
+
+            try:
+                password_validation.validate_password(password)
+            except:
+                error = "Please use a better password. The attempted password may be too similar to username or too common."
 
             # TODO: ONLY SHOW THE CLASSES CORRESPONDING TO A SPECIFIC TEACHER
             # teacher_target = Class.objects.get(class_id = class_id).teacher_id

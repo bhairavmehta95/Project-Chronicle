@@ -35,12 +35,13 @@
         </div>
     {% endfor %}
 
-    {% if error != None %}
-      {{ error }}
-    {% endif %}
-
-
   </div>
+  {% if error != None %}
+  <div class="ui horizontal divider">
+    Error
+  </div>
+  <h5>{{ error }}</h5>
+  {% endif %}
   <div class="ui very padded center aligned container" style="padding-top: 30px">
     <button class="ui green button" type="submit">
       Submit
