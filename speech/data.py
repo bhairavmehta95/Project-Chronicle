@@ -42,7 +42,6 @@ def getPercentString(topicId, userId):
 
     if topicProgress.count() > 0: #topicProgress exists
 
-        print ("answered: " + str(answeredCount))
         return (answeredCount * 100 / questionCount)
 
     else: #topicProgress does not exist
