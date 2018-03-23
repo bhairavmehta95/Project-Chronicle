@@ -162,11 +162,12 @@ def correct(request, classId, topicId, questionId):
     recommended_keyword = ''
     recommended_keyword_value = 0
 
-    for idx, word in enumerate(keywordDict):
-        numPoints = float(keywordDict[word]['points'])
-        if (recommended_keyword is '' or (numPoints > 0 and numPoints < float(recommended_keyword_value))):
+    for idx, pair in enumerate(keywordDict):
+        numPoints = float(keywordDict[pair]['points'])
+        word = keywordDict[pair]['hint']
+        if (recommended_keyword is '' or (numPoints > 0 and numPoints < recommended_keyword_value)):
             recommended_keyword = word
-            recommended_keyword_value = keywordDict[word]['hint']
+            recommended_keyword_value = numPoints
 
     interleaved_transcript = []
     i = 0
