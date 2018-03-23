@@ -309,11 +309,11 @@ def manual_new_question(request, class_id, topic_id):
             keyword = request.POST['primary_keyword_field_' + index_str]
             points = request.POST['primary_keyword_point_field_' + index_str]
             hint = request.POST['primary_keyword_hint_field_' + index_str]
-            primary_data.append((keyword, points))
+            primary_data.append((keyword, points, hint))
 
         for kw_tuple in primary_data:
             kw = Keyword.objects.create(question_id=question_id, keyword=kw_tuple[0].lower(),
-                                        point_value=float(kw_tuple[1]), hint=hint, is_primary=True)
+                                        point_value=float(kw_tuple[1]), hint=kw_tuple[2], is_primary=True)
             kwc1 = KeywordContext.objects.create(question_id=question_id, keyword=kw, context='', previous=False)
             kwc2 = KeywordContext.objects.create(question_id=question_id, keyword=kw, context='', previous=True)
 
