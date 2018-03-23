@@ -106,7 +106,6 @@ def correct(request, classId, topicId, questionId):
     keywords = Keyword.objects.filter(question_id=questionId, is_primary=True)
     studentResponse = request.POST['final_transcript']
     keywordDict = {}
-    hintDict = {}
 
     studentScore = 0
     possibleScore = 0
@@ -117,8 +116,7 @@ def correct(request, classId, topicId, questionId):
         hint = keywordObj.hint
         possibleScore += keywordObj.point_value
         if keywordDict.get(word) == None:
-            keywordDict[word] = keywordObj.point_value
-        hintDict[hint] = keywordObj.point_value
+            keywordDict[word] = (keywordObj.point_value, keywordObj.hint)
 
     # studentResponse = re.sub("~!@#$%^&*()_+=-`/*.,[];:'/?><", ' ', studentResponse)
     #replace illegal characters with a space
@@ -138,8 +136,8 @@ def correct(request, classId, topicId, questionId):
 
     for idx, word in enumerate(studentResponseLemmatized):
         if keywordDict.get(word) is not None:
-            studentScore += keywordDict[word]
-            keywordDict[word] = 0  # set the point value to 0 bc the points have already been earned
+            studentScore += keywordDict[word][0]
+            keywordDict[word][0] = 0  # set the point value to 0 bc the points have already been earned
 
             # Add the NON Lemmatized word for output
             kw_list.append(studentResponseList[idx])
@@ -164,10 +162,10 @@ def correct(request, classId, topicId, questionId):
     recommended_keyword = ''
     recommended_keyword_value = 0
 
-    for idx, word in enumerate(hintDict):
-        if (recommended_keyword is '' or (hintDict[word] > 0 and hintDict[word] < recommended_keyword_value)):
+    for idx, word in enumerate(keywordDict):
+        if (recommended_keyword is '' or (keywordDict[word][0] > 0 and keywordDict[word][0] < recommended_keyword_value)):
             recommended_keyword = word
-            recommended_keyword_value = hintDict[word]
+            recommended_keyword_value = keywordDict[word]
 
     interleaved_transcript = []
     i = 0
