@@ -166,7 +166,6 @@ def correct(request, classId, topicId, questionId):
 
     for idx, word in enumerate(hintDict):
         if (recommended_keyword is '' or (hintDict[word] > 0 and hintDict[word] < recommended_keyword_value)):
-            print(word)
             recommended_keyword = word
             recommended_keyword_value = hintDict[word]
 

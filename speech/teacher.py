@@ -167,7 +167,6 @@ def createQuestion(request):
     topicId = request.POST['topic']
     title = request.POST['title']
     
-    print("topic id " + topicId)
     topic_instance = Topic.objects.get(topic_id = topicId)
     class_instance = topic_instance.class_id
 

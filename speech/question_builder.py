@@ -79,7 +79,6 @@ def question_builder(request, class_id, topic_id):
             raw_text_list[:] = [re.sub(r'[^a-zA-Z0-9]+', '', word) for word in raw_text_list]
 
             for kw_tuple in primary_data:
-                print kw_tuple
                 kw = Keyword.objects.create(question_id=question_, keyword=kw_tuple[0],
                                             point_value=float(kw_tuple[1]), is_primary=True)
                 word = kw_tuple[0]
@@ -189,7 +188,6 @@ def question_builder(request, class_id, topic_id):
                 'perfect_answer': perfect_answer
             })
 
-    print(186)
     return render(request, 'question_builder.html', {'form': form})
 
 def question_builder_existing (request, class_id, topic_id, question_id):
@@ -208,7 +206,6 @@ def question_builder_existing (request, class_id, topic_id, question_id):
     form_fields['raw_text'] = dict()
 
     for idx, word in enumerate(keywords):
-        print word.hint
         form_fields['primary_keyword_field_{index}'.format(index=idx)] = word.keyword
         form_fields['primary_keyword_point_field_{index}'.format(index=idx)] = word.point_value
         form_fields['primary_keyword_hint_field_{index}'.format(index=idx)] = word.hint
@@ -223,7 +220,6 @@ def question_builder_existing (request, class_id, topic_id, question_id):
         data=form_fields
     )
 
-    print(218)
     return render(request, 'question_builder_post.html', {
         'form': form,
         'q_title': question_.question_title,
@@ -237,7 +233,6 @@ def build_question(request):
     if request.method == 'POST':
 
         pdata = request.POST
-        print(pdata)
         class_ = Class.objects.get(class_id = pdata['classId'])
         topic_ = Topic.objects.get(topic_id = pdata['topicId'])
         sources = pdata['sources']
@@ -255,8 +250,6 @@ def build_question(request):
 
         # keyword api
         r = requests.post('http://pc-builder-dev2.us-west-2.elasticbeanstalk.com/index', json=data)
-        # r = requests.post('http://0.0.0.0:5000/index', json=data)
-        print (r.text)
         response_json = json.loads(r.text)
 
         form_fields = dict()
@@ -286,7 +279,6 @@ def build_question(request):
 
         perfect_answer = get_perfect_answer(response_json['raw_text'])
 
-        print(281)
         return render(request, 'question_builder_post.html', {
             'form': form,
             'q_title': q_title,
@@ -354,7 +346,6 @@ def verify_question_update_form(post_data):
         error = True
 
     perfect_answer = post_data.get('perfect_answer')
-    print(perfect_answer)
 
     test_form = StringValidatorForm(data={'string': post_data.get('raw_text')})
 
