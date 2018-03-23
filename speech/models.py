@@ -97,6 +97,7 @@ class Keyword(models.Model):
     question_id = models.ForeignKey(Question)
     keyword = models.CharField(max_length=100)
     point_value = models.IntegerField()
+    hint = models.CharField(max_length=500)
     number_of_hits = models.IntegerField(default=0)
     is_primary = models.BooleanField(default=True)
 
@@ -121,3 +122,7 @@ class TopicProgress(models.Model):
     num_answered = models.IntegerField(default=0)
     total_questions = models.IntegerField(default=0)
 
+class QuestionImage(models.Model):
+    question_image_id = models.AutoField(primary_key=True)
+    question_id = models.ForeignKey(Question)
+    url = models.CharField(max_length=1000)

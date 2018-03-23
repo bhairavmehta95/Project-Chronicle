@@ -14,9 +14,23 @@
 <body>
 
 <h1 class="ui center aligned header" style="padding-top: 70px">Question Builder</h1>
+
+<form class="ui fixed width form" method="post">
+        
+{% if not q_title %}
+    <div class="ui container">
+        <div class="ui input" style="margin-bottom: 20px;">
+            <h5 style="line-height: 30px; margin-right: 10px;">Question:</h5>
+            <input type="text" name="q_title" id="q_title">
+        </div>
+    </div>
+    <input type="hidden" id="id_num_primary_keywords" name="num_primary_keywords" value="0">
+{% endif %}
+<input type="hidden" id="numImages" name="num_images" value="0">
+
 <div class="ui very padded center aligned container">
-  <h3 class="ui header">{{ q_title }}</h3>
-  <div class="ui three column grid">
+    <h3 class="ui header">{{ q_title }}</h3>
+    <div class="ui three column grid">
       <div class="eight wide column">
           <h5 class="ui header">Phrase</h5></div>
       <div class="two wide column"><h5 class="ui header">Points</h5></div>
@@ -27,27 +41,64 @@
           </div>
       </div>
   </div>
-  <form class="ui fixed width form" method="post">
+  
     <div class="ui three column grid" id="phraseArea">
-        <div class="row"><!-- row for space --></div>
+
+        <div class="row first template">
+            <div class="eight wide column field">
+                <div class="ui input keyword">
+                    <input type="text">
+                </div>
+            </div>
+            <div class="two wide column">
+                <div class="ui input points">
+                    <input type="text" value="0">
+                </div>
+            </div>
+            <div class="six wide column">
+                <div class="ui two column grid">
+                    <div class="column">
+                        <div class="ui indicating progress" style="margin-top:7px">
+                            <div class="bar"></div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <button type="button" class="circular ui basic icon button remove">
+                            <i class="icon remove removephrase"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row second template" style="padding-top: 0;">
+            <div class="three wide column" style="line-height: 30px;">Hint for this keyword:</div>
+            <div class="ten wide column field">
+                <div class="ui input keyword">
+                    <input type="text">
+                </div>
+            </div>
+        </div>
+        <div class="ui divider template"></div>
 
         {% csrf_token %}
         {{ form.errors }}
         {{ form.non_field_errors }}
         {% for field in form.visible_fields %}
             
-            {% if forloop.counter0|divisibleby:2 %}
-                <div class="row"> <!-- open the row -->
-                <div class="eight wide column">
-                    <div class="field">
-                        <div class="row">
-                            <div class="ui input keyword">{{ field }}</div>
-                        </div>
-                        <div class="row left aligned" style="margin-top: 3px">
-                            <p style="margin-top: 3px"><strong>Hint for this keyword:</strong></p>
-                        </div>
+            {% if forloop.counter0|divisibleby:3 %}
+                <div class="row" style="padding-bottom: 0;"> <!-- open the row1 -->
+                <div class="eight wide column field">
+                    <div class="ui input keyword">{{ field }}</div>
+                </div>
+            {% elif forloop.counter|divisibleby:3 %}
+                <!-- open the row2 -->
+                <div class="row" style="padding-top: 0;">
+                    <div class="three wide column" style="line-height: 30px;">Hint for this keyword:</div>
+                    <div class="ten wide column field">
+                        <div class="ui input keyword">{{ field }}</div>
                     </div>
                 </div>
+                <div class="ui divider"></div>
             {% else %}
                 <div class="two wide column">
                     <div class="ui input points">{{ field }}</div>
@@ -66,7 +117,7 @@
                         </div>
                     </div>
                 </div>
-            </div> <!-- close the row -->
+                </div> <!-- close the row1 -->
             {% endif %}
     
         {% endfor %}
@@ -100,17 +151,21 @@
             </select>
           </div>
         </div>
-{#        <div class="one column">#}
-{#            <div class="field" style="margin-top: 3px">#}
-{#                <div class="ui input percent">#}
-{#                    <label>Percent to Pass:</label>#}
-{#                    <input type="number" placeholder="Percent to Pass">#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
+    </div>
+
+    <div class="ui container" id="urlContainer">
+        <div class="ui url template fluid input" style="margin-bottom: 20px;">
+            <h5 style="line-height: 30px; margin-right: 10px;">Image Url:</h5>
+            <input type="text" >
+        </div>
     </div>
 
     <div class="ui container" style="margin: 15px">
+        <button id="addImage" class="ui basic right icon button" type="button">
+            Add An Image
+            <i class="icon add"></i>
+        </button>
+        
         <button id="addPhrase" class="ui basic right icon button" type="button">
             Add A Phrase
             <i class="icon add"></i>

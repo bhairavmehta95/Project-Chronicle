@@ -63,6 +63,9 @@ class QBuilderUpdateForm(forms.Form):
             self.fields['primary_keyword_point_field_{index}'.format(index=index)] = forms.IntegerField(
                 initial=data['primary_keyword_point_field_{index}'.format(index=index)],
                 min_value=1)
+
+            self.fields['primary_keyword_hint_field_{index}'.format(index=index)] = forms.CharField(
+                initial=data['primary_keyword_hint_field_{index}'.format(index=index)])
             
         for index in range(secondary_keywords):
             self.fields['secondary_keyword_field_{index}'.format(index=index)] = forms.CharField(

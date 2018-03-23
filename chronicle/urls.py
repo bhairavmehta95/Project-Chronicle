@@ -54,6 +54,7 @@ urlpatterns = [
     url(r'^builder/(\d+)/(\d+)/$', speech.question_builder.question_builder, name='question_builder'),
     url(r'^builder/(\d+)/(\d+)/(\d+)/$', speech.question_builder.question_builder_existing, name='question_builder_existing'),
     url(r'^buildNewQuestion/', speech.question_builder.build_question),
+    url(r'^builder/(\d+)/(\d+)/manualNewQuestion/', speech.question_builder.manual_new_question),
 
     # Metrics
     url(r'^metrics/$', speech.metrics.metrics, name='metrics'),
