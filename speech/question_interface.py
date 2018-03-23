@@ -164,7 +164,7 @@ def correct(request, classId, topicId, questionId):
 
     for idx, word in enumerate(keywordDict):
         numPoints = float(keywordDict[word]['points'])
-        if (recommended_keyword is '' or (numPoints > 0 and numPoints < recommended_keyword_value)):
+        if (recommended_keyword is '' or (numPoints > 0 and numPoints < float(recommended_keyword_value))):
             recommended_keyword = word
             recommended_keyword_value = keywordDict[word]['hint']
 
