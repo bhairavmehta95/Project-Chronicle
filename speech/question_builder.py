@@ -2,7 +2,7 @@
 
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import Class, Topic, Question, Keyword, RawText, KeywordContext
+from .models import Class, Topic, Question, Keyword, RawText, KeywordContext, QuestionImage
 from .forms import QuestionBuilderForm, QBuilderUpdateForm, IntegerValidatorForm, StringValidatorForm
 
 import requests
@@ -80,6 +80,7 @@ def question_builder(request, class_id, topic_id):
             raw_text_list[:] = [re.sub(r'[^a-zA-Z0-9]+', '', word) for word in raw_text_list]
 
             for kw_tuple in primary_data:
+                print kw_tuple
                 kw = Keyword.objects.create(question_id=question_, keyword=kw_tuple[0],
                                             point_value=float(kw_tuple[1]), is_primary=True)
                 word = kw_tuple[0]
@@ -157,6 +158,7 @@ def question_builder(request, class_id, topic_id):
                 form_fields['primary_keyword_field_{index}'.format(index=idx)] = response_json['primary_words'][idx]
                 form_fields['primary_keyword_point_field_{index}'.format(index=idx)] = \
                     int(response_json['primary_point_values'][idx])
+                form_fields['primary_keyword_hint_field_{index}'.format(index=idx)] = 'this is a test'
 
             for idx, word in enumerate(response_json['secondary_words']):
                 form_fields['secondary_keyword_field_{index}'.format(index=idx)] = response_json['secondary_words'][idx]
@@ -182,6 +184,7 @@ def question_builder(request, class_id, topic_id):
                 'perfect_answer': perfect_answer
             })
 
+    print(186)
     return render(request, 'question_builder.html', {'form': form})
 
 def question_builder_existing (request, class_id, topic_id, question_id):
@@ -200,8 +203,10 @@ def question_builder_existing (request, class_id, topic_id, question_id):
     form_fields['raw_text'] = dict()
 
     for idx, word in enumerate(keywords):
+        print word.hint
         form_fields['primary_keyword_field_{index}'.format(index=idx)] = word.keyword
         form_fields['primary_keyword_point_field_{index}'.format(index=idx)] = word.point_value
+        form_fields['primary_keyword_hint_field_{index}'.format(index=idx)] = word.hint
 
     # get synonyms
     synoymns_dict = dict()
@@ -213,6 +218,7 @@ def question_builder_existing (request, class_id, topic_id, question_id):
         data=form_fields
     )
 
+    print(218)
     return render(request, 'question_builder_post.html', {
         'form': form,
         'q_title': question_.question_title,
@@ -275,6 +281,7 @@ def build_question(request):
 
         perfect_answer = get_perfect_answer(response_json['raw_text'])
 
+        print(281)
         return render(request, 'question_builder_post.html', {
             'form': form,
             'q_title': q_title,
@@ -283,6 +290,43 @@ def build_question(request):
         })
 
     return render(request, 'question_builder.html', {'form': form})
+
+
+def manual_new_question(request, class_id, topic_id):
+    if request.method == 'GET':
+        return render(request, 'question_builder_post.html', { 'class_id': class_id, 'topic_id': topic_id})
+    elif request.method == 'POST':
+
+        c = Class.objects.get(class_id = class_id)
+        t = Topic.objects.get(topic_id = topic_id)
+        q_title = request.POST['q_title']
+        perfect_answer = request.POST['perfect_answer']
+
+        # Add question to database
+        question_id = Question.objects.create(class_id=c, topic_id=t, question_title=q_title, perfect_answer=perfect_answer)
+
+        primary_data = []
+
+        for index in range(int(request.POST['num_primary_keywords'])):
+            index_str = str(index)
+            keyword = request.POST['primary_keyword_field_' + index_str]
+            points = request.POST['primary_keyword_point_field_' + index_str]
+            hint = request.POST['primary_keyword_hint_field_' + index_str]
+            primary_data.append((keyword, points))
+
+        for kw_tuple in primary_data:
+            kw = Keyword.objects.create(question_id=question_id, keyword=kw_tuple[0].lower(),
+                                        point_value=float(kw_tuple[1]), hint=hint, is_primary=True)
+            kwc1 = KeywordContext.objects.create(question_id=question_id, keyword=kw, context='', previous=False)
+            kwc2 = KeywordContext.objects.create(question_id=question_id, keyword=kw, context='', previous=True)
+
+        for index in range(int(request.POST['num_images'])):
+            index_str = str(index)
+            value = request.POST['img_' + index_str]
+            QuestionImage.objects.create(question_id = question_id, url = value)
+            
+        return HttpResponseRedirect('/builder/{}/{}'.format(class_id, topic_id))
+
 
 
 

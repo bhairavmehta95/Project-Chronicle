@@ -6,6 +6,8 @@
   recognition.continuous = true;
   recognition.interimResults = true;
 
+  var shownImageIndex = 0;
+
   recognition.onstart = function() {
     recognizing = true;
   };
@@ -114,6 +116,7 @@ $(document).ready(function() {
   bindEvents();
   Data.TimerState = 'New'
   Data.TotalSeconds = '0';
+  getImages();
 });
 
 function bindEvents() {
@@ -224,4 +227,22 @@ var Functions = {
   Pad: function(val) {
     return val > 9 ? val : "0" + val;
   }
+}
+
+function getImages() {
+  var imageContainer = $('.images.container');
+  var images = imageContainer.find('img');
+  images.each((index, img) => {
+    $(img).hide();
+  })
+  images.eq(shownImageIndex).show();
+}
+
+function nextImage() {
+  var imageContainer = $('.images.container');
+  var images = imageContainer.find('img');
+  images.eq(shownImageIndex).hide();
+  shownImageIndex++;
+  if (shownImageIndex >= images.length) shownImageIndex = 0;
+  images.eq(shownImageIndex).show();
 }

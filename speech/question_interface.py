@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import Student, Class, Topic, Question, Completion, Keyword, RawText, KeywordContext, Teacher
+from .models import Student, Class, Topic, Question, Completion, Keyword, RawText, KeywordContext, Teacher, QuestionImage
 from .data import updateSingleTopicProgress, getPercentString, greatestCompletionByStudent, getClassesOfStudent
 
 from nltk.stem import WordNetLemmatizer
@@ -86,11 +86,13 @@ def speech(request, class_id, topic_id, question_id):
         topic = q.topic_id.topic_name
         topic_id = q.topic_id
         class_ = q.class_id
+        images = QuestionImage.objects.filter(question_id = q)
 
         context = {'q': q,
                    'topic': topic,
                    'class': class_,
-                   'topic_id': topic_id
+                   'topic_id': topic_id,
+                   'images': images
                    }
 
         return render(request, 'speech.html', context)
@@ -104,6 +106,7 @@ def correct(request, classId, topicId, questionId):
     keywords = Keyword.objects.filter(question_id=questionId, is_primary=True)
     studentResponse = request.POST['final_transcript']
     keywordDict = {}
+    hintDict = {}
 
     studentScore = 0
     possibleScore = 0
@@ -111,9 +114,11 @@ def correct(request, classId, topicId, questionId):
     # add words to dictionary with point values
     for keywordObj in keywords:
         word = keywordObj.keyword.lower()
+        hint = keywordObj.hint
         possibleScore += keywordObj.point_value
         if keywordDict.get(word) == None:
             keywordDict[word] = keywordObj.point_value
+        hintDict[hint] = keywordObj.point_value
 
     # studentResponse = re.sub("~!@#$%^&*()_+=-`/*.,[];:'/?><", ' ', studentResponse)
     #replace illegal characters with a space
@@ -159,10 +164,11 @@ def correct(request, classId, topicId, questionId):
     recommended_keyword = ''
     recommended_keyword_value = 0
 
-    for idx, word in enumerate(keywordDict):
-        if (recommended_keyword is '' or (keywordDict[word] > 0 and keywordDict[word] < recommended_keyword_value)):
+    for idx, word in enumerate(hintDict):
+        if (recommended_keyword is '' or (hintDict[word] > 0 and hintDict[word] < recommended_keyword_value)):
+            print(word)
             recommended_keyword = word
-            recommended_keyword_value = keywordDict[word]
+            recommended_keyword_value = hintDict[word]
 
     interleaved_transcript = []
     i = 0

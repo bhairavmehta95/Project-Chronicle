@@ -27,6 +27,17 @@
             <h5 id="questionContent" class="ui header">
                 {{ q.question_title }}
             </h5>
+            <div class="ui container images">
+                {% for image in images %}
+                    <img src={{image.url}}>
+                    <input type="hidden" value={{image.url}}>
+                {% endfor %}
+                {% if images.count > 1 %}
+                    <div style="margin-top: 10px;">
+                        <button onclick="nextImage()" id="nextImgButton" class="ui basic button">Next Image</button>
+                    </div>
+                {% endif %}
+            </div>
             <h4 class="ui horizontal divider header">
               YOUR RESPONSE
             </h4>
@@ -37,7 +48,7 @@
                 <div class="ui center aligned container">
                     <button id="recordTimer" class="ui basic disabled button">
                         <span class="ui center aligned" id="minutes"></span>:<span class="ui center aligned" id="seconds"></span>
-                </button>
+                    </button>
                 </div>
                 <div class="ui buttons">
 

@@ -1,10 +1,29 @@
 function addPhrase(){
-    var cloned = $('.row').eq(1).clone(true);
+    var one = $('.row.first.template').clone(true);
+    var two = $('.row.second.template').clone(true);
+    var div = $('.divider.template').clone(true);
 
-    $('#phraseArea').append(cloned);
+    one = one.removeClass('template');
+    two = two.removeClass('template');
+    div = div.removeClass('template');
 
     var num_primary = parseInt($('#id_num_primary_keywords').val());
+    one.find('input').first().attr('name', 'primary_keyword_field_' + num_primary);
+    one.find('input').eq(1).attr('name', 'primary_keyword_point_field_' + num_primary);
+    two.find('input').first().attr('name', 'primary_keyword_hint_field_' + num_primary);
+
+    $('#phraseArea').append(one, two, div);
+
     $('#id_num_primary_keywords').val(num_primary + 1);
+}
+
+function addImage() {
+    var numImages = parseInt($('#numImages').val());
+    var imgRow = $('.url.template').clone(true);
+    imgRow.removeClass('template');
+    imgRow.find('input').attr('name', 'img_' + numImages);
+    $('#urlContainer').append(imgRow);
+    $('#numImages').val(numImages + 1);
 }
 
 function updateDOM() {
@@ -50,6 +69,8 @@ function updateDOM() {
             e.preventDefault();
         }
 
+
+
     });
 }
 
@@ -58,6 +79,10 @@ $(document).ready(function(){
         addPhrase();
         updateValues();
         updateDOM();
+    });
+
+    $(document).on('click','#addImage',function(){
+        addImage();
     });
 
     updateDOM();
