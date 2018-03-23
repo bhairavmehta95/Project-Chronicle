@@ -136,8 +136,8 @@ def correct(request, classId, topicId, questionId):
 
     for idx, word in enumerate(studentResponseLemmatized):
         if keywordDict.get(word) is not None:
-            studentScore += keywordDict[word].points
-            keywordDict[word].points = 0 # set the point value to 0 bc the points have already been earned
+            studentScore += keywordDict[word]['points']
+            keywordDict[word]['points'] = 0 # set the point value to 0 bc the points have already been earned
 
             # Add the NON Lemmatized word for output
             kw_list.append(studentResponseList[idx])
@@ -163,9 +163,9 @@ def correct(request, classId, topicId, questionId):
     recommended_keyword_value = 0
 
     for idx, word in enumerate(keywordDict):
-        if (recommended_keyword is '' or (keywordDict[word].points > 0 and keywordDict[word].points < recommended_keyword_value)):
+        if (recommended_keyword is '' or (keywordDict[word]['points'] > 0 and keywordDict[word]['points'] < recommended_keyword_value)):
             recommended_keyword = word
-            recommended_keyword_value = keywordDict.hint
+            recommended_keyword_value = keywordDict[word]['hint']
 
     interleaved_transcript = []
     i = 0
