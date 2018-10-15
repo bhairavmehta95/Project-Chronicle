@@ -1,88 +1,89 @@
-  var final_transcript = '';
-  var recognizing = false;
-  var ignore_onend;
-  var start_timestamp;
-  var recognition = new webkitSpeechRecognition();
-  recognition.continuous = true;
-  recognition.interimResults = true;
+var final_transcript = '';
+var interim_transcript = '';
 
-  var shownImageIndex = 0;
+var recognizing = false;
+var ignore_onend;
+var start_timestamp;
 
-  recognition.onstart = function() {
-    recognizing = true;
-  };
+var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
+var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
+var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
 
-  recognition.onerror = function(event) {
-    if (event.error == 'no-speech') {
-      ignore_onend = true;
+var recognition = new SpeechRecognition();
+recognition.lang = 'en-US';
+
+var shownImageIndex = 0;
+
+recognition.onstart = function() {
+  recognizing = true;
+};
+
+recognition.onerror = function(event) {
+  if (event.error == 'no-speech') {
+    ignore_onend = true;
+  }
+  if (event.error == 'audio-capture') {
+    ignore_onend = true;
+  }
+  if (event.error == 'not-allowed') {
+    if (event.timeStamp - start_timestamp < 100) {
+      showInfo('info_blocked');
+    } else {
+      showInfo('info_denied');
     }
-    if (event.error == 'audio-capture') {
-      ignore_onend = true;
-    }
-    if (event.error == 'not-allowed') {
-      if (event.timeStamp - start_timestamp < 100) {
-        showInfo('info_blocked');
-      } else {
-        showInfo('info_denied');
-      }
-      ignore_onend = true;
-    }
-  };
+    ignore_onend = true;
+  }
+};
 
-  recognition.onend = function() {
-    recognizing = false;
-    if (ignore_onend) {
-      return;
-    }
-    
-    if (!final_transcript) {
-      showInfo('info_start');
-      return;
-    }
-    showInfo('');
-    if (window.getSelection) {
-      window.getSelection().removeAllRanges();
-      var range = document.createRange();
-      range.selectNode(document.getElementById('final_span'));
-      window.getSelection().addRange(range);
-    }
-  };
+recognition.onspeechend = function(event) {
+  final_transcript += interim_transcript + '. ';
+  interim_transcript = ''
 
-  recognition.onresult = function(event) {
-    var interim_transcript = '';
-    if (typeof(event.results) == 'undefined') {
-      recognition.onend = null;
-      recognition.stop();
-      upgrade();
-      return;
+  try {
+    final_transcript_list = final_transcript.match(/[^\.!\?]+[\.!\?]+/g);
+    final_transcript = "";
+
+    for (i = 0; i < final_transcript_list.length; ++i) {
+        final_transcript = final_transcript + capitalize(final_transcript_list[i]);
     }
-    for (var i = event.resultIndex; i < event.results.length; ++i) {
-      if (event.results[i].isFinal) {
-        final_transcript += event.results[i][0].transcript + '. ';
-      } else {
-        interim_transcript += event.results[i][0].transcript;
-      }
-    }
+  }
 
-    try {
-        final_transcript_list = final_transcript.match(/[^\.!\?]+[\.!\?]+/g);
+  catch(err){
+    final_transcript = capitalize(final_transcript);
+  }
 
-        final_transcript = "";
+  final_span.innerHTML = linebreak(final_transcript);
+  interim_span.innerHTML = linebreak(interim_transcript);
 
-        for (i = 0; i < final_transcript_list.length; ++i) {
-            final_transcript = final_transcript + capitalize(final_transcript_list[i]);
-        }
-    }
+  // Shutting down recognition
+  recognition.stop();
+  recognizing = false;
+  if (ignore_onend) {
+    return;
+  }
+  
+  if (!final_transcript) {
+    showInfo('info_start');
+    return;
+  }
+  showInfo('');
+  if (window.getSelection) {
+    window.getSelection().removeAllRanges();
+    var range = document.createRange();
+    range.selectNode(document.getElementById('final_span'));
+    window.getSelection().addRange(range);
+  }
+}
 
-    catch(err){
-      final_transcript = capitalize(final_transcript);
-    }
+recognition.onresult = function(event) {
+  var last = event.results.length - 1;
+  var transcript = event.results[last][0].transcript;
 
-    final_span.innerHTML = linebreak(final_transcript);
-    interim_span.innerHTML = linebreak(interim_transcript);
-  };
+  interim_transcript = transcript
+  interim_span.innerHTML = linebreak(interim_transcript);
+};
 
-  var two_line = /\n\n/g;
+var two_line = /\n\n/g;
 var one_line = /\n/g;
 function linebreak(s) {
   return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
